@@ -6,6 +6,7 @@
     <content type="text"><![CDATA[配置镜像加速器:修改daemon配置文件/etc/docker/daemon.json12sudo mkdir -p /etc/dockersudo vi /etc/docker/daemon.json 在key为registry-mirrors追加&quot;https://1031vuk0.mirror.aliyuncs.com&quot; 1234# 若没有直接cv大法&#123; &quot;registry-mirrors&quot;: [&quot;https://1031vuk0.mirror.aliyuncs.com&quot;]&#125; 重启docker刷新配置12sudo systemctl daemon-reloadsudo systemctl restart docker 编写docker-compose.yml123456789version: &apos;3.1&apos;services: fastdfs: image: registry.cn-shenzhen.aliyuncs.com/dev_docker_resp/fastdfs restart: always container_name: fastdfs volumes: - ./storage:/fastdfs/storage network_mode: host 运行docker-compose up -d]]></content>
       <categories>
         <category>docker-compose</category>
+        <category>FastDFS</category>
       </categories>
       <tags>
         <tag>FastDFS</tag>
