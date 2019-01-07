@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[FastDFS单机版安装]]></title>
+    <url>%2F2019%2F01%2F07%2FFastDFS%E5%8D%95%E6%9C%BA%E7%89%88%E5%AE%89%E8%A3%85%2F</url>
+    <content type="text"><![CDATA[配置镜像加速器:修改daemon配置文件/etc/docker/daemon.json12sudo mkdir -p /etc/dockersudo vi /etc/docker/daemon.json 在key为registry-mirrors追加&quot;https://1031vuk0.mirror.aliyuncs.com&quot; 1234# 若没有直接cv大法&#123; &quot;registry-mirrors&quot;: [&quot;https://1031vuk0.mirror.aliyuncs.com&quot;]&#125; 重启docker刷新配置12sudo systemctl daemon-reloadsudo systemctl restart docker 编写docker-compose.yml123456789version: &apos;3.1&apos;services: fastdfs: image: registry.cn-shenzhen.aliyuncs.com/dev_docker_resp/fastdfs restart: always container_name: fastdfs volumes: - ./storage:/fastdfs/storage network_mode: host 运行docker-compose up -d]]></content>
+      <categories>
+        <category>docker-compose</category>
+      </categories>
+      <tags>
+        <tag>FastDFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[消息中间件RabbitMQ]]></title>
+    <url>%2F2019%2F01%2F07%2F%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6RabbitMQ%2F</url>
+    <content type="text"><![CDATA[消息中间件RabbitMQ 消息队列中间件简介 消息队列中间件是分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋等问题实现高性能，高可用，可伸缩和最终一致性[架构] 使用较多的消息队列有ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ 以下介绍消息队列在实际应用中常用的使用场景：异步处理，应用解耦，流量削锋和消息通讯四个场景 RabbitMQ 简介 RabbitMQ 是一个由 Erlang语言开发的AMQP的开源实现。 AMQP：Advanced Message Queue，高级消息队列协议。它是应用层协议的一个开放标准，为面向消息的中间件设计，基于此协议的客户端与消息中间件可传递消息，并不受产品、开发语言等条件的限制。 主要概念 RabbitMQ Server： 也叫broker server，它是一种传输服务。 他的角色就是维护一条从Producer到Consumer的路线，保证数据能够按照指定的方式进行传输。 Producer： 消息生产者，如图A、B、C，数据的发送方。消息生产者连接RabbitMQ服务器然后将消息投递到Exchange。 Consumer：消息消费者，如图1、2、3，数据的接收方。消息消费者订阅队列，RabbitMQ将Queue中的消息发送到消息消费者。 Exchange：生产者将消息发送到Exchange（交换器），由Exchange将消息路由到一个或多个Queue中（或者丢弃）。Exchange并不存储消息。RabbitMQ中的Exchange有direct、fanout、topic、headers四种类型，每种类型对应不同的路由规则。 Queue：（队列）是RabbitMQ的内部对象，用于存储消息。消息消费者就是通过订阅队列来获取消息的，RabbitMQ中的消息都只能存储在Queue中，生产者生产消息并最终投递到Queue中，消费者可以从Queue中获取消息并消费。多个消费者可以订阅同一个Queue，这时Queue中的消息会被平均分摊给多个消费者进行处理，而不是每个消费者都收到所有的消息并处理。 RoutingKey：生产者在将消息发送给Exchange的时候，一般会指定一个routing key，来指定这个消息的路由规则，而这个routing key需要与Exchange Type binding key联合使用才能最终生效。在Exchange Type与binding key固定的情况下（在正常使用时一般这些内容都是固定配置好的），我们的生产者就可以在发送消息给Exchange时，通过指定routing key来决定消息流向哪里。RabbitMQ为routing key设定的长度限制为255bytes。 Connection： （连接）：Producer和Consumer都是通过TCP连接到RabbitMQ Server的。以后我们可以看到，程序的起始处就是建立这个TCP连接。 Channels： （信道）：它建立在上述的TCP连接中。数据流动都是在Channel中进行的。也就是说，一般情况是程序起始建立TCP连接，第二步就是建立这个Channel。 VirtualHost：权限控制的基本单位，一个VirtualHost里面有若干Exchange和MessageQueue，以及指定被哪些user使用 RabbitMQ安装与启动 编写docker-compose.yml文件 1234567891011121314151617181920version: '3.1'services: rabbitmq: restart: always image: rabbitmq:management container_name: rabbitmq ports: - 5672:5672 - 15672:15672 - 5671:5617 - 15671:15671 - 25672:25672 environment: TZ: Asia/Shanghai RABBITMQ_DEFAULT_USER: rabbit RABBITMQ_DEFAULT_PASS: 123456 volumes: - data:/var/lib/rabbitmqvolumes: data: rabbitmq需要有映射以下端口: 5671、5672、4369、15671、15672、25672 15672 (if management plugin is enabled) 15671 management监听端口 5672, 5671 (AMQP 0-9-1 without and with TLS) 4369 (epmd) epmd 代表 Erlang 端口映射守护进程 25672 (Erlang distribution) 启动容器docker-compose up -d 访问地址：http://IP:15672,即可看到管理界面的登陆页]]></content>
+      <categories>
+        <category>docker-compose</category>
+        <category>RabbitMQ</category>
+      </categories>
+      <tags>
+        <tag>docker-compose</tag>
+        <tag>RabbitMQ</tag>
+      </tags>
+  </entry>
+</search>
