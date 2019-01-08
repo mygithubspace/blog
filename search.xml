@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[MyCat搭建]]></title>
-    <url>%2F2019%2F01%2F08%2FMycat%E6%90%AD%E5%BB%BA%2F</url>
-    <content type="text"><![CDATA[必要环境 安装jdk]]></content>
-      <categories>
-        <category>MyCat</category>
-      </categories>
-      <tags>
-        <tag>MyCat</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[MyCat简介]]></title>
-    <url>%2F2019%2F01%2F08%2FMyCat%E7%AE%80%E4%BB%8B%2F</url>
-    <content type="text"><![CDATA[MyCat 简介java 编写的数据库中间件 Mycat 运行环境需要 JDK. Mycat 是中间件.运行在代码应用和 MySQL 数据库之间的应用. 前身 : corba. 是阿里开发的数据库中间件.实现 MySQL 数据库分库分表集群管理的中间件.曾经出现过重大事故. 二次开发,形成 Mycat. 使用 MyCat 之后,编写的所有的 SQL 语句,必须严格遵守 SQL 标准规范. insert into table_name(column_name) values(column_value); 使用 MyCat 中间件后的结构图如下： MyCat 术语简介切分逻辑上的切分. 在物理层面,是使用多库[database],多表[table]实现的切分. 纵向切分把一个数据库切分成多个数据库,配置方便只能实现两张表的表连接查询. 将一张表中的数据，分散到若干个 database 的同结构表中。多个表的数据的集合是当前表格的数据。 横向切分把一个表切分成多个表,相比纵向切分配置麻烦 无法实现表连接查询. 将一张表的字段，分散到若干张表中，将若干表连接到一起，才是当前表的完整数据。 逻辑库Mycat 中定义的 database.是逻辑上存在的.但是物理上未必存在. 主要是针对纵向切分提供的概念. 访问 MyCat，就是将 MyCat 当做 MySQL 使用。 Db 数据库是 MyCat 中定义的 database。通过 SQL 访问 MyCat 中的 db 库的时候，对应的是 MySQL 中的 db1，db2，db3 三个库。物理上的 database 是 db1，db2，db3.逻辑上的database 就是 db。 逻辑表Mycat 中定义的 table.是逻辑上存在,物理上未必存在. 主要是针对横向切分提供的概念 MyCat 中的表格 table，其字段分散到 MySQL 数据库的表格 table1,table2,table3 中。 默认端口Mycat 默认端口是 8066 数据主机- dataHost物理 MySQL 存放的主机地址.可以使用主机名,IP,域名定义. 数据节点 - dataNode物理的 database 是什么.数据保存的物理节点.就是database. 分片规则当控制数据的时候,如何访问物理 database 和 table. 就是访问 dataHost 和 dataNode 的算法. 在 Mycat 处理具体的数据 CRUD 的时候,如何访问 dataHost 和 dataNode 的算法.如:哈希算法,crc16 算法等.]]></content>
-      <categories>
-        <category>MyCat</category>
-      </categories>
-      <tags>
-        <tag>MyCat</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[CentOS 7 Zookeeper安装]]></title>
     <url>%2F2019%2F01%2F08%2FZookeeper%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用手动安装的方式部署 注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。 单机模式下载进入要下载的版本的目录，选择 .tar.gz 文件下载，下载链接：http://archive.apache.org/dist/zookeeper/ 安装注意： 需要先安装 Java 使用 tar 解压要安装的目录即可，以 3.4.13 版本为例，解压到 /usr/local/zookeeper-3.4.13 1tar -zxvf zookeeper-3.4.13.tar.gz -C /usr/local 配置在根目录下创建 data 和 logs 两个目录用于存储数据和日志 123cd /usr/local/zookeeper-3.4.13mkdir datamkdir logs 在 conf 目录下新建 zoo.cfg 文件，写入以下内容保存 1234tickTime=2000dataDir=/usr/local/zookeeper-3.4.13/datadataLogDir=/usr/local/zookeeper-3.4.13/logsclientPort=2181 启动和停止进入 bin 目录，启动、停止、重启和查看当前节点状态 1234./zkServer.sh start./zkServer.sh stop./zkServer.sh restart./zkServer.sh status 伪集群模式伪集群模式就是在同一主机启动多个 zookeeper 并组成集群，下边以在 192.168.10.134 主机上创 3 个 zookeeper 组集群为例。 将通过单机模式安装的 zookeeper，复制成 zookeeper1/zookeeper2/zookeeper3 三份 zookeeper1 修改配置文件 123456789tickTime=2000dataDir=/usr/local/zookeeper1/datadataLogDir=/usr/local/zookeeper1/logsclientPort=2181initLimit=5syncLimit=2server.1=192.168.10.134:2888:3888server.2=192.168.10.134:4888:5888server.3=192.168.10.134:6888:7888 设置服务器 ID 1echo '1' &gt; data/myid zookeeper2 修改配置文件 123456789tickTime=2000dataDir=/usr/local/zookeeper2/datadataLogDir=/usr/local/zookeeper2/logsclientPort=2181initLimit=5syncLimit=2server.1=192.168.10.134:2888:3888server.2=192.168.10.134:4888:5888server.3=192.168.10.134:6888:7888 设置服务器 ID1echo '2' &gt; data/myid zookeeper3 修改配置文件 123456789tickTime=2000dataDir=/usr/local/zookeeper3/datadataLogDir=/usr/local/zookeeper3/logsclientPort=2181initLimit=5syncLimit=2server.1=192.168.10.134:2888:3888server.2=192.168.10.134:4888:5888server.3=192.168.10.134:6888:7888 设置服务器 ID 1echo '3' &gt; data/myid 启动和停止分别启动服务器，顺序无所谓 1234./zkServer.sh start./zkServer.sh stop./zkServer.sh restart./zkServer.sh status 集群模式集群模式就是在不同主机上安装 zookeeper 然后组成集群的模式，操作步骤同上，此处不再赘述。]]></content>
@@ -132,8 +110,8 @@
         <category>FastDFS</category>
       </categories>
       <tags>
-        <tag>FastDFS</tag>
         <tag>Docker Compose</tag>
+        <tag>FastDFS</tag>
       </tags>
   </entry>
   <entry>
