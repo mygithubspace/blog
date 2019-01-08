@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="个人博客, Hexo, NexT">
+  <meta name="keywords" content="Zookeeper,">
 
 
 
@@ -81,14 +81,18 @@
 
 
 
-<meta name="keywords" content="技术博客,blog,hexo">
-<meta property="og:type" content="website">
-<meta property="og:title" content="程鹏">
-<meta property="og:url" content="http://yoursite.com/categories/Docker-Compose/FastDFS/index.html">
+<meta name="description" content="Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用手动安装的方式部署 注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。">
+<meta name="keywords" content="Zookeeper">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS 7 Zookeeper安装">
+<meta property="og:url" content="http://yoursite.com/2019/01/08/Zookeeper安装/index.html">
 <meta property="og:site_name" content="程鹏">
+<meta property="og:description" content="Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用手动安装的方式部署 注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-08T02:20:16.095Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="程鹏">
+<meta name="twitter:title" content="CentOS 7 Zookeeper安装">
+<meta name="twitter:description" content="Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用手动安装的方式部署 注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/Docker-Compose/FastDFS/">
+  <link rel="canonical" href="http://yoursite.com/2019/01/08/Zookeeper安装/">
 
 
 
 
 
-  <title>分类: FastDFS | 程鹏</title>
+  <title>CentOS 7 Zookeeper安装 | 程鹏</title>
   
 
 
@@ -153,7 +157,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -279,53 +283,261 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>FastDFS<small>分类</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/08/Zookeeper安装/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/01/07/FastDFS单机版安装/" itemprop="url">
-              
-                <span itemprop="name">FastDFS单机版安装</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">CentOS 7 Zookeeper安装</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-01-07T21:28:20+08:00" content="2019-01-07">
-          01-07
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-08T10:17:26+08:00">
+                2019-01-08
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Zookeeper/" itemprop="url" rel="index">
+                    <span itemprop="name">Zookeeper</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+             <span id="/2019/01/08/Zookeeper安装/" class="leancloud_visitors" data-flag-title="CentOS 7 Zookeeper安装">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  559
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用手动安装的方式部署</p>
+<p>注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。</p>
+<a id="more"></a>
+<p>单机模式<br>下载<br>进入要下载的版本的目录，选择 <code>.tar.gz</code> 文件下载，下载链接：<a href="http://archive.apache.org/dist/zookeeper/" target="_blank" rel="noopener">http://archive.apache.org/dist/zookeeper/</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><strong>注意</strong>： 需要先安装 <code>Java</code></p>
+<p>使用 <code>tar</code> 解压要安装的目录即可，以 <code>3.4.13</code> 版本为例，解压到 <code>/usr/local/zookeeper-3.4.13</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf zookeeper-3.4.13.tar.gz -C /usr/<span class="built_in">local</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>在根目录下创建 data 和 logs 两个目录用于存储数据和日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/<span class="built_in">local</span>/zookeeper-3.4.13</span><br><span class="line">mkdir data</span><br><span class="line">mkdir logs</span><br></pre></td></tr></table></figure>
+<p>在 <code>conf</code> 目录下新建 <code>zoo.cfg</code> 文件，写入以下内容保存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/usr/local/zookeeper-3.4.13/data</span><br><span class="line">dataLogDir=/usr/local/zookeeper-3.4.13/logs</span><br><span class="line">clientPort=2181</span><br></pre></td></tr></table></figure>
+<h2 id="启动和停止"><a href="#启动和停止" class="headerlink" title="启动和停止"></a>启动和停止</h2><p>进入 <code>bin</code> 目录，启动、停止、重启和查看当前节点状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh start</span><br><span class="line">./zkServer.sh stop</span><br><span class="line">./zkServer.sh restart</span><br><span class="line">./zkServer.sh status</span><br></pre></td></tr></table></figure>
+<h1 id="伪集群模式"><a href="#伪集群模式" class="headerlink" title="伪集群模式"></a>伪集群模式</h1><p>伪集群模式就是在同一主机启动多个 zookeeper 并组成集群，下边以在 192.168.10.134 主机上创 3 个 zookeeper 组集群为例。</p>
+<p>将通过单机模式安装的 zookeeper，复制成 zookeeper1/zookeeper2/zookeeper3 三份</p>
+<h3 id="zookeeper1"><a href="#zookeeper1" class="headerlink" title="zookeeper1"></a>zookeeper1</h3><ul>
+<li>修改配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/usr/local/zookeeper1/data</span><br><span class="line">dataLogDir=/usr/local/zookeeper1/logs</span><br><span class="line">clientPort=2181</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">server.1=192.168.10.134:2888:3888</span><br><span class="line">server.2=192.168.10.134:4888:5888</span><br><span class="line">server.3=192.168.10.134:6888:7888</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置服务器 ID</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'1'</span> &gt; data/myid</span><br></pre></td></tr></table></figure>
+<h3 id="zookeeper2"><a href="#zookeeper2" class="headerlink" title="zookeeper2"></a>zookeeper2</h3><ul>
+<li>修改配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/usr/local/zookeeper2/data</span><br><span class="line">dataLogDir=/usr/local/zookeeper2/logs</span><br><span class="line">clientPort=2181</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">server.1=192.168.10.134:2888:3888</span><br><span class="line">server.2=192.168.10.134:4888:5888</span><br><span class="line">server.3=192.168.10.134:6888:7888</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置服务器 ID<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'2'</span> &gt; data/myid</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="zookeeper3"><a href="#zookeeper3" class="headerlink" title="zookeeper3"></a>zookeeper3</h3><ul>
+<li>修改配置文件</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/usr/local/zookeeper3/data</span><br><span class="line">dataLogDir=/usr/local/zookeeper3/logs</span><br><span class="line">clientPort=2181</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">server.1=192.168.10.134:2888:3888</span><br><span class="line">server.2=192.168.10.134:4888:5888</span><br><span class="line">server.3=192.168.10.134:6888:7888</span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置服务器 ID</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'3'</span> &gt; data/myid</span><br></pre></td></tr></table></figure>
+<h2 id="启动和停止-1"><a href="#启动和停止-1" class="headerlink" title="启动和停止"></a>启动和停止</h2><p>分别启动服务器，顺序无所谓</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh start</span><br><span class="line">./zkServer.sh stop</span><br><span class="line">./zkServer.sh restart</span><br><span class="line">./zkServer.sh status</span><br></pre></td></tr></table></figure>
+<h2 id="集群模式"><a href="#集群模式" class="headerlink" title="集群模式"></a>集群模式</h2><p>集群模式就是在不同主机上安装 zookeeper 然后组成集群的模式，操作步骤同上，此处不再赘述。</p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Zookeeper/" rel="tag"># Zookeeper</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/08/Jenkins安装/" rel="next" title="CentOS 7 Jenkins安装">
+                <i class="fa fa-chevron-left"></i> CentOS 7 Jenkins安装
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c335a79d370ec5c" async="async"></script>
+</div>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -353,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -461,6 +682,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">2.</span> <span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动和停止"><span class="nav-number">3.</span> <span class="nav-text">启动和停止</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#伪集群模式"><span class="nav-number"></span> <span class="nav-text">伪集群模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper1"><span class="nav-number">0.1.</span> <span class="nav-text">zookeeper1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper2"><span class="nav-number">0.2.</span> <span class="nav-text">zookeeper2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zookeeper3"><span class="nav-number">0.3.</span> <span class="nav-text">zookeeper3</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动和停止-1"><span class="nav-number">1.</span> <span class="nav-text">启动和停止</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群模式"><span class="nav-number">2.</span> <span class="nav-text">集群模式</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -644,6 +881,10 @@ setInterval("createtime()",250);
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

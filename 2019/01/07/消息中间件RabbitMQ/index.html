@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker-compose,RabbitMQ,">
+  <meta name="keywords" content="Docker Compose,RabbitMQ,">
 
 
 
@@ -82,14 +82,14 @@
 
 
 <meta name="description" content="消息中间件RabbitMQ 消息队列中间件简介 消息队列中间件是分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋等问题实现高性能，高可用，可伸缩和最终一致性[架构] 使用较多的消息队列有ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ 以下介绍消息队列在实际应用中常用的使用场景：异步处理，应用解耦，流量削锋和消息通讯四个场景">
-<meta name="keywords" content="docker-compose,RabbitMQ">
+<meta name="keywords" content="Docker Compose,RabbitMQ">
 <meta property="og:type" content="article">
 <meta property="og:title" content="消息中间件RabbitMQ">
 <meta property="og:url" content="http://yoursite.com/2019/01/07/消息中间件RabbitMQ/index.html">
 <meta property="og:site_name" content="程鹏">
 <meta property="og:description" content="消息中间件RabbitMQ 消息队列中间件简介 消息队列中间件是分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋等问题实现高性能，高可用，可伸缩和最终一致性[架构] 使用较多的消息队列有ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ 以下介绍消息队列在实际应用中常用的使用场景：异步处理，应用解耦，流量削锋和消息通讯四个场景">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-07T13:29:50.687Z">
+<meta property="og:updated_time" content="2019-01-08T01:47:00.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="消息中间件RabbitMQ">
 <meta name="twitter:description" content="消息中间件RabbitMQ 消息队列中间件简介 消息队列中间件是分布式系统中重要的组件，主要解决应用耦合，异步消息，流量削锋等问题实现高性能，高可用，可伸缩和最终一致性[架构] 使用较多的消息队列有ActiveMQ，RabbitMQ，ZeroMQ，Kafka，MetaMQ，RocketMQ 以下介绍消息队列在实际应用中常用的使用场景：异步处理，应用解耦，流量削锋和消息通讯四个场景">
@@ -349,8 +349,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker-compose/" itemprop="url" rel="index">
-                    <span itemprop="name">docker-compose</span>
+                  <a href="/categories/Docker-Compose/" itemprop="url" rel="index">
+                    <span itemprop="name">Docker Compose</span>
                   </a>
                 </span>
 
@@ -360,7 +360,7 @@
                 
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker-compose/RabbitMQ/" itemprop="url" rel="index">
+                  <a href="/categories/Docker-Compose/RabbitMQ/" itemprop="url" rel="index">
                     <span itemprop="name">RabbitMQ</span>
                   </a>
                 </span>
@@ -394,6 +394,37 @@
             </span>
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  926
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
           
 
           
@@ -437,7 +468,7 @@
 </li>
 <li><h3 id="RabbitMQ安装与启动"><a href="#RabbitMQ安装与启动" class="headerlink" title="RabbitMQ安装与启动"></a>RabbitMQ安装与启动</h3><ul>
 <li><p>编写<code>docker-compose.yml</code>文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">version: '3.1'</span><br><span class="line">services:</span><br><span class="line">  rabbitmq:</span><br><span class="line">    restart: always</span><br><span class="line">    image: rabbitmq:management</span><br><span class="line">    container_name: rabbitmq</span><br><span class="line">    ports:</span><br><span class="line">      - 5672:5672</span><br><span class="line">      - 15672:15672</span><br><span class="line">      - 5671:5617</span><br><span class="line">      - 15671:15671</span><br><span class="line">      - 25672:25672</span><br><span class="line">    environment:</span><br><span class="line">      TZ: Asia/Shanghai</span><br><span class="line">      RABBITMQ_DEFAULT_USER: rabbit</span><br><span class="line">      RABBITMQ_DEFAULT_PASS: 123456</span><br><span class="line">    volumes:</span><br><span class="line">      - data:/var/lib/rabbitmq</span><br><span class="line">volumes:</span><br><span class="line">  data:</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.1'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">rabbitmq:management</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">rabbitmq</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">5672</span><span class="string">:5672</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">15672</span><span class="string">:15672</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">5671</span><span class="string">:5617</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">15671</span><span class="string">:15671</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">25672</span><span class="string">:25672</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      TZ:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line"><span class="attr">      RABBITMQ_DEFAULT_USER:</span> <span class="string">rabbit</span></span><br><span class="line"><span class="attr">      RABBITMQ_DEFAULT_PASS:</span> <span class="number">123456</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="attr">      - data:</span><span class="string">/var/lib/rabbitmq</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="attr">  data:</span></span><br></pre></td></tr></table></figure>
 <p>rabbitmq需要有映射以下端口: 5671、5672、4369、15671、15672、25672</p>
 <ul>
 <li>15672 (if management plugin is enabled)</li>
@@ -471,7 +502,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker-compose/" rel="tag"># docker-compose</a>
+            <a href="/tags/Docker-Compose/" rel="tag"># Docker Compose</a>
           
             <a href="/tags/RabbitMQ/" rel="tag"># RabbitMQ</a>
           
@@ -573,7 +604,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -584,7 +615,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -595,7 +626,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -702,6 +733,15 @@
   <span class="author" itemprop="copyrightHolder">程鹏</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site total words </span>
+    
+    <span title="Site words total count">8.4k</span>
+  
 </div>
 
 
@@ -721,7 +761,24 @@
 
 
 
-
+<span>|</span>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("07/1/2018 8:00:00");//此处修改你的建站时间或者网站上线时间 
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "Running "+dnum+" days "; 
+        document.getElementById("times").innerHTML = hnum + ":" + mnum + ":" + snum; 
+    } 
+setInterval("createtime()",250);
+</script>
         
 <div class="busuanzi-count">
   <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
