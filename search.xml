@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[SpringBoot自定义Banner]]></title>
+    <url>%2F2019%2F01%2F09%2FSpringBoot%E8%87%AA%E5%AE%9A%E4%B9%89Banner(%E4%BD%9B%E7%A5%96%E4%BF%9D%E4%BD%91)%2F</url>
+    <content type="text"><![CDATA[在 Spring Boot 启动的时候会有一个默认的启动图案 1234567. ____ _ __ _ _ /\\ / ___&apos;_ __ _ _(_)_ __ __ _ \ \ \ \( ( )\___ | &apos;_ | &apos;_| | &apos;_ \/ _` | \ \ \ \ \\/ ___)| |_)| | | | | || (_| | ) ) ) ) &apos; |____| .__|_| |_|_| |_\__, | / / / / =========|_|==============|___/=/_/_/_/ :: Spring Boot :: (v1.5.8.RELEASE) 我们在 src/main/resources 目录下新建一个 banner.txt 通过 http://patorjk.com/software/taag 网站生成字符串，将网站生成的字符复制到 banner.txt 中 再次运行这个程序 1234567891011121314151617181920212223$&#123;AnsiColor.BRIGHT_RED&#125;////////////////////////////////////////////////////////////////////// _ooOoo_ //// o8888888o //// 88&quot; . &quot;88 //// (| ^_^ |) //// O\ = /O //// ____/`---&apos;\____ //// .&apos; \\| |// `. //// / \\||| : |||// \ //// / _||||| -:- |||||- \ //// | | \\\ - /// | | //// | \_| &apos;&apos;\---/&apos;&apos; | | //// \ .-\__ `-` ___/-. / //// ___`. .&apos; /--.--\ `. . ___ //// .&quot;&quot; &apos;&lt; `.___\_&lt;|&gt;_/___.&apos; &gt;&apos;&quot;&quot;. //// | | : `- \`.;`\ _ /`;.`/ - ` : | | //// \ \ `-. \_ __\ /__ _/ .-` / / //// ========`-.____`-.___\_____/___.-`____.-&apos;======== //// `=---=&apos; //// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //// 佛祖保佑 永不宕机 永无BUG ////////////////////////////////////////////////////////////////////// 常用属性设置： ${AnsiColor.BRIGHT_RED}：设置控制台中输出内容的颜色 ${application.version}：用来获取 MANIFEST.MF 文件中的版本号 ${application.formatted-version}：格式化后的 ${application.version} 版本信息 ${spring-boot.version}：Spring Boot 的版本号 ${spring-boot.formatted-version}：格式化后的 ${spring-boot.version} 版本信息]]></content>
+      <categories>
+        <category>Spring Boot</category>
+      </categories>
+      <tags>
+        <tag>Spring Boot</tag>
+        <tag>Banner</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SpringBoot整合tk.mybatis]]></title>
+    <url>%2F2019%2F01%2F09%2FSpringBoot%E6%95%B4%E5%90%88tk.mybatis%2F</url>
+    <content type="text"><![CDATA[tk.mybatis 简介tk.mybatis 是在 MyBatis 框架的基础上提供了很多工具，让开发更加高效 引入依赖在 pom.xml 文件中引入 mapper-spring-boot-starter 依赖，该依赖会自动引入 MyBaits 相关依赖 12345&lt;dependency&gt; &lt;groupId&gt;tk.mybatis&lt;/groupId&gt; &lt;artifactId&gt;mapper-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;2.0.2&lt;/version&gt;&lt;/dependency&gt; 配置 application.yml配置 MyBatis 123mybatis: type-aliases-package: 实体类的存放路径，如：com.funtl.hello.spring.boot.entity mapper-locations: classpath:mapper/*.xml 创建一个通用的父级接口主要作用是让 DAO 层的接口继承该接口，以达到使用 tk.mybatis 的目的 1234567891011package tk.mybatis;import tk.mybatis.mapper.common.Mapper;import tk.mybatis.mapper.common.MySqlMapper;/** * 自己的 Mapper * 特别注意，该接口不能被扫描到，否则会出错 * 不能放在主启动类所在包及其子包下 */public interface MyMapper&lt;T&gt; extends Mapper&lt;T&gt;, MySqlMapper&lt;T&gt; &#123;&#125;]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>tk.mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SpringBoot整合Druid]]></title>
+    <url>%2F2019%2F01%2F09%2FSpringBoot%E6%95%B4%E5%90%88Druid%2F</url>
+    <content type="text"><![CDATA[引入依赖在 pom.xml 文件中引入 druid-spring-boot-starter 依赖 12345&lt;dependency&gt; &lt;groupId&gt;com.alibaba&lt;/groupId&gt; &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt; &lt;version&gt;1.1.10&lt;/version&gt;&lt;/dependency&gt; 引入数据库连接依赖 12345&lt;dependency&gt; &lt;groupId&gt;mysql&lt;/groupId&gt; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt; &lt;scope&gt;runtime&lt;/scope&gt;&lt;/dependency&gt; 配置 application.yml在 application.yml 中配置数据库连接 1234567891011spring: datasource: druid: url: jdbc:mysql://ip:port/dbname?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false username: root password: 123456 initial-size: 1 min-idle: 1 max-active: 20 test-on-borrow: true driver-class-name: com.mysql.jdbc.Driver]]></content>
+      <categories>
+        <category>SpringBoot</category>
+      </categories>
+      <tags>
+        <tag>SpringBoot</tag>
+        <tag>Druid</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[阿里云短信服务工具类]]></title>
+    <url>%2F2019%2F01%2F09%2F%E9%98%BF%E9%87%8C%E4%BA%91%E7%9F%AD%E4%BF%A1%E6%9C%8D%E5%8A%A1%E5%B7%A5%E5%85%B7%E7%B1%BB%2F</url>
+    <content type="text"><![CDATA[短信服务（Short Message Service）是阿里云为用户提供的一种通信服务的能力。支持国内和国际快速发送验证码、短信通知和推广短信，服务范围覆盖全球200多个国家和地区。国内短信支持三网合一专属通道，与工信部携号转网平台实时互联。电信级运维保障，实时监控自动切换，到达率高达99%。完美支撑双11期间20亿短信发送，6亿用户触达。 工具内容如下： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899import com.aliyuncs.DefaultAcsClient;import com.aliyuncs.IAcsClient;import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsRequest;import com.aliyuncs.dysmsapi.model.v20170525.QuerySendDetailsResponse;import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;import com.aliyuncs.exceptions.ClientException;import com.aliyuncs.profile.DefaultProfile;import com.aliyuncs.profile.IClientProfile;import org.springframework.beans.factory.annotation.Autowired;import org.springframework.core.env.Environment;import org.springframework.stereotype.Component;import java.text.SimpleDateFormat;import java.util.Date;/** * 短信工具类 * @author Administrator * */@Componentpublic class SmsUtil &#123; //产品名称:云通信短信API产品,开发者无需替换 static final String product = "Dysmsapi"; //产品域名,开发者无需替换 static final String domain = "dysmsapi.aliyuncs.com"; @Autowired private Environment env; // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找) /** * 发送短信 * @param mobile 手机号 * @param template_code 模板号 * @param sign_name 签名 * @param param 参数 * @return * @throws ClientException */ public SendSmsResponse sendSms(String mobile,String template_code,String sign_name,String param) throws ClientException &#123; String accessKeyId =env.getProperty("aliyun.sms.accessKeyId"); String accessKeySecret = env.getProperty("aliyun.sms.accessKeySecret"); //可自助调整超时时间 System.setProperty("sun.net.client.defaultConnectTimeout", "10000"); System.setProperty("sun.net.client.defaultReadTimeout", "10000"); //初始化acsClient,暂不支持region化 IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret); DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain); IAcsClient acsClient = new DefaultAcsClient(profile); //组装请求对象-具体描述见控制台-文档部分内容 SendSmsRequest request = new SendSmsRequest(); //必填:待发送手机号 request.setPhoneNumbers(mobile); //必填:短信签名-可在短信控制台中找到 request.setSignName(sign_name); //必填:短信模板-可在短信控制台中找到 request.setTemplateCode(template_code); //可选:模板中的变量替换JSON串,如模板内容为"亲爱的$&#123;name&#125;,您的验证码为$&#123;code&#125;"时,此处的值为 request.setTemplateParam(param); //选填-上行短信扩展码(无特殊需求用户请忽略此字段) //request.setSmsUpExtendCode("90997"); //可选:outId为提供给业务方扩展字段,最终在短信回执消息中将此值带回给调用者 request.setOutId("yourOutId"); //hint 此处可能会抛出异常，注意catch SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request); return sendSmsResponse; &#125; public QuerySendDetailsResponse querySendDetails(String mobile,String bizId) throws ClientException &#123; String accessKeyId =env.getProperty("accessKeyId"); String accessKeySecret = env.getProperty("accessKeySecret"); //可自助调整超时时间 System.setProperty("sun.net.client.defaultConnectTimeout", "10000"); System.setProperty("sun.net.client.defaultReadTimeout", "10000"); //初始化acsClient,暂不支持region化 IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret); DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain); IAcsClient acsClient = new DefaultAcsClient(profile); //组装请求对象 QuerySendDetailsRequest request = new QuerySendDetailsRequest(); //必填-号码 request.setPhoneNumber(mobile); //可选-流水号 request.setBizId(bizId); //必填-发送日期 支持30天内记录查询，格式yyyyMMdd SimpleDateFormat ft = new SimpleDateFormat("yyyyMMdd"); request.setSendDate(ft.format(new Date())); //必填-页大小 request.setPageSize(10L); //必填-当前页码从1开始计数 request.setCurrentPage(1L); //hint 此处可能会抛出异常，注意catch QuerySendDetailsResponse querySendDetailsResponse = acsClient.getAcsResponse(request); return querySendDetailsResponse; &#125;&#125;]]></content>
+      <categories>
+        <category>JavaUtils</category>
+      </categories>
+      <tags>
+        <tag>JavaUtils</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[CentOS7 搭建FTP]]></title>
+    <url>%2F2019%2F01%2F09%2FCentOS7%E6%90%AD%E5%BB%BAFTP%2F</url>
+    <content type="text"><![CDATA[查看是否安装了FTP：rpm -qa |grep vsftpd 如果没有任何输出，表示没有安装。 如果出现如下版本信息，则表示已经安装。 如果没有安装，可以使用如下命令直接安装1yum -y install vsftpd 默认安装目录：/etc/vsftpd 添加FTP账号1useradd admin -s /sbin/nologin 该账户路径默认指向/home/admin目录 设置密码：passwd admin 一些常用设置 设置匿名用户可以下载上传将文件/etc/vsftpd/vsftpd.conf 中下面两句的注释删除 12anon_upload_enable=YESanon_mkdir_write_enable=YES 根据个人需要设置默认目录修改/etc/passwd文件，找到你的用户名的那一行修改路径，然后保存即可，无需重启 将admin:x:500:500::/home/admin:/sbin/nologin 改成admin:x:500:500::/自定义文件夹:/sbin/nologin 启动 启动：systemctl start vsftpd 重启：systemctl restart vsftpd 开机自启：systemctl enable vsftpd]]></content>
+      <categories>
+        <category>FTP</category>
+        <category>CentOS</category>
+      </categories>
+      <tags>
+        <tag>FTP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CentOS 7 Zookeeper安装]]></title>
     <url>%2F2019%2F01%2F08%2FZookeeper%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[Zookeeper 部署有三种方式，单机模式、集群模式、伪集群模式，以下采用手动安装的方式部署 注意： 集群为大于等于3个奇数，如 3、5、7,不宜太多，集群机器多了选举和数据同步耗时长，不稳定。 单机模式下载进入要下载的版本的目录，选择 .tar.gz 文件下载，下载链接：http://archive.apache.org/dist/zookeeper/ 安装注意： 需要先安装 Java 使用 tar 解压要安装的目录即可，以 3.4.13 版本为例，解压到 /usr/local/zookeeper-3.4.13 1tar -zxvf zookeeper-3.4.13.tar.gz -C /usr/local 配置在根目录下创建 data 和 logs 两个目录用于存储数据和日志 123cd /usr/local/zookeeper-3.4.13mkdir datamkdir logs 在 conf 目录下新建 zoo.cfg 文件，写入以下内容保存 1234tickTime=2000dataDir=/usr/local/zookeeper-3.4.13/datadataLogDir=/usr/local/zookeeper-3.4.13/logsclientPort=2181 启动和停止进入 bin 目录，启动、停止、重启和查看当前节点状态 1234./zkServer.sh start./zkServer.sh stop./zkServer.sh restart./zkServer.sh status 伪集群模式伪集群模式就是在同一主机启动多个 zookeeper 并组成集群，下边以在 192.168.10.134 主机上创 3 个 zookeeper 组集群为例。 将通过单机模式安装的 zookeeper，复制成 zookeeper1/zookeeper2/zookeeper3 三份 zookeeper1 修改配置文件 123456789tickTime=2000dataDir=/usr/local/zookeeper1/datadataLogDir=/usr/local/zookeeper1/logsclientPort=2181initLimit=5syncLimit=2server.1=192.168.10.134:2888:3888server.2=192.168.10.134:4888:5888server.3=192.168.10.134:6888:7888 设置服务器 ID 1echo '1' &gt; data/myid zookeeper2 修改配置文件 123456789tickTime=2000dataDir=/usr/local/zookeeper2/datadataLogDir=/usr/local/zookeeper2/logsclientPort=2181initLimit=5syncLimit=2server.1=192.168.10.134:2888:3888server.2=192.168.10.134:4888:5888server.3=192.168.10.134:6888:7888 设置服务器 ID1echo '2' &gt; data/myid zookeeper3 修改配置文件 123456789tickTime=2000dataDir=/usr/local/zookeeper3/datadataLogDir=/usr/local/zookeeper3/logsclientPort=2181initLimit=5syncLimit=2server.1=192.168.10.134:2888:3888server.2=192.168.10.134:4888:5888server.3=192.168.10.134:6888:7888 设置服务器 ID 1echo '3' &gt; data/myid 启动和停止分别启动服务器，顺序无所谓 1234./zkServer.sh start./zkServer.sh stop./zkServer.sh restart./zkServer.sh status 集群模式集群模式就是在不同主机上安装 zookeeper 然后组成集群的模式，操作步骤同上，此处不再赘述。]]></content>
