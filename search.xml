@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[娱乐CentOS命令行]]></title>
-    <url>%2F2019%2F02%2F06%2F%E5%A8%B1%E4%B9%90CentOS%E5%91%BD%E4%BB%A4%E8%A1%8C%2F</url>
-    <content type="text"><![CDATA[话不多说，有图有真相 纯属娱乐，勿喷 至于实现起来还是很简单 编辑配置 1vi /etc/motd 将需要展示的文本图形放进去即可，如： 12345678910111213141516171819202122////////////////////////////////////////////////////////////////////// _ooOoo_ //// o8888888o //// 88&quot; . &quot;88 //// (| ^_^ |) //// O\ = /O //// ____/`---&apos;\____ //// .&apos; \\| |// `. //// / \\||| : |||// \ //// / _||||| -:- |||||- \ //// | | \\\ - /// | | //// | \_| &apos;&apos;\---/&apos;&apos; | | //// \ .-\__ `-` ___/-. / //// ___`. .&apos; /--.--\ `. . ___ //// .&quot;&quot; &apos;&lt; `.___\_&lt;|&gt;_/___.&apos; &gt;&apos;&quot;&quot;. //// | | : `- \`.;`\ _ /`;.`/ - ` : | | //// \ \ `-. \_ __\ /__ _/ .-` / / //// ========`-.____`-.___\_____/___.-`____.-&apos;======== //// `=---=&apos; //// ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ //// 佛祖保佑 永不宕机 永无BUG ////////////////////////////////////////////////////////////////////// 重新连接即可展示效果]]></content>
-      <categories>
-        <category>CentOS</category>
-      </categories>
-      <tags>
-        <tag>CentOS</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Git快速入手]]></title>
     <url>%2F2019%2F02%2F02%2FGit%E5%BF%AB%E9%80%9F%E5%85%A5%E6%89%8B%2F</url>
     <content type="text"><![CDATA[简介Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. Git is easy to learn and has a tiny footprint with lightning fast performance. It outclasses SCM tools like Subversion, CVS, Perforce, and ClearCase with features like cheap local branching, convenient staging areas, and multiple workflows. 官网 下载 git安装 官方教程：https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git windows详细安装教程：https://www.jianshu.com/p/414ccd423efc 配置 git config –list git config –-global user.name &#39;yourname&#39; git config –-global user.email &#39;youremail&#39; ssh-keygen -t rsa -C &#39;youremail&#39; 把本地的 ~/.ssh/xxx.pub 添加到github类似平台的SSH keys中 常用命令 创建自己远端项目 github gitee 码市 gitlab … 下载远端的代码 git clone git@github.com:mygithubspace/blog.git 修改 git add . git commit -m &#39;why modify&#39; git push origin master 拉取远端修改 git pull origin master 获取远程分支状态 git fetch 对分支操作 git branch 查看本地有哪些分支 git branch -D 删除本地分支 git branch -a 查看包含远程的分支 git checkout 可以切换要去 git checkout branchName 可以还原更改 git checkout fileName 合并分支 git merge git rebase git提升、经验 git flow git tag 每次合master之前一定要打个 tag .gitignore git rm –cached **/BaseTest.java]]></content>
