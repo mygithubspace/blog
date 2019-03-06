@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lgy1fz4uw2zld3j30qw0fsqbf.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lgy1fz4uxqfji2j311g0ojgn6.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lgy1fz4v2auprlj31e20e7x3a.jpg">
-<meta property="og:updated_time" content="2019-01-13T04:49:28.649Z">
+<meta property="og:updated_time" content="2019-02-19T07:54:54.674Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Cloud Alibaba 服务配置">
 <meta name="twitter:description" content="Nacos Config 服务端初始化分布式配置中心在分布式系统中，由于服务数量巨多，为了方便服务配置文件统一管理，实时更新，所以需要分布式配置中心组件。 Nacos ConfigNacos 提供用于存储配置和其他元数据的 key/value 存储，为分布式系统中的外部化配置提供服务器端和客户端支持。使用 Spring Cloud Alibaba Nacos Config，您可以在 Nacos S">
@@ -485,7 +485,7 @@
 <li>发布成功后在 “配置列表” 一栏即可看到刚才创建的配置项</li>
 </ul>
 <p><img src="http://ww1.sinaimg.cn/large/006j3B4Lgy1fz4tt3q8a1j31h50frmxx.jpg" alt=""></p>
-<h1 id="Nacos-Config-客户端的使用"><a href="#Nacos-Config-客户端的使用" class="headerlink" title="Nacos Config 客户端的使用"></a>Nacos Config 客户端的使用</h1><h2 id="POM"><a href="#POM" class="headerlink" title="POM"></a>POM</h2><p>此处我们以之前创建的 <a href="http://www.funtl.com/zh/spring-cloud-alibaba/%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85.html#%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85" target="_blank" rel="noopener"><strong>服务提供者</strong></a> 项目为例</p>
+<h1 id="Nacos-Config-客户端的使用"><a href="#Nacos-Config-客户端的使用" class="headerlink" title="Nacos Config 客户端的使用"></a>Nacos Config 客户端的使用</h1><h2 id="POM"><a href="#POM" class="headerlink" title="POM"></a>POM</h2><p>此处我们以之前创建的 <code>服务提供者</code> 项目为例</p>
 <p>在 <code>pom.xml</code> 中增加 <code>org.springframework.cloud:spring-cloud-starter-alibaba-nacos-config</code> 依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-config<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>完整的 <code>pom.xml</code> 如下：</p>
@@ -523,7 +523,7 @@
 <p>操作起来很简单，只需要为不同的环境编写专门的配置文件，如：<code>application-dev.yml</code>、<code>application-prod.yml</code>， 启动项目时只需要增加一个命令参数 <code>--spring.profiles.active=环境配置</code> 即可，启动命令如下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar spring-cloud-alibaba-demo-nacos-provider-1.0.0-SNAPSHOT.jar --spring.profiles.active=prod</span><br></pre></td></tr></table></figure>
 <h2 id="Nacos-Config-Profile"><a href="#Nacos-Config-Profile" class="headerlink" title="Nacos Config Profile"></a>Nacos Config Profile</h2><p>spring-cloud-starter-alibaba-nacos-config 在加载配置的时候，不仅仅加载了以 dataid 为 <code>${spring.application.name}.${file-extension:properties}</code> 为前缀的基础配置，还加载了 dataid 为 <code>${spring.application.name}-${profile}.${file-extension:properties}</code> 的基础配置。在日常开发中如果遇到多套环境下的不同配置，可以通过 Spring 提供的 <code>${spring.profiles.active}</code> 这个配置项来配置。</p>
-<p>此处我们以之前创建的 <a href="http://www.funtl.com/zh/spring-cloud-alibaba/%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85.html#%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85" target="_blank" rel="noopener"><strong>服务提供者</strong></a> 项目为例</p>
+<p>此处我们以之前创建的 <code>服务提供者</code> 项目为例</p>
 <h3 id="在-Nacos-Server-中增加配置"><a href="#在-Nacos-Server-中增加配置" class="headerlink" title="在 Nacos Server 中增加配置"></a>在 Nacos Server 中增加配置</h3><p>增加一个名为 <code>nacos-provider-config-prod.yaml</code> 的配置</p>
 <p><img src="http://ww1.sinaimg.cn/large/006j3B4Lgy1fz4utonrxcj31200ly75c.jpg" alt=""></p>
 <p><strong>注意：此时，我将配置文件中的端口由 8081 -&gt; 8082</strong></p>
@@ -675,7 +675,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -686,7 +686,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -697,7 +697,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -819,7 +819,7 @@
     
       <span class="post-meta-item-text">Site total words </span>
     
-    <span title="Site words total count">56.8k</span>
+    <span title="Site words total count">74.5k</span>
   
 </div>
 
