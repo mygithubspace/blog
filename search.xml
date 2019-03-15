@@ -95,7 +95,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Maven私服Nexus3快速搭建使用]]></title>
+    <title><![CDATA[MySql安装]]></title>
     <url>%2F2019%2F03%2F15%2Fdocker%2FMySQL%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[1. 编写docker-compose.yml文件Mysql 51234567891011121314151617181920version: '3'services: mysql: restart: always image: mysql:5.7.23 container_name: mysql ports: - 3306:3306 environment: TZ: Asia/Shanghai MYSQL_ROOT_PASSWORD: 123456 command: --character-set-server=utf8 --collation-server=utf8_general_ci --explicit_defaults_for_timestamp=true --lower_case_table_names=1 --max_allowed_packet=128M --sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO" volumes: - ./data:/var/lib/mysql Mysql 8**1234567891011121314151617181920212223version: '3.1'services: db: image: mysql restart: always environment: MYSQL_ROOT_PASSWORD: 123456 command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8 --collation-server=utf8_general_ci --explicit_defaults_for_timestamp=true --lower_case_table_names=1 ports: - 3306:3306 volumes: - ./data:/var/lib/mysql adminer: image: adminer restart: always ports: - 8080:8080 2. 使用命令docker-compose up -d启动]]></content>
       <categories>
@@ -771,8 +771,8 @@
         <category>FastDFS</category>
       </categories>
       <tags>
-        <tag>Docker Compose</tag>
         <tag>FastDFS</tag>
+        <tag>Docker Compose</tag>
       </tags>
   </entry>
   <entry>
