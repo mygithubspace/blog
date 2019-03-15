@@ -48,11 +48,6 @@
       </tags>
   </entry>
   <entry>
-    <title></title>
-    <url>%2F2019%2F03%2F15%2Fdocker%2FUntitled%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
     <title><![CDATA[Redis安装]]></title>
     <url>%2F2019%2F03%2F15%2FRedis%2FRedis%E5%AE%89%E8%A3%85%2F</url>
     <content type="text"><![CDATA[编写docker-compose.yml配置文件12345678910111213version: &apos;3.1&apos;services: redis: restart: always image: redis container_name: redis command: redis-server --requirepass 123456 --appendonly yes ports: - &quot;6379:6379&quot; volumes: - data:/datavolumes: data: --requirepass:设置密码，--appendonly:开启持久化 使用命令docker-compose up -d运行]]></content>
