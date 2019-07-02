@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Kubernetes,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="概述在 Docker 中就有数据卷的概念，当容器删除时，数据也一起会被删除，想要持久化使用数据，需要把主机上的目录挂载到 Docker 中去，在 K8S 中，数据卷是通过 Pod 实现持久化的，如果 Pod 删除，数据卷也会一起删除，k8s 的数据卷是 docker 数据卷的扩展，K8S 适配各种存储系统，包括本地存储 EmptyDir，HostPath， 网络存储（NFS，GlusterFS，P">
+<meta name="keywords" content="Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s数据持久化">
+<meta property="og:url" content="http://yoursite.com/2019/06/28/k8s/K8s数据持久化/index.html">
+<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:description" content="概述在 Docker 中就有数据卷的概念，当容器删除时，数据也一起会被删除，想要持久化使用数据，需要把主机上的目录挂载到 Docker 中去，在 K8S 中，数据卷是通过 Pod 实现持久化的，如果 Pod 删除，数据卷也会一起删除，k8s 的数据卷是 docker 数据卷的扩展，K8S 适配各种存储系统，包括本地存储 EmptyDir，HostPath， 网络存储（NFS，GlusterFS，P">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lly1g4gy9og21vj30jg0asmxv.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lly1g4gyfpzrl2j30ge05st8z.jpg">
+<meta property="og:updated_time" content="2019-07-02T04:18:31.832Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K8s数据持久化">
+<meta name="twitter:description" content="概述在 Docker 中就有数据卷的概念，当容器删除时，数据也一起会被删除，想要持久化使用数据，需要把主机上的目录挂载到 Docker 中去，在 K8S 中，数据卷是通过 Pod 实现持久化的，如果 Pod 删除，数据卷也会一起删除，k8s 的数据卷是 docker 数据卷的扩展，K8S 适配各种存储系统，包括本地存储 EmptyDir，HostPath， 网络存储（NFS，GlusterFS，P">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006j3B4Lly1g4gy9og21vj30jg0asmxv.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/28/k8s/K8s数据持久化/">
+
+
+
+
+
+  <title>K8s数据持久化 | 程鹏 | 个人博客</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-131905457-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1e660ccc784192fa277187863bbd5143";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">没有爱因斯坦的智商，学习便没有事半功倍</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/K8s数据持久化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">K8s数据持久化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:27:23+08:00">
+                2019-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/28/k8s/K8s数据持久化/" class="leancloud_visitors" data-flag-title="K8s数据持久化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在 Docker 中就有数据卷的概念，当容器删除时，数据也一起会被删除，想要持久化使用数据，需要把主机上的目录挂载到 Docker 中去，在 K8S 中，数据卷是通过 Pod 实现持久化的，如果 Pod 删除，数据卷也会一起删除，k8s 的数据卷是 docker 数据卷的扩展，K8S 适配各种存储系统，包括本地存储 EmptyDir，HostPath， 网络存储（NFS，GlusterFS，PV/PVC）等。</p>
+<p>我们以部署 MySQL8 为例，采用 <strong>NFS + PV/PVC</strong> 网络存储方案实现我们的 Kubernetes 数据持久化。</p>
+<a id="more"></a>
+<p>存储管理与计算管理是两个不同的问题。Persistent Volume 子系统，对存储的供应和使用做了抽象，以 API 形式提供给管理员和用户使用。要完成这一任务，我们引入了两个新的 API 资源：<strong>Persistent Volume（持久卷）</strong> 和 <strong>Persistent Volume Claim（持久卷消费者）</strong>。</p>
+<p>Persistent Volume（PV）是集群之中的一块网络存储。跟 Node 一样，也是集群的资源。PV 跟 Volume (卷) 类似，不过会有独立于 Pod 的生命周期。这一 API 对象包含了存储的实现细节，例如 NFS、iSCSI 或者其他的云提供商的存储系统。Persistent Volume Claim (PVC) 是用户的一个请求。跟 Pod 类似，Pod 消费 Node 的资源，PVC 消费 PV 的资源。Pod 能够申请特定的资源（CPU 和内存）；Claim 能够请求特定的尺寸和访问模式（例如可以加载一个读写，以及多个只读实例）</p>
+<h2 id="什么是-NFS"><a href="#什么是-NFS" class="headerlink" title="什么是 NFS"></a>什么是 NFS</h2><p>NFS 是 Network File System 的简写，即网络文件系统，NFS 是 FreeBSD 支持的文件系统中的一种。NFS 基于 RPC (Remote Procedure Call) 远程过程调用实现，其允许一个系统在网络上与它人共享目录和文件。通过使用 NFS，用户和程序就可以像访问本地文件一样访问远端系统上的文件。NFS 是一个非常稳定的，可移植的网络文件系统。具备可扩展和高性能等特性，达到了企业级应用质量标准。由于网络速度的增加和延迟的降低，NFS 系统一直是通过网络提供文件系统服务的有竞争力的选择 。</p>
+<h3 id="NFS-原理"><a href="#NFS-原理" class="headerlink" title="NFS 原理"></a>NFS 原理</h3><p>NFS 使用 RPC (Remote Procedure Call) 的机制进行实现，RPC 使得客户端可以调用服务端的函数。同时，由于有 VFS 的存在，客户端可以像使用其它普通文件系统一样使用 NFS 文件系统。经由操作系统的内核，将 NFS 文件系统的调用请求通过 TCP/IP 发送至服务端的 NFS 服务。NFS 服务器执行相关的操作，并将操作结果返回给客户端。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006j3B4Lly1g4gy9og21vj30jg0asmxv.jpg" alt=""></p>
+<h3 id="NFS-服务主要进程"><a href="#NFS-服务主要进程" class="headerlink" title="NFS 服务主要进程"></a>NFS 服务主要进程</h3><ul>
+<li>rpc.nfsd：最主要的 NFS 进程，管理客户端是否可登录</li>
+<li>rpc.mountd：挂载和卸载 NFS 文件系统，包括权限管理</li>
+<li>rpc.lockd：非必要，管理文件锁，避免同时写出错</li>
+<li>rpc.statd：非必要，检查文件一致性，可修复文件</li>
+</ul>
+<h3 id="NFS-的关键工具"><a href="#NFS-的关键工具" class="headerlink" title="NFS 的关键工具"></a>NFS 的关键工具</h3><ul>
+<li>主要配置文件：<code>/etc/exports</code></li>
+<li>NFS 文件系统维护命令：<code>/usr/bin/exportfs</code></li>
+<li>共享资源的日志文件：<code>/var/lib/nfs/*tab</code></li>
+<li>客户端查询共享资源命令：<code>/usr/sbin/showmount</code></li>
+<li>端口配置：<code>/etc/sysconfig/nfs</code></li>
+</ul>
+<h3 id="NFS-服务端配置"><a href="#NFS-服务端配置" class="headerlink" title="NFS 服务端配置"></a>NFS 服务端配置</h3><p>在 NFS 服务器端的主要配置文件为 <code>/etc/exports</code> 时，通过此配置文件可以设置共享文件目录。每条配置记录由 NFS 共享目录、NFS 客户端地址和参数这 3 部分组成，格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[NFS 共享目录] [NFS 客户端地址 1 (参数 1, 参数 2, 参数 3……)] [客户端地址 2 (参数 1, 参数 2, 参数 3……)]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>NFS 共享目录：服务器上共享出去的文件目录</li>
+<li>NFS 客户端地址：允许其访问的 NFS 服务器的客户端地址，可以是客户端 IP 地址，也可以是一个网段 (192.168.141.0/24)</li>
+<li>访问参数：括号中逗号分隔项，主要是一些权限选项</li>
+</ul>
+<h4 id="访问权限参数"><a href="#访问权限参数" class="headerlink" title="访问权限参数"></a>访问权限参数</h4><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>ro</td>
+<td>客户端对于共享文件目录为只读权限。默认</td>
+</tr>
+<tr>
+<td>2</td>
+<td>rw</td>
+<td>客户端对于共享文件目录具有读写权限</td>
+</tr>
+</tbody>
+</table>
+<h4 id="用户映射参数"><a href="#用户映射参数" class="headerlink" title="用户映射参数"></a>用户映射参数</h4><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>root_squash</td>
+<td>使客户端使用 root 账户访冋时，服务器映射为服务器本地的匿名账号</td>
+</tr>
+<tr>
+<td>2</td>
+<td>no_root_squash</td>
+<td>客户端连接服务端时如果使用的是 root，那么也拥有对服务端分享的目录的 root 权限</td>
+</tr>
+<tr>
+<td>3</td>
+<td>all_squash</td>
+<td>将所有客户端用户请求映射到匿名用户或用户组（nfsnobody)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>no_all_squash</td>
+<td>与上相反。默认</td>
+</tr>
+<tr>
+<td>5</td>
+<td>anonuid=xxx</td>
+<td>将远程访问的所有用户都映射为匿名用户，并指定该用户为本地用户(UID=xxx)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>anongid=xxx</td>
+<td>将远程访问的所有用户组都映射为匿名用户组账户，并指定该匿名用户组账户为本地用户组账户(GUI=xxx)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="其它配置参数"><a href="#其它配置参数" class="headerlink" title="其它配置参数"></a>其它配置参数</h4><table>
+<thead>
+<tr>
+<th>序号</th>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>sync</td>
+<td>同步写操作，数据写入存储设备后返回成功信息。默认</td>
+</tr>
+<tr>
+<td>2</td>
+<td>async</td>
+<td>异步写提作，数据在未完全写入存储设备前就返回成功信息，实际还在内存，</td>
+</tr>
+<tr>
+<td>3</td>
+<td>wdelay</td>
+<td>延迟写入选项，将多个写提请求合并后写入硬盘，减少 I/O 次数， NFS 非正常关闭数据可能丢失。默认</td>
+</tr>
+<tr>
+<td>4</td>
+<td>no_wdelay</td>
+<td>与上相反，不与 async 同时生效，如果 NFS 服务器主要收到小且不相关的请求，该选项实际会降低性能</td>
+</tr>
+<tr>
+<td>5</td>
+<td>subtree</td>
+<td>若输出目录是一个子目录，则 NFS 服务器将检查其父目录的权限。默认</td>
+</tr>
+<tr>
+<td>6</td>
+<td>no_subtree</td>
+<td>即使输出目录是一个子目录， NFS 服务器也不检查其父目录的权限，这样可以提高效率</td>
+</tr>
+<tr>
+<td>7</td>
+<td>secure</td>
+<td>限制客户端只能从小于 1024 的 TCP/IP 端口连接 NFS 服务器。默认</td>
+</tr>
+<tr>
+<td>8</td>
+<td>insecure</td>
+<td>允许客户端从大于 1024 的 TCP/IP 端口连接服务器</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安装-NFS-服务端"><a href="#安装-NFS-服务端" class="headerlink" title="安装 NFS 服务端"></a>安装 NFS 服务端</h2><p>由于 NFS 是一套分布式文件系统，我们再创建一台独立的虚拟机作为我们 NFS 服务端，配置如下</p>
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+<th>系统</th>
+<th>CPU/内存</th>
+<th>磁盘</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kubernetes-volumes</td>
+<td>192.168.141.140</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核2G</td>
+<td>20G</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>创建一个目录作为共享文件目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/<span class="built_in">local</span>/kubernetes/volumes</span><br></pre></td></tr></table></figure>
+<ul>
+<li>给目录增加读写权限</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod a+rw /usr/<span class="built_in">local</span>/kubernetes/volumes</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装 NFS 服务端</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install -y nfs-kernel-server</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置 NFS 服务目录，打开文件</li>
+</ul>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/exports</span><br></pre></td></tr></table></figure>
+<p>  ，在尾部新增一行，内容如下</p>
+<ul>
+<li><code>/usr/local/kubernetes/volumes</code>：作为服务目录向客户端开放</li>
+<li>*：表示任何 IP 都可以访问</li>
+<li>rw：读写权限</li>
+<li>sync：同步权限</li>
+<li>no_subtree_check：表示如果输出目录是一个子目录，NFS 服务器不检查其父目录的权限</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/local/kubernetes/volumes *(rw,sync,no_subtree_check)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重启服务，使配置生效</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/init.d/nfs-kernel-server restart</span><br></pre></td></tr></table></figure>
+<h2 id="安装-NFS-客户端"><a href="#安装-NFS-客户端" class="headerlink" title="安装 NFS 客户端"></a>安装 NFS 客户端</h2><p>安装客户端的目的是验证是否可以上传文件到服务端，安装命令如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install -y nfs-common</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建 NFS 客户端挂载目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /usr/<span class="built_in">local</span>/kubernetes/volumes-mount</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将 NFS 服务器的 <code>/usr/local/kubernetes/volumes</code> 目录挂载到 NFS 客户端的 <code>/usr/local/kubernetes/volumes-mount</code> 目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount 192.168.141.140:/usr/<span class="built_in">local</span>/kubernetes/volumes /usr/<span class="built_in">local</span>/kubernetes/volumes-mount</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用 <code>df</code> 命令查看挂载信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">df</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下</span></span><br><span class="line">Filesystem                                    1K-blocks    Used Available Use% Mounted on</span><br><span class="line">udev                                             977556       0    977556   0% /dev</span><br><span class="line">tmpfs                                            201732    1252    200480   1% /run</span><br><span class="line">/dev/mapper/ubuntu--vg-ubuntu--lv              19475088 5490916  12971848  30% /</span><br><span class="line">tmpfs                                           1008648       0   1008648   0% /dev/shm</span><br><span class="line">tmpfs                                              5120       0      5120   0% /run/lock</span><br><span class="line">tmpfs                                           1008648       0   1008648   0% /sys/fs/cgroup</span><br><span class="line">/dev/loop0                                        90624   90624         0 100% /snap/core/6964</span><br><span class="line">/dev/loop1                                        93184   93184         0 100% /snap/core/6350</span><br><span class="line">/dev/sda2                                        999320  214252    716256  24% /boot</span><br><span class="line">tmpfs                                            201728       0    201728   0% /run/user/0</span><br><span class="line"><span class="comment"># 有此输出表示挂载成功</span></span><br><span class="line">193.192.168.141.140:/usr/<span class="built_in">local</span>/kubernetes/volumes  19475200 5490944  12972032  30% /usr/<span class="built_in">local</span>/kubernetes/volumes-mount</span><br></pre></td></tr></table></figure>
+<h2 id="验证-NFS-服务"><a href="#验证-NFS-服务" class="headerlink" title="验证 NFS 服务"></a>验证 NFS 服务</h2><ul>
+<li>测试文件上传</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip addr &gt; /usr/<span class="built_in">local</span>/kubernetes/volumes-mount/test.txt</span><br></pre></td></tr></table></figure>
+<p>查看 <code>/usr/local/kubernetes/volumes</code> 目录下是否有 <code>test.txt</code> 文件，有则表示成功</p>
+<h2 id="取消-NFS-客户端挂载"><a href="#取消-NFS-客户端挂载" class="headerlink" title="取消 NFS 客户端挂载"></a>取消 NFS 客户端挂载</h2><blockquote>
+<p><strong>注意：</strong> 不要直接在挂载目录下执行，否则会报错</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">umount /usr/<span class="built_in">local</span>/kubernetes/volumes-mount</span><br></pre></td></tr></table></figure>
+<h2 id="PV-与-PVC"><a href="#PV-与-PVC" class="headerlink" title="PV 与 PVC"></a>PV 与 PVC</h2><p>PV 是集群的资源。PVC 是对这一资源的请求，也是对资源的所有权的检验。PV 和 PVC 之间的互动遵循如下的生命周期。</p>
+<ul>
+<li><strong>供应：</strong> 集群管理员会创建一系列的 PV。这些 PV 包含了为集群用户提供的真实存储资源，它们可利用 Kubernetes API 来消费。</li>
+<li><strong>绑定：</strong> 用户创建一个包含了容量和访问模式的持久卷申请。Master 会监听 PVC 的产生，并尝试根据请求内容查找匹配的 PV，并把 PV 和 PVC 进行绑定。用户能够获取满足需要的资源，并且在使用过程中可能超出请求数量。如果找不到合适的卷，这一申请就会持续处于非绑定状态，一直到出现合适的 PV。例如一个集群准备了很多的 50G 大小的持久卷，（虽然总量足够）也是无法响应 100G 的申请的，除非把 100G 的 PV 加入集群。</li>
+<li><strong>使用：</strong> Pod 把申请作为卷来使用。集群会通过 PVC 查找绑定的 PV，并 Mount 给 Pod。对于支持多种访问方式的卷，用户在使用 PVC 作为卷的时候，可以指定需要的访问方式。一旦用户拥有了一个已经绑定的 PVC，被绑定的 PV 就归该用户所有了。用户的 Pods 能够通过在 Pod 的卷中包含的 PVC 来访问他们占有的 PV。</li>
+<li><strong>释放：</strong> 当用户完成对卷的使用时，就可以利用 API 删除 PVC 对象了，而且他还可以重新申请。删除 PVC 后，对应的卷被视为 “被释放”，但是这时还不能给其他的 PVC 使用。之前的 PVC 数据还保存在卷中，要根据策略来进行后续处理。</li>
+<li><strong>回收：</strong> PV 的回收策略向集群阐述了在 PVC 释放卷的时候，应如何进行后续工作。目前可以采用三种策略：保留，回收或者删除。保留策略允许重新申请这一资源。在持久卷能够支持的情况下，删除策略会同时删除持久卷以及 AWS EBS/GCE PD 或者 Cinder 卷中的存储内容。如果插件能够支持，回收策略会执行基础的擦除操作（<code>rm -rf /thevolume/*</code>），这一卷就能被重新申请了。</li>
+</ul>
+<h2 id="定义-PV"><a href="#定义-PV" class="headerlink" title="定义 PV"></a>定义 PV</h2><h3 id="持久卷插件"><a href="#持久卷插件" class="headerlink" title="持久卷插件"></a>持久卷插件</h3><p>持久卷是以插件方式实现的，目前支持的插件如下：</p>
+<ul>
+<li>GCEPersistentDisk</li>
+<li>AWSElasticBlockStore</li>
+<li><strong>NFS（我们采用的是该方案）</strong></li>
+<li>iSCSI</li>
+<li>RBD (Ceph Block Device)</li>
+<li>Glusterfs</li>
+<li>HostPath (单节点测试使用)</li>
+<li>本地持久卷</li>
+</ul>
+<h3 id="YAML-配置"><a href="#YAML-配置" class="headerlink" title="YAML 配置"></a>YAML 配置</h3><p>创建一个名为 <code>nfs-pv-mysql.yml</code> 的配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolume</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">nfs-pv-mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="comment"># 设置容量</span></span><br><span class="line"><span class="attr">  capacity:</span></span><br><span class="line"><span class="attr">    storage:</span> <span class="number">5</span><span class="string">Gi</span></span><br><span class="line">  <span class="comment"># 访问模式</span></span><br><span class="line"><span class="attr">  accessModes:</span></span><br><span class="line">    <span class="comment"># 该卷能够以读写模式被多个节点同时加载</span></span><br><span class="line"><span class="bullet">    -</span> <span class="string">ReadWriteMany</span></span><br><span class="line">  <span class="comment"># 回收策略，这里是基础擦除 `rm-rf/thevolume/*`</span></span><br><span class="line"><span class="attr">  persistentVolumeReclaimPolicy:</span> <span class="string">Recycle</span></span><br><span class="line"><span class="attr">  nfs:</span></span><br><span class="line">    <span class="comment"># NFS 服务端配置的路径</span></span><br><span class="line"><span class="attr">    path:</span> <span class="string">"/usr/local/kubernetes/volumes"</span></span><br><span class="line">    <span class="comment"># NFS 服务端地址</span></span><br><span class="line"><span class="attr">    server:</span> <span class="number">192.168</span><span class="number">.141</span><span class="number">.140</span></span><br><span class="line"><span class="attr">    readOnly:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 部署</span></span><br><span class="line">kubectl create -f nfs-pv-mysql.yml</span><br><span class="line"><span class="comment"># 删除</span></span><br><span class="line">kubectl delete -f nfs-pv-mysql.yml</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">kubectl get pv</span><br><span class="line">NAME           CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE</span><br><span class="line">nfs-pv-mysql   5Gi        RWX            Recycle          Available                                   29m</span><br></pre></td></tr></table></figure>
+<h3 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a>配置说明</h3><h4 id="Capacity（容量）"><a href="#Capacity（容量）" class="headerlink" title="Capacity（容量）"></a>Capacity（容量）</h4><p>一般来说，PV 会指定存储容量。这里需要使用 PV 的 capcity 属性。目前存储大小是唯一一个能够被申请的指标，今后会加入更多属性，例如 IOPS，吞吐能力等</p>
+<h4 id="AccessModes（访问模式）"><a href="#AccessModes（访问模式）" class="headerlink" title="AccessModes（访问模式）"></a>AccessModes（访问模式）</h4><p>只要资源提供者支持，持久卷能够被用任何方式加载到主机上。每种存储都会有不同的能力，每个 PV 的访问模式也会被设置成为该卷所支持的特定模式。例如 NFS 能够支持多个读写客户端，但是某个 NFS PV 可能会在服务器上以只读方式使用。每个 PV 都有自己的一系列的访问模式，这些访问模式取决于 PV 的能力。访问模式的可选范围如下：</p>
+<ul>
+<li>ReadWriteOnce：该卷能够以读写模式被加载到一个节点上</li>
+<li>ReadOnlyMany：该卷能够以只读模式加载到多个节点上</li>
+<li>ReadWriteMany：该卷能够以读写模式被多个节点同时加载</li>
+</ul>
+<p>在 CLI 下，访问模式缩写为：</p>
+<ul>
+<li>RWO：ReadWriteOnce</li>
+<li>ROX：ReadOnlyMany</li>
+<li>RWX：ReadWriteMany</li>
+</ul>
+<p>另外，一个卷不论支持多少种访问模式，同时只能以一种访问模式加载。例如一个 GCE Persistent Disk 既能支持 ReadWriteOnce，也能支持 ReadOnlyMany</p>
+<h4 id="RecyclingPolicy（回收策略）"><a href="#RecyclingPolicy（回收策略）" class="headerlink" title="RecyclingPolicy（回收策略）"></a>RecyclingPolicy（回收策略）</h4><p>当前的回收策略可选值包括：</p>
+<ul>
+<li>Retain：人工重新申请</li>
+<li>Recycle：基础擦除（<code>rm-rf/thevolume/*</code>）</li>
+<li>Delete：相关的存储资产例如 AWS EBS，GCE PD 或者 OpenStack Cinder 卷一并删除</li>
+</ul>
+<p>目前，只有 NFS 和 HostPath 支持 Recycle 策略，AWS EBS、GCE PD 以及 Cinder 卷支持 Delete 策略</p>
+<h4 id="阶段（Phase）"><a href="#阶段（Phase）" class="headerlink" title="阶段（Phase）"></a>阶段（Phase）</h4><p>一个卷会处于如下阶段之一：</p>
+<ul>
+<li>Available：可用资源，尚未被绑定到 PVC 上</li>
+<li>Bound：该卷已经被绑定</li>
+<li>Released：PVC 已经被删除，但该资源尚未被集群回收</li>
+<li>Failed：该卷的自动回收过程失败</li>
+</ul>
+<h2 id="定义-PVC"><a href="#定义-PVC" class="headerlink" title="定义 PVC"></a>定义 PVC</h2><p>创建一个名为 <code>nfs-pvc-mysql-test.yml</code> 的配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolumeClaim</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">nfs-pvc-mysql-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  accessModes:</span></span><br><span class="line">  <span class="comment"># 需要使用和 PV 一致的访问模式</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">ReadWriteMany</span></span><br><span class="line">  <span class="comment"># 按需分配资源</span></span><br><span class="line"><span class="attr">  resources:</span></span><br><span class="line"><span class="attr">     requests:</span></span><br><span class="line"><span class="attr">       storage:</span> <span class="number">1</span><span class="string">Gi</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 部署</span></span><br><span class="line">kubectl create -f nfs-pvc-mysql-test.yml</span><br><span class="line"><span class="comment"># 删除</span></span><br><span class="line">kubectl delete -f nfs-pvc-mysql-test.yml</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">kubectl get pvc</span><br></pre></td></tr></table></figure>
+<h2 id="部署-MySQL8"><a href="#部署-MySQL8" class="headerlink" title="部署 MySQL8"></a>部署 MySQL8</h2><blockquote>
+<p><strong>注意：</strong> 要确保每台 Node 都安装了 NFS 客户端，<code>apt-get install -y nfs-common</code></p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">extensions/v1beta1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">mysql-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">1</span></span><br><span class="line"><span class="attr">  template:</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        name:</span> <span class="string">mysql-test</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">mysql-test</span></span><br><span class="line"><span class="attr">          image:</span> <span class="string">mysql</span></span><br><span class="line">          <span class="comment"># 只有镜像不存在时，才会进行镜像拉取</span></span><br><span class="line"><span class="attr">          imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line"><span class="attr">          ports:</span></span><br><span class="line"><span class="attr">            - containerPort:</span> <span class="number">3306</span></span><br><span class="line">          <span class="comment"># 同 Docker 配置中的 environment</span></span><br><span class="line"><span class="attr">          env:</span></span><br><span class="line"><span class="attr">            - name:</span> <span class="string">MYSQL_ROOT_PASSWORD</span></span><br><span class="line"><span class="attr">              value:</span> <span class="string">"123456"</span></span><br><span class="line">          <span class="comment"># 容器中的挂载目录</span></span><br><span class="line"><span class="attr">          volumeMounts:</span></span><br><span class="line"><span class="attr">            - name:</span> <span class="string">nfs-vol-test</span></span><br><span class="line"><span class="attr">              mountPath:</span> <span class="string">/var/lib/mysql</span></span><br><span class="line"><span class="attr">      volumes:</span></span><br><span class="line">        <span class="comment"># 挂载到数据卷</span></span><br><span class="line"><span class="attr">        - name:</span> <span class="string">nfs-vol-test</span></span><br><span class="line"><span class="attr">          persistentVolumeClaim:</span></span><br><span class="line"><span class="attr">            claimName:</span> <span class="string">nfs-pvc-mysql-test</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">mysql-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">    - port:</span> <span class="number">3306</span></span><br><span class="line"><span class="attr">      targetPort:</span> <span class="number">3306</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">LoadBalancer</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">db-test</span></span><br></pre></td></tr></table></figure>
+<h3 id="解决权限问题"><a href="#解决权限问题" class="headerlink" title="解决权限问题"></a>解决权限问题</h3><p>当你使用 <code>kubectl create -f &lt;YAML&gt;</code> 部署后，你会发现 Pod 状态为 Error，容器无法正常启动的情况，我们可以使用 <code>kubectl logs &lt;Pod Name&gt;</code> 看到一条日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chown: changing ownership of &apos;/var/lib/mysql/&apos;: Operation not permitted</span><br></pre></td></tr></table></figure>
+<p>解决方案是在 NFS 服务端配置中增加一个参数 <code>no_root_squash</code>，即将配置修改为：<code>/usr/local/kubernetes/volumes *(rw,sync,no_subtree_check,no_root_squash)</code></p>
+<h3 id="测试运行"><a href="#测试运行" class="headerlink" title="测试运行"></a>测试运行</h3><p>部署成功后可以使用 <code>kubectl get service</code> 查看我们 MySQL 的运行端口，再使用连接工具连接会报如下错误</p>
+<p><img src="http://ww1.sinaimg.cn/large/006j3B4Lly1g4gyfpzrl2j30ge05st8z.jpg" alt=""></p>
+<p>意思为无法使用密码的方式登录，在 Docker 部署时我们可以在 YAML 中配置相关参数解决这个问题；下一节我们讲解在 Kubernetes 中采用 <strong>ConfigMap</strong> 的方式配置 MySQL</p>
+<h2 id="附：ImagePullPolicy"><a href="#附：ImagePullPolicy" class="headerlink" title="附：ImagePullPolicy"></a>附：ImagePullPolicy</h2><p>支持三种 ImagePullPolicy</p>
+<ul>
+<li><strong>Always：</strong> 不管镜像是否存在都会进行一次拉取</li>
+<li><strong>Never：</strong> 不管镜像是否存在都不会进行拉取</li>
+<li><strong>IfNotPresent：</strong> 只有镜像不存在时，才会进行镜像拉取</li>
+</ul>
+<p>注意</p>
+<ul>
+<li>默认为 <code>IfNotPresent</code>，但 <code>:latest</code> 标签的镜像默认为 <code>Always</code></li>
+<li>拉取镜像时 Docker 会进行校验，如果镜像中的 MD5 码没有变，则不会拉取镜像数据</li>
+<li>生产环境中应该尽量避免使用 <code>:latest</code> 标签，而开发环境中可以借助 <code>:latest</code> 标签自动拉取最新的镜像</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kubernetes/" rel="tag"># Kubernetes</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/28/k8s/Ingress 统一访问入口/" rel="next" title="Ingress 统一访问入口">
+                <i class="fa fa-chevron-left"></i> Ingress 统一访问入口
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/28/k8s/Kubernetes ConfigMap/" rel="prev" title="Kubernetes ConfigMap">
+                Kubernetes ConfigMap <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c335a79d370ec5c" async="async"></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">程鹏</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mygithubspace" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/" title="Hexo" target="_blank">Hexo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bootcdn.cn/" title="Boot CDN" target="_blank">Boot CDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="科大谷歌字体加速" title="科大谷歌字体加速" target="_blank">科大谷歌字体加速</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.toyaml.com/index.html" title="YAML <-> Properties" target="_blank">YAML <-> Properties</-></a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cli.im/" title="二维码生成器" target="_blank">二维码生成器</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.toolfk.com/" title="程序员的在线工具箱" target="_blank">程序员的在线工具箱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mailnesia.com/" title="10分钟匿名邮箱注册" target="_blank">10分钟匿名邮箱注册</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是-NFS"><span class="nav-number">2.</span> <span class="nav-text">什么是 NFS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NFS-原理"><span class="nav-number">2.1.</span> <span class="nav-text">NFS 原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NFS-服务主要进程"><span class="nav-number">2.2.</span> <span class="nav-text">NFS 服务主要进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NFS-的关键工具"><span class="nav-number">2.3.</span> <span class="nav-text">NFS 的关键工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NFS-服务端配置"><span class="nav-number">2.4.</span> <span class="nav-text">NFS 服务端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问权限参数"><span class="nav-number">2.4.1.</span> <span class="nav-text">访问权限参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户映射参数"><span class="nav-number">2.4.2.</span> <span class="nav-text">用户映射参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它配置参数"><span class="nav-number">2.4.3.</span> <span class="nav-text">其它配置参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-NFS-服务端"><span class="nav-number">3.</span> <span class="nav-text">安装 NFS 服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-NFS-客户端"><span class="nav-number">4.</span> <span class="nav-text">安装 NFS 客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#验证-NFS-服务"><span class="nav-number">5.</span> <span class="nav-text">验证 NFS 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取消-NFS-客户端挂载"><span class="nav-number">6.</span> <span class="nav-text">取消 NFS 客户端挂载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PV-与-PVC"><span class="nav-number">7.</span> <span class="nav-text">PV 与 PVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义-PV"><span class="nav-number">8.</span> <span class="nav-text">定义 PV</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#持久卷插件"><span class="nav-number">8.1.</span> <span class="nav-text">持久卷插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YAML-配置"><span class="nav-number">8.2.</span> <span class="nav-text">YAML 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置说明"><span class="nav-number">8.3.</span> <span class="nav-text">配置说明</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Capacity（容量）"><span class="nav-number">8.3.1.</span> <span class="nav-text">Capacity（容量）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AccessModes（访问模式）"><span class="nav-number">8.3.2.</span> <span class="nav-text">AccessModes（访问模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RecyclingPolicy（回收策略）"><span class="nav-number">8.3.3.</span> <span class="nav-text">RecyclingPolicy（回收策略）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段（Phase）"><span class="nav-number">8.3.4.</span> <span class="nav-text">阶段（Phase）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义-PVC"><span class="nav-number">9.</span> <span class="nav-text">定义 PVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署-MySQL8"><span class="nav-number">10.</span> <span class="nav-text">部署 MySQL8</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决权限问题"><span class="nav-number">10.1.</span> <span class="nav-text">解决权限问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试运行"><span class="nav-number">10.2.</span> <span class="nav-text">测试运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#附：ImagePullPolicy"><span class="nav-number">11.</span> <span class="nav-text">附：ImagePullPolicy</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程鹏</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site total words </span>
+    
+    <span title="Site words total count">117.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">
+    Dev By <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>
+  </div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">
+    Theme by <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+  </div>
+
+
+
+<span>|</span>
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/07/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Run for "+dnum+" Days ";
+        document.getElementById("times").innerHTML = hnum + " Hours " + mnum + " m " + snum + " s";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Qwoaf74LKjPDJCdu3D1Uiq30-gzGzoHsz", "AhRCrDTKckU62aUKEvKtUWhk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

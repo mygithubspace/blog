@@ -303,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/docker/MySQL安装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Kubernetes Dashboard/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -322,7 +322,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/15/docker/MySQL安装/" itemprop="url">MySql安装</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/Kubernetes Dashboard/" itemprop="url">Kubernetes Dashboard</a></h1>
         
 
         <div class="post-meta">
@@ -334,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-15T17:06:06+08:00">
-                2019-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:36:26+08:00">
+                2019-06-28
               </time>
             
 
@@ -357,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">MySQL</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -374,7 +374,7 @@
 
           
           
-             <span id="/2019/03/15/docker/MySQL安装/" class="leancloud_visitors" data-flag-title="MySql安装">
+             <span id="/2019/06/28/k8s/Kubernetes Dashboard/" class="leancloud_visitors" data-flag-title="Kubernetes Dashboard">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  114
+                  487
                 </span>
               
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -437,10 +437,13 @@
 
       
         
-          <h2 id="1-编写docker-compose-yml文件"><a href="#1-编写docker-compose-yml文件" class="headerlink" title="1. 编写docker-compose.yml文件"></a>1. 编写<code>docker-compose.yml</code>文件</h2><h3 id="Mysql-5"><a href="#Mysql-5" class="headerlink" title="Mysql 5"></a><strong>Mysql 5</strong></h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line"><span class="attr">  mysql:</span></span><br><span class="line"><span class="attr">    restart:</span> <span class="string">always</span></span><br><span class="line"><span class="attr">    image:</span> <span class="attr">mysql:5.7.23</span></span><br><span class="line"><span class="attr">    container_name:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">    ports:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="number">3306</span><span class="string">:3306</span></span><br><span class="line"><span class="attr">    environment:</span></span><br><span class="line"><span class="attr">      TZ:</span> <span class="string">Asia/Shanghai</span></span><br><span class="line"><span class="attr">      MYSQL_ROOT_PASSWORD:</span> <span class="number">123456</span></span><br><span class="line"><span class="attr">    command:</span></span><br><span class="line"><span class="bullet">      -</span><span class="bullet">-character-set-server=utf8</span></span><br><span class="line"><span class="bullet">      -</span><span class="bullet">-collation-server=utf8_general_ci</span></span><br><span class="line"><span class="bullet">      -</span><span class="bullet">-explicit_defaults_for_timestamp=true</span></span><br><span class="line"><span class="bullet">      -</span><span class="bullet">-lower_case_table_names=1</span></span><br><span class="line"><span class="bullet">      -</span><span class="bullet">-max_allowed_packet=128M</span></span><br><span class="line"><span class="bullet">      -</span><span class="bullet">-sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO"</span></span><br><span class="line"><span class="attr">    volumes:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">./data:/var/lib/mysql</span></span><br></pre></td></tr></table></figure>
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Kubernetes Dashboard 是 Kubernetes 集群的 Web UI，用于管理集群。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>GitHub 地址：<a href="https://github.com/kubernetes/dashboard" target="_blank" rel="noopener">Kubernetes Dashboard</a></p>
+<p>下载配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/03/15/docker/MySQL安装/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/Kubernetes Dashboard/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -491,7 +494,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/spring-boot/引入thymeleaf并支持非严格的HTML/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Kubernetes ConfigMap/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -510,7 +513,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/15/spring-boot/引入thymeleaf并支持非严格的HTML/" itemprop="url">引入thymeleaf并支持非严格的HTML</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/Kubernetes ConfigMap/" itemprop="url">Kubernetes ConfigMap</a></h1>
         
 
         <div class="post-meta">
@@ -522,8 +525,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-15T17:02:45+08:00">
-                2019-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:35:04+08:00">
+                2019-06-28
               </time>
             
 
@@ -545,8 +548,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/thymeleaf/" itemprop="url" rel="index">
-                    <span itemprop="name">thymeleaf</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -562,7 +565,7 @@
 
           
           
-             <span id="/2019/03/15/spring-boot/引入thymeleaf并支持非严格的HTML/" class="leancloud_visitors" data-flag-title="引入thymeleaf并支持非严格的HTML">
+             <span id="/2019/06/28/k8s/Kubernetes ConfigMap/" class="leancloud_visitors" data-flag-title="Kubernetes ConfigMap">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -587,7 +590,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  211
+                  340
                 </span>
               
 
@@ -625,15 +628,11 @@
 
       
         
-          <h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>主要增加 spring-boot-starter-thymeleaf 和 nekohtml 这两个依赖</p>
-<ul>
-<li>spring-boot-starter-thymeleaf：Thymeleaf 自动配置</li>
-<li>nekohtml：允许使用非严格的 HTML 语法</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;net.sourceforge.nekohtml&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;nekohtml&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.9.22&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>ConfigMap 是用来存储配置文件的 Kubernetes 资源对象，所有的配置内容都存储在 etcd 中。它可以被用来保存单个属性，也可以用来保存整个配置文件或者 JSON 二进制对象。ConfigMap API 资源提供了将配置数据注入容器的方式，同时保证该机制对容器来说是透明的。配置应该从 Image 内容中解耦，以此来保持容器化应用程序的可移植性。</p>
+<h2 id="使用-ConfigMap-配置-MySQL"><a href="#使用-ConfigMap-配置-MySQL" class="headerlink" title="使用 ConfigMap 配置 MySQL"></a>使用 ConfigMap 配置 MySQL</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/03/15/spring-boot/引入thymeleaf并支持非严格的HTML/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/Kubernetes ConfigMap/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -684,7 +683,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/15/spring-boot/集成MyBatis的Maven插件生成代码/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/K8s数据持久化/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -703,7 +702,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/03/15/spring-boot/集成MyBatis的Maven插件生成代码/" itemprop="url">集成MyBatis的Maven插件生成代码</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/K8s数据持久化/" itemprop="url">K8s数据持久化</a></h1>
         
 
         <div class="post-meta">
@@ -715,8 +714,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-15T16:59:38+08:00">
-                2019-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:27:23+08:00">
+                2019-06-28
               </time>
             
 
@@ -738,8 +737,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mybatis/" itemprop="url" rel="index">
-                    <span itemprop="name">Mybatis</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -755,7 +754,7 @@
 
           
           
-             <span id="/2019/03/15/spring-boot/集成MyBatis的Maven插件生成代码/" class="leancloud_visitors" data-flag-title="集成MyBatis的Maven插件生成代码">
+             <span id="/2019/06/28/k8s/K8s数据持久化/" class="leancloud_visitors" data-flag-title="K8s数据持久化">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -796,7 +795,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  16
+                  15
                 </span>
               
             </div>
@@ -818,11 +817,11 @@
 
       
         
-          <p>我们无需手动编写 实体类、DAO、XML 配置文件，只需要使用 MyBatis 提供的一个 Maven 插件就可以自动生成所需的各种文件便能够满足基本的业务需求，如果业务比较复杂只需要修改相关文件即可。</p>
-<h2 id="配置插件"><a href="#配置插件" class="headerlink" title="配置插件"></a>配置插件</h2><p>在 <code>pom.xml</code> 文件中增加 <code>mybatis-generator-maven-plugin</code> 插件</p>
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在 Docker 中就有数据卷的概念，当容器删除时，数据也一起会被删除，想要持久化使用数据，需要把主机上的目录挂载到 Docker 中去，在 K8S 中，数据卷是通过 Pod 实现持久化的，如果 Pod 删除，数据卷也会一起删除，k8s 的数据卷是 docker 数据卷的扩展，K8S 适配各种存储系统，包括本地存储 EmptyDir，HostPath， 网络存储（NFS，GlusterFS，PV/PVC）等。</p>
+<p>我们以部署 MySQL8 为例，采用 <strong>NFS + PV/PVC</strong> 网络存储方案实现我们的 Kubernetes 数据持久化。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/03/15/spring-boot/集成MyBatis的Maven插件生成代码/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/K8s数据持久化/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -873,7 +872,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/spring-cloud-alibaba/Spring Cloud Alibaba 合集/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Ingress 统一访问入口/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -892,7 +891,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/19/spring-cloud-alibaba/Spring Cloud Alibaba 合集/" itemprop="url">Spring Cloud Alibaba 合集</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/Ingress 统一访问入口/" itemprop="url">Ingress 统一访问入口</a></h1>
         
 
         <div class="post-meta">
@@ -904,8 +903,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T18:51:03+08:00">
-                2019-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:23:20+08:00">
+                2019-06-28
               </time>
             
 
@@ -927,8 +926,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-Cloud-Alibaba/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring Cloud Alibaba</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -944,7 +943,7 @@
 
           
           
-             <span id="/2019/02/19/spring-cloud-alibaba/Spring Cloud Alibaba 合集/" class="leancloud_visitors" data-flag-title="Spring Cloud Alibaba 合集">
+             <span id="/2019/06/28/k8s/Ingress 统一访问入口/" class="leancloud_visitors" data-flag-title="Ingress 统一访问入口">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -969,7 +968,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  16.9k
+                  1.7k
                 </span>
               
 
@@ -985,7 +984,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  76
+                  7
                 </span>
               
             </div>
@@ -1007,12 +1006,16 @@
 
       
         
-          <h1 id="Spring-Cloud-Alibaba"><a href="#Spring-Cloud-Alibaba" class="headerlink" title="Spring Cloud Alibaba"></a>Spring Cloud Alibaba</h1><p>Spring Cloud Alibaba 致力于提供微服务开发的一站式解决方案。此项目包含开发分布式应用微服务的必需组件，方便开发者通过 Spring Cloud 编程模型轻松使用这些组件来开发分布式应用服务。</p>
-<p>依托 Spring Cloud Alibaba，您只需要添加一些注解和少量配置，就可以将 Spring Cloud 应用接入阿里微服务解决方案，通过阿里中间件来迅速搭建分布式应用系统。</p>
-<p>参考文档 请查看 <a href="https://github.com/spring-cloud-incubator/spring-cloud-alibaba/wiki" target="_blank" rel="noopener">WIKI</a> 。</p>
+          <h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><ul>
+<li><strong>节点：</strong> Kubernetes 集群中的服务器</li>
+<li><strong>集群：</strong> Kubernetes 管理的一组服务器集合</li>
+<li><strong>边界路由器：</strong> 为局域网和 Internet 路由数据包的路由器，执行防火墙保护局域网络</li>
+<li><strong>集群网络：</strong> 遵循 Kubernetes 网络模型实现集群内的通信的具体实现，比如 Flannel 和 Calico</li>
+<li><strong>服务：</strong> Kubernetes 的服务 (Service) 是使用标签选择器标识的一组 Pod Service (Deployment)。 <strong>除非另有说明，否则服务的虚拟 IP 仅可在集群内部访问</strong></li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/19/spring-cloud-alibaba/Spring Cloud Alibaba 合集/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/Ingress 统一访问入口/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1063,7 +1066,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/19/Elasticsearch/Docker-Compose安装ElasticSearch单机版/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/通过资源配置运行容器/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1082,7 +1085,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/19/Elasticsearch/Docker-Compose安装ElasticSearch单机版/" itemprop="url">Docker-Compose安装ElasticSearch单机版</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/通过资源配置运行容器/" itemprop="url">通过资源配置运行容器</a></h1>
         
 
         <div class="post-meta">
@@ -1094,8 +1097,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T15:55:39+08:00">
-                2019-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:20:27+08:00">
+                2019-06-28
               </time>
             
 
@@ -1117,19 +1120,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker-Compose/" itemprop="url" rel="index">
-                    <span itemprop="name">Docker Compose</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Docker-Compose/ElasticSearch/" itemprop="url" rel="index">
-                    <span itemprop="name">ElasticSearch</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -1145,7 +1137,7 @@
 
           
           
-             <span id="/2019/02/19/Elasticsearch/Docker-Compose安装ElasticSearch单机版/" class="leancloud_visitors" data-flag-title="Docker-Compose安装ElasticSearch单机版">
+             <span id="/2019/06/28/k8s/通过资源配置运行容器/" class="leancloud_visitors" data-flag-title="通过资源配置运行容器">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1170,7 +1162,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  255
+                  881
                 </span>
               
 
@@ -1186,7 +1178,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -1208,22 +1200,12 @@
 
       
         
-          <ol>
-<li>系统调优</li>
-</ol>
-<ul>
-<li>修改/etc/security/limits.conf ，追加内容</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br></pre></td></tr></table></figure>
-<p>nofile是单个进程允许打开的最大文件个数 soft nofile 是软限制 hard nofile是硬限制</p>
-<ul>
-<li>修改/etc/sysctl.conf，追加内容</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.max_map_count=655360</span><br></pre></td></tr></table></figure>
-<p>限制一个进程可以拥有的VMA(虚拟内存区域)的数量</p>
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>我们知道通过 <code>run</code> 命令启动容器非常麻烦，Docker 提供了 Compose 为我们解决了这个问题。那 Kubernetes 是如何解决这个问题的呢？其实很简单，使用 <code>kubectl create</code> 命令就可以做到和 Compose 一样的效果了，该命令可以通过配置文件快速创建一个集群资源对象。</p>
+<h2 id="创建-YAML-配置文件"><a href="#创建-YAML-配置文件" class="headerlink" title="创建 YAML 配置文件"></a>创建 YAML 配置文件</h2><p>以部署 Nginx 为例</p>
+<h3 id="部署-Deployment"><a href="#部署-Deployment" class="headerlink" title="部署 Deployment"></a>部署 Deployment</h3><p>创建一个名为 <code>nginx-deployment.yml</code> 的配置文件</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/19/Elasticsearch/Docker-Compose安装ElasticSearch单机版/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/通过资源配置运行容器/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1274,7 +1256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/spring-boot/SpringBoot 整合 Druid/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/解决 Node 无法加入的问题/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1293,7 +1275,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/13/spring-boot/SpringBoot 整合 Druid/" itemprop="url">SpringBoot整合Druid并开启监控</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/解决 Node 无法加入的问题/" itemprop="url">解决 Node 无法加入的问题</a></h1>
         
 
         <div class="post-meta">
@@ -1305,8 +1287,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T12:15:49+08:00">
-                2019-02-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:15:35+08:00">
+                2019-06-28
               </time>
             
 
@@ -1328,19 +1310,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/SpringBoot/Druid/" itemprop="url" rel="index">
-                    <span itemprop="name">Druid</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -1356,7 +1327,7 @@
 
           
           
-             <span id="/2019/02/13/spring-boot/SpringBoot 整合 Druid/" class="leancloud_visitors" data-flag-title="SpringBoot整合Druid并开启监控">
+             <span id="/2019/06/28/k8s/解决 Node 无法加入的问题/" class="leancloud_visitors" data-flag-title="解决 Node 无法加入的问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1381,7 +1352,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  417
+                  3.3k
                 </span>
               
 
@@ -1397,7 +1368,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  18
                 </span>
               
             </div>
@@ -1419,13 +1390,10 @@
 
       
         
-          <h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在<code>pom.xml</code>文件中引入<code>druid-spring-boot-starter</code> 依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>引入数据库连接依赖</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>当我们使用 <code>kubeadm join</code> 命令将 Node 节点加入集群时，你会发现所有 <code>kubectl</code> 命令均不可用（呈现阻塞状态，并不会返回响应结果），我们可以在 Node 节点中通过 <code>kubeadm reset</code> 命令将 Node 节点下线，此时回到 Master 节点再使用 <code>watch kubectl get pods --all-namespaces</code> 可以看到下图中报错了，<code>coredns-xxx-xxx</code> 状态为 <code>CrashLoopBackOff</code></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/13/spring-boot/SpringBoot 整合 Druid/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/解决 Node 无法加入的问题/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1476,7 +1444,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/devNote/Intellij IDEA 常用快捷键/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/K8s高可用集群/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1495,7 +1463,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/13/devNote/Intellij IDEA 常用快捷键/" itemprop="url">Intellij IDEA 常用快捷键</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/K8s高可用集群/" itemprop="url">K8s高可用集群</a></h1>
         
 
         <div class="post-meta">
@@ -1507,8 +1475,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T12:15:49+08:00">
-                2019-02-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:00:19+08:00">
+                2019-06-28
               </time>
             
 
@@ -1530,8 +1498,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/IDEA/" itemprop="url" rel="index">
-                    <span itemprop="name">IDEA</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -1547,7 +1515,7 @@
 
           
           
-             <span id="/2019/02/13/devNote/Intellij IDEA 常用快捷键/" class="leancloud_visitors" data-flag-title="Intellij IDEA 常用快捷键">
+             <span id="/2019/06/28/k8s/K8s高可用集群/" class="leancloud_visitors" data-flag-title="K8s高可用集群">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1572,7 +1540,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  189
+                  3k
                 </span>
               
 
@@ -1588,7 +1556,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  14
                 </span>
               
             </div>
@@ -1610,39 +1578,88 @@
 
       
         
-          <h1 id="Intellij-IDEA-常用快捷键"><a href="#Intellij-IDEA-常用快捷键" class="headerlink" title="Intellij IDEA 常用快捷键"></a>Intellij IDEA 常用快捷键</h1><ul>
-<li><p>智能提示</p>
-<ul>
-<li>设置为Alt + /</li>
-</ul>
-</li>
-<li><p>代码模板生成</p>
-<ul>
-<li>psvm</li>
-<li>sout</li>
-<li>ifn</li>
-</ul>
-</li>
-<li><p>生成getting、setting方法等</p>
-<ul>
-<li>alt + Insert</li>
-</ul>
-</li>
-<li><p>编辑快捷键</p>
-<ul>
-<li><p>删除行：ctrl + y</p>
-</li>
-<li><p>复制行：ctrl + d</p>
+          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在入门课程中我们部署的 Kubernetes 是 <strong>集群模式</strong>，但在实际生产中我们需要部署 <strong>高可用集群</strong> ，本章内容旨在指导大家如何部署 Kubernetes 高可用集群</p>
+<h2 id="统一环境配置"><a href="#统一环境配置" class="headerlink" title="统一环境配置"></a>统一环境配置</h2><h3 id="节点配置"><a href="#节点配置" class="headerlink" title="节点配置"></a>节点配置</h3><table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>IP</th>
+<th>角色</th>
+<th>系统</th>
+<th>CPU/内存</th>
+<th>磁盘</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kubernetes-master-01</td>
+<td>192.168.141.150</td>
+<td>Master</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核2G</td>
+<td>20G</td>
+</tr>
+<tr>
+<td>kubernetes-master-02</td>
+<td>192.168.141.151</td>
+<td>Master</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核2G</td>
+<td>20G</td>
+</tr>
+<tr>
+<td>kubernetes-master-03</td>
+<td>192.168.141.152</td>
+<td>Master</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核2G</td>
+<td>20G</td>
+</tr>
+<tr>
+<td>kubernetes-node-01</td>
+<td>192.168.141.160</td>
+<td>Node</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核4G</td>
+<td>20G</td>
+</tr>
+<tr>
+<td>kubernetes-node-02</td>
+<td>192.168.141.161</td>
+<td>Node</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核4G</td>
+<td>20G</td>
+</tr>
+<tr>
+<td>kubernetes-node-03</td>
+<td>192.168.141.162</td>
+<td>Node</td>
+<td>Ubuntu Server 18.04</td>
+<td>2核4G</td>
+<td>20G</td>
+</tr>
+<tr>
+<td>Kubernetes VIP</td>
+<td>192.168.141.200</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="对操作系统的配置"><a href="#对操作系统的配置" class="headerlink" title="对操作系统的配置"></a>对操作系统的配置</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/13/devNote/Intellij IDEA 常用快捷键/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/K8s高可用集群/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
-    </li></ul></li></ul></div>
+    </div>
     
     
     
@@ -1686,7 +1703,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/devNote/使用maven-tomcat插件实现tomcat热部署/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/使用K8s创建容器/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1705,7 +1722,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/13/devNote/使用maven-tomcat插件实现tomcat热部署/" itemprop="url">使用maven-tomcat插件实现tomcat热部署</a></h1>
+                <a class="post-title-link" href="/2019/06/28/k8s/使用K8s创建容器/" itemprop="url">使用K8s创建容器</a></h1>
         
 
         <div class="post-meta">
@@ -1717,8 +1734,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T12:15:49+08:00">
-                2019-02-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T15:55:50+08:00">
+                2019-06-28
               </time>
             
 
@@ -1740,8 +1757,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/maven-tomcat/" itemprop="url" rel="index">
-                    <span itemprop="name">maven-tomcat</span>
+                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">Kubernetes</span>
                   </a>
                 </span>
 
@@ -1757,7 +1774,7 @@
 
           
           
-             <span id="/2019/02/13/devNote/使用maven-tomcat插件实现tomcat热部署/" class="leancloud_visitors" data-flag-title="使用maven-tomcat插件实现tomcat热部署">
+             <span id="/2019/06/28/k8s/使用K8s创建容器/" class="leancloud_visitors" data-flag-title="使用K8s创建容器">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1782,7 +1799,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  413
+                  625
                 </span>
               
 
@@ -1798,7 +1815,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -1820,14 +1837,11 @@
 
       
         
-          <h2 id="配置tomcat开启manager项目"><a href="#配置tomcat开启manager项目" class="headerlink" title="配置tomcat开启manager项目"></a>配置tomcat开启manager项目</h2><ul>
-<li>在tomcat目录中修改 <code>vi config/tomcat-users.xml</code>文件，在<code>&lt;/tomcat-users&gt;</code>前添加</li>
-</ul>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-gui"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-script"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">"tomcat"</span> <span class="attr">password</span>=<span class="string">"managepwd"</span> <span class="attr">roles</span>=<span class="string">"manager-gui,manager-script"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="http://ww1.sinaimg.cn/large/006j3B4Lgy1fzy42lk0yrj30ms07daab.jpg" alt=""></p>
+          <h2 id="检查组件运行状态"><a href="#检查组件运行状态" class="headerlink" title="检查组件运行状态"></a>检查组件运行状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kubectl get cs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下</span></span><br><span class="line">NAME                 STATUS    MESSAGE             ERROR</span><br><span class="line"><span class="comment"># 调度服务，主要作用是将 POD 调度到 Node</span></span><br><span class="line">scheduler            Healthy   ok                  </span><br><span class="line"><span class="comment"># 自动化修复服务，主要作用是 Node 宕机后自动修复 Node 回到正常的工作状态</span></span><br><span class="line">controller-manager   Healthy   ok                  </span><br><span class="line"><span class="comment"># 服务注册与发现</span></span><br><span class="line">etcd-0               Healthy   &#123;<span class="string">"health"</span>:<span class="string">"true"</span>&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="检查-Master-状态"><a href="#检查-Master-状态" class="headerlink" title="检查 Master 状态"></a>检查 Master 状态</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/02/13/devNote/使用maven-tomcat插件实现tomcat热部署/#more" rel="contents">
+            <a class="btn" href="/2019/06/28/k8s/使用K8s创建容器/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1869,7 +1883,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1915,7 +1929,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">67</span>
+                  <span class="site-state-item-count">96</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1926,7 +1940,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1937,7 +1951,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-count">56</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2043,7 +2057,7 @@
     
       <span class="post-meta-item-text">Site total words </span>
     
-    <span title="Site words total count">80.8k</span>
+    <span title="Site words total count">117.3k</span>
   
 </div>
 
