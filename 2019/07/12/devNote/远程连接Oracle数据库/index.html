@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/devNote/远程连接Oracle数据库/1.png">
 <meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/devNote/远程连接Oracle数据库/2.png">
 <meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/devNote/远程连接Oracle数据库/3.png">
-<meta property="og:updated_time" content="2019-07-12T01:42:40.709Z">
+<meta property="og:updated_time" content="2019-07-16T09:44:40.172Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="远程连接Oracle数据库(本地不安装Oracle)">
 <meta name="twitter:description" content="下载Oracle客户端instantclient-basic-windows.x64-11.2.0.4.0网盘链接：https://pan.baidu.com/s/1cmLH2EWHqZ-VI0QBCDy0kQ提取码：zlxu 配置Oracle客户端 将客户端压缩包解压  进入解压目录，新建文件夹NETWORK并进入其再新建文件夹ADMIN  进入文件夹ADMIN，创建tnsnames.ora文件">
@@ -454,6 +454,7 @@
 </li>
 <li><p>进入文件夹<code>ADMIN</code>，创建<code>tnsnames.ora</code>文件并编辑</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ORCL = </span><br><span class="line">   (DESCRIPTION = </span><br><span class="line">     (ADDRESS_LIST = </span><br><span class="line">       (ADDRESS = (PROTOCOL = TCP)(HOST = YOURSERVERIP )(PORT = 1521)) </span><br><span class="line">     ) </span><br><span class="line">     (CONNECT_DATA = </span><br><span class="line">	   (SERVICE = DEDICATED)</span><br><span class="line">       (SERVICE_NAME = YOURDBNAME) </span><br><span class="line">     ) </span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <ul>
 <li><code>ORCL</code>：本机识别服务名，可任意命名，不重复即可</li>
 <li><code>YOURSERVERIP</code>：待连接Oracle数据库服务器IP地址</li>
