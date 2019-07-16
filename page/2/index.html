@@ -179,7 +179,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">没有爱因斯坦的智商，学习便没有事半功倍</p>
+        <p class="site-subtitle">知识是进步的基石，学习是成功的阶梯</p>
       
   </div>
 
@@ -303,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Kubernetes Dashboard/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(五)常见的Thread Dump日志案例分析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -322,7 +322,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/Kubernetes Dashboard/" itemprop="url">Kubernetes Dashboard</a></h1>
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(五)常见的Thread Dump日志案例分析/" itemprop="url">(五)常见的Thread Dump日志案例分析</a></h1>
         
 
         <div class="post-meta">
@@ -334,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:36:26+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T20:16:21+08:00">
+                2019-07-06
               </time>
             
 
@@ -357,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
                   </a>
                 </span>
 
@@ -374,7 +374,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/Kubernetes Dashboard/" class="leancloud_visitors" data-flag-title="Kubernetes Dashboard">
+             <span id="/2019/07/06/JVM故障分析/(五)常见的Thread Dump日志案例分析/" class="leancloud_visitors" data-flag-title="(五)常见的Thread Dump日志案例分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  487
+                  1.9k
                 </span>
               
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  8
                 </span>
               
             </div>
@@ -437,13 +437,12 @@
 
       
         
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Kubernetes Dashboard 是 Kubernetes 集群的 Web UI，用于管理集群。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>GitHub 地址：<a href="https://github.com/kubernetes/dashboard" target="_blank" rel="noopener">Kubernetes Dashboard</a></p>
-<p>下载配置文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="症状及解决方案"><a href="#症状及解决方案" class="headerlink" title="症状及解决方案"></a>症状及解决方案</h2><p>下面列出几种常见的症状即对应的解决方案：</p>
+<h3 id="CPU占用率很高，响应很慢"><a href="#CPU占用率很高，响应很慢" class="headerlink" title="CPU占用率很高，响应很慢"></a>CPU占用率很高，响应很慢</h3><p>按照<a href="http://www.javatang.com/archives/2017/10/19/33151873.html" target="_blank" rel="noopener">《Java内存泄漏分析系列之一：使用jstack定位线程堆栈信息》</a>中所说的方法，先找到占用CPU的进程，然后再定位到对应的线程，最后分析出对应的堆栈信息。<br>在同一时间多次使用上述的方法，然后进行对比分析，从代码中找到问题所在的原因。<a href="http://www.javatang.com/archives/2017/10/20/12131956.html" target="_blank" rel="noopener">如果线程指向的是”VM Thread”</a>或者无法从代码中直接找到原因，就需要进行内存分析，具体的见下一篇文章。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/Kubernetes Dashboard/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(五)常见的Thread Dump日志案例分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -494,7 +493,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Kubernetes ConfigMap/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(三)jstat命令的使用及VM Thread分析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -513,7 +512,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/Kubernetes ConfigMap/" itemprop="url">Kubernetes ConfigMap</a></h1>
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(三)jstat命令的使用及VM Thread分析/" itemprop="url">(三)jstat命令的使用及VM Thread分析</a></h1>
         
 
         <div class="post-meta">
@@ -525,8 +524,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:35:04+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T20:12:37+08:00">
+                2019-07-06
               </time>
             
 
@@ -548,8 +547,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
                   </a>
                 </span>
 
@@ -565,7 +564,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/Kubernetes ConfigMap/" class="leancloud_visitors" data-flag-title="Kubernetes ConfigMap">
+             <span id="/2019/07/06/JVM故障分析/(三)jstat命令的使用及VM Thread分析/" class="leancloud_visitors" data-flag-title="(三)jstat命令的使用及VM Thread分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -590,7 +589,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  340
+                  933
                 </span>
               
 
@@ -606,7 +605,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -628,11 +627,15 @@
 
       
         
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>ConfigMap 是用来存储配置文件的 Kubernetes 资源对象，所有的配置内容都存储在 etcd 中。它可以被用来保存单个属性，也可以用来保存整个配置文件或者 JSON 二进制对象。ConfigMap API 资源提供了将配置数据注入容器的方式，同时保证该机制对容器来说是透明的。配置应该从 Image 内容中解耦，以此来保持容器化应用程序的可移植性。</p>
-<h2 id="使用-ConfigMap-配置-MySQL"><a href="#使用-ConfigMap-配置-MySQL" class="headerlink" title="使用 ConfigMap 配置 MySQL"></a>使用 ConfigMap 配置 MySQL</h2>
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="使用jstat命令"><a href="#使用jstat命令" class="headerlink" title="使用jstat命令"></a>使用jstat命令</h2><p>当服务器CPU100%的时候，通过定位占用资源最大的线程定位到 <a href="http://www.javatang.com/archives/2017/10/19/51301886.html#VM_Thread" target="_blank" rel="noopener">VM Thread</a>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;VM Thread&quot; prio=10 tid=0x00007fbea80d3800 nid=0x5e9 runnable</span><br></pre></td></tr></table></figure>
+<p>这个时候需要使用 <code>jstat -gc &lt;pid&gt; &lt;period&gt; &lt;times&gt;</code> 命令查看gc的信息，显示结果如下：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/jstat命令的使用及VM Thread分析/1.jpg" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/jstat%E5%91%BD%E4%BB%A4%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8F%8AVM%20Thread%E5%88%86%E6%9E%90/1.jpg"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">S0C    S1C    S0U    S1U      EC       EU      OC         OU       PC        PU       YGC     YGCT    FGC   FGCT       GCT</span><br><span class="line">64.0   64.0   0.0    0.0   332992.0   0.0    666304.0   73192.5   83968.0   83967.9   6893   17.576  6882   2705.923  2723.499</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/Kubernetes ConfigMap/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(三)jstat命令的使用及VM Thread分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -683,7 +686,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/K8s数据持久化/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(二)jstack生成的Thread Dump日志结构解析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -702,7 +705,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/K8s数据持久化/" itemprop="url">K8s数据持久化</a></h1>
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(二)jstack生成的Thread Dump日志结构解析/" itemprop="url">(二)jstack生成的Thread Dump日志结构解析</a></h1>
         
 
         <div class="post-meta">
@@ -714,8 +717,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:27:23+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T17:20:20+08:00">
+                2019-07-06
               </time>
             
 
@@ -737,8 +740,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
                   </a>
                 </span>
 
@@ -754,7 +757,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/K8s数据持久化/" class="leancloud_visitors" data-flag-title="K8s数据持久化">
+             <span id="/2019/07/06/JVM故障分析/(二)jstack生成的Thread Dump日志结构解析/" class="leancloud_visitors" data-flag-title="(二)jstack生成的Thread Dump日志结构解析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -779,7 +782,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.9k
+                  2.5k
                 </span>
               
 
@@ -795,7 +798,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  15
+                  10
                 </span>
               
             </div>
@@ -817,11 +820,12 @@
 
       
         
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在 Docker 中就有数据卷的概念，当容器删除时，数据也一起会被删除，想要持久化使用数据，需要把主机上的目录挂载到 Docker 中去，在 K8S 中，数据卷是通过 Pod 实现持久化的，如果 Pod 删除，数据卷也会一起删除，k8s 的数据卷是 docker 数据卷的扩展，K8S 适配各种存储系统，包括本地存储 EmptyDir，HostPath， 网络存储（NFS，GlusterFS，PV/PVC）等。</p>
-<p>我们以部署 MySQL8 为例，采用 <strong>NFS + PV/PVC</strong> 网络存储方案实现我们的 Kubernetes 数据持久化。</p>
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<p>首先对Thread Dump日志文件的结构进行分析。一个典型的thread dump文件主要由一下几个部分组成：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/jstack生成的Thread Dump日志结构解析/1.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/jstack%E7%94%9F%E6%88%90%E7%9A%84Thread%20Dump%E6%97%A5%E5%BF%97%E7%BB%93%E6%9E%84%E8%A7%A3%E6%9E%90/1.png"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/K8s数据持久化/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(二)jstack生成的Thread Dump日志结构解析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -872,7 +876,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Ingress 统一访问入口/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(一)使用jstack定位线程堆栈信息/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -891,7 +895,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/Ingress 统一访问入口/" itemprop="url">Ingress 统一访问入口</a></h1>
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(一)使用jstack定位线程堆栈信息/" itemprop="url">(一)使用jstack定位线程堆栈信息</a></h1>
         
 
         <div class="post-meta">
@@ -903,8 +907,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:23:20+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T17:15:38+08:00">
+                2019-07-06
               </time>
             
 
@@ -926,8 +930,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
                   </a>
                 </span>
 
@@ -943,7 +947,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/Ingress 统一访问入口/" class="leancloud_visitors" data-flag-title="Ingress 统一访问入口">
+             <span id="/2019/07/06/JVM故障分析/(一)使用jstack定位线程堆栈信息/" class="leancloud_visitors" data-flag-title="(一)使用jstack定位线程堆栈信息">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -968,201 +972,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h2><ul>
-<li><strong>节点：</strong> Kubernetes 集群中的服务器</li>
-<li><strong>集群：</strong> Kubernetes 管理的一组服务器集合</li>
-<li><strong>边界路由器：</strong> 为局域网和 Internet 路由数据包的路由器，执行防火墙保护局域网络</li>
-<li><strong>集群网络：</strong> 遵循 Kubernetes 网络模型实现集群内的通信的具体实现，比如 Flannel 和 Calico</li>
-<li><strong>服务：</strong> Kubernetes 的服务 (Service) 是使用标签选择器标识的一组 Pod Service (Deployment)。 <strong>除非另有说明，否则服务的虚拟 IP 仅可在集群内部访问</strong></li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/Ingress 统一访问入口/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/通过资源配置运行容器/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程鹏">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/28/k8s/通过资源配置运行容器/" itemprop="url">通过资源配置运行容器</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:20:27+08:00">
-                2019-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/28/k8s/通过资源配置运行容器/" class="leancloud_visitors" data-flag-title="通过资源配置运行容器">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  881
+                  1.1k
                 </span>
               
 
@@ -1200,12 +1010,16 @@
 
       
         
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>我们知道通过 <code>run</code> 命令启动容器非常麻烦，Docker 提供了 Compose 为我们解决了这个问题。那 Kubernetes 是如何解决这个问题的呢？其实很简单，使用 <code>kubectl create</code> 命令就可以做到和 Compose 一样的效果了，该命令可以通过配置文件快速创建一个集群资源对象。</p>
-<h2 id="创建-YAML-配置文件"><a href="#创建-YAML-配置文件" class="headerlink" title="创建 YAML 配置文件"></a>创建 YAML 配置文件</h2><p>以部署 Nginx 为例</p>
-<h3 id="部署-Deployment"><a href="#部署-Deployment" class="headerlink" title="部署 Deployment"></a>部署 Deployment</h3><p>创建一个名为 <code>nginx-deployment.yml</code> 的配置文件</p>
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>在对Java内存泄漏进行分析的时候，需要对jvm运行期间的内存占用、线程执行等情况进行记录的dump文件，常用的主要有thread dump和heap dump。</p>
+<ul>
+<li><strong>thread dump</strong> 主要记录JVM在某一时刻各个线程执行的情况，以栈的形式显示，是一个文本文件。通过对thread dump文件可以分析出程序的问题出现在什么地方，从而定位具体的代码然后进行修正。thread dump需要结合占用系统资源的线程id进行分析才有意义。</li>
+<li><strong>heap dump</strong> 主要记录了在某一时刻JVM堆中对象使用的情况，即某个时刻JVM堆的快照，是一个二进制文件，主要用于分析哪些对象占用了太对的堆空间，从而发现导致内存泄漏的对象。</li>
+</ul>
+<p>上面两种dump文件都具有实时性，因此需要在服务器出现问题的时候生成，并且多生成几个文件，方便进行对比分析。下面我们先来说一下如何生成 thread dump。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/通过资源配置运行容器/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(一)使用jstack定位线程堆栈信息/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1256,7 +1070,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/解决 Node 无法加入的问题/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(四)jstack生成的Thread Dump日志线程状态 /">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1275,7 +1089,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/解决 Node 无法加入的问题/" itemprop="url">解决 Node 无法加入的问题</a></h1>
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(四)jstack生成的Thread Dump日志线程状态 /" itemprop="url">(四)jstack生成的Thread Dump日志线程状态</a></h1>
         
 
         <div class="post-meta">
@@ -1287,8 +1101,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:15:35+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T17:07:24+08:00">
+                2019-07-06
               </time>
             
 
@@ -1310,8 +1124,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
                   </a>
                 </span>
 
@@ -1327,7 +1141,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/解决 Node 无法加入的问题/" class="leancloud_visitors" data-flag-title="解决 Node 无法加入的问题">
+             <span id="/2019/07/06/JVM故障分析/(四)jstack生成的Thread Dump日志线程状态 /" class="leancloud_visitors" data-flag-title="(四)jstack生成的Thread Dump日志线程状态">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1368,194 +1182,6 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  18
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>当我们使用 <code>kubeadm join</code> 命令将 Node 节点加入集群时，你会发现所有 <code>kubectl</code> 命令均不可用（呈现阻塞状态，并不会返回响应结果），我们可以在 Node 节点中通过 <code>kubeadm reset</code> 命令将 Node 节点下线，此时回到 Master 节点再使用 <code>watch kubectl get pods --all-namespaces</code> 可以看到下图中报错了，<code>coredns-xxx-xxx</code> 状态为 <code>CrashLoopBackOff</code></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/解决 Node 无法加入的问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/K8s高可用集群/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程鹏">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/28/k8s/K8s高可用集群/" itemprop="url">K8s高可用集群</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:00:19+08:00">
-                2019-06-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/28/k8s/K8s高可用集群/" class="leancloud_visitors" data-flag-title="K8s高可用集群">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
                   14
                 </span>
               
@@ -1578,81 +1204,13 @@
 
       
         
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在入门课程中我们部署的 Kubernetes 是 <strong>集群模式</strong>，但在实际生产中我们需要部署 <strong>高可用集群</strong> ，本章内容旨在指导大家如何部署 Kubernetes 高可用集群</p>
-<h2 id="统一环境配置"><a href="#统一环境配置" class="headerlink" title="统一环境配置"></a>统一环境配置</h2><h3 id="节点配置"><a href="#节点配置" class="headerlink" title="节点配置"></a>节点配置</h3><table>
-<thead>
-<tr>
-<th>主机名</th>
-<th>IP</th>
-<th>角色</th>
-<th>系统</th>
-<th>CPU/内存</th>
-<th>磁盘</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>kubernetes-master-01</td>
-<td>192.168.141.150</td>
-<td>Master</td>
-<td>Ubuntu Server 18.04</td>
-<td>2核2G</td>
-<td>20G</td>
-</tr>
-<tr>
-<td>kubernetes-master-02</td>
-<td>192.168.141.151</td>
-<td>Master</td>
-<td>Ubuntu Server 18.04</td>
-<td>2核2G</td>
-<td>20G</td>
-</tr>
-<tr>
-<td>kubernetes-master-03</td>
-<td>192.168.141.152</td>
-<td>Master</td>
-<td>Ubuntu Server 18.04</td>
-<td>2核2G</td>
-<td>20G</td>
-</tr>
-<tr>
-<td>kubernetes-node-01</td>
-<td>192.168.141.160</td>
-<td>Node</td>
-<td>Ubuntu Server 18.04</td>
-<td>2核4G</td>
-<td>20G</td>
-</tr>
-<tr>
-<td>kubernetes-node-02</td>
-<td>192.168.141.161</td>
-<td>Node</td>
-<td>Ubuntu Server 18.04</td>
-<td>2核4G</td>
-<td>20G</td>
-</tr>
-<tr>
-<td>kubernetes-node-03</td>
-<td>192.168.141.162</td>
-<td>Node</td>
-<td>Ubuntu Server 18.04</td>
-<td>2核4G</td>
-<td>20G</td>
-</tr>
-<tr>
-<td>Kubernetes VIP</td>
-<td>192.168.141.200</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-<td>-</td>
-</tr>
-</tbody>
-</table>
-<h3 id="对操作系统的配置"><a href="#对操作系统的配置" class="headerlink" title="对操作系统的配置"></a>对操作系统的配置</h3>
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="Thread-Dump日志的线程信息"><a href="#Thread-Dump日志的线程信息" class="headerlink" title="Thread Dump日志的线程信息"></a>Thread Dump日志的线程信息</h2><p>以下面的日志为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"resin-22129"</span> daemon prio=10 tid=0x00007fbe5c34e000 nid=0x4cb1 waiting on condition [0x00007fbe4ff7c000]   java.lang.Thread.State: WAITING (parking)    at sun.misc.Unsafe.park(Native Method)    at java.util.concurrent.locks.LockSupport.park(LockSupport.java:315)    at com.caucho.env.thread2.ResinThread2.park(ResinThread2.java:196)    at com.caucho.env.thread2.ResinThread2.runTasks(ResinThread2.java:147)    at com.caucho.env.thread2.ResinThread2.run(ResinThread2.java:118)<span class="string">"Timer-20"</span> daemon prio=10 tid=0x00007fe3a4bfb800 nid=0x1a31 <span class="keyword">in</span> Object.wait() [0x00007fe3a077a000]   java.lang.Thread.State: TIMED_WAITING (on object monitor)    at java.lang.Object.wait(Native Method)    - waiting on &lt;0x00000006f0620ff0&gt; (a java.util.TaskQueue)    at java.util.TimerThread.mainLoop(Timer.java:552)    - locked &lt;0x00000006f0620ff0&gt; (a java.util.TaskQueue)    at java.util.TimerThread.run(Timer.java:505)</span><br></pre></td></tr></table></figure>
+<p>以上依次是：</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/K8s高可用集群/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(四)jstack生成的Thread Dump日志线程状态 /#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1703,7 +1261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/使用K8s创建容器/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/04/Exception/Spring Cloud Stream Kafka 异常/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1722,7 +1280,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/使用K8s创建容器/" itemprop="url">使用K8s创建容器</a></h1>
+                <a class="post-title-link" href="/2019/07/04/Exception/Spring Cloud Stream Kafka 异常/" itemprop="url">Spring Cloud Stream Kafka 异常</a></h1>
         
 
         <div class="post-meta">
@@ -1734,8 +1292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T15:55:50+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-04T10:08:34+08:00">
+                2019-07-04
               </time>
             
 
@@ -1757,8 +1315,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/Exception/" itemprop="url" rel="index">
+                    <span itemprop="name">Exception</span>
                   </a>
                 </span>
 
@@ -1774,7 +1332,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/使用K8s创建容器/" class="leancloud_visitors" data-flag-title="使用K8s创建容器">
+             <span id="/2019/07/04/Exception/Spring Cloud Stream Kafka 异常/" class="leancloud_visitors" data-flag-title="Spring Cloud Stream Kafka 异常">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1799,7 +1357,195 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  625
+                  775
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="问题描述-一"><a href="#问题描述-一" class="headerlink" title="问题描述(一)"></a>问题描述(一)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">2019-07-04 10:12:33.287 ERROR 91464 --- [p-nio-80-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() <span class="keyword">for</span> servlet [dispatcherServlet] <span class="keyword">in</span> context with path [] threw exception [Request processing failed; nested exception is org.springframework.messaging.MessageHandlingException: error occurred <span class="keyword">in</span> message handler [org.springframework.cloud.stream.binder.kafka.KafkaMessageChannelBinder<span class="variable">$ProducerConfigurationMessageHandler</span>@7cc5f891]; nested exception is org.apache.kafka.common.errors.SerializationException: Can<span class="string">'t convert value of class [B to class org.apache.kafka.common.serialization.StringSerializer specified in value.serializer, failedMessage=GenericMessage [payload=byte[11], headers=&#123;contentType=application/json, id=5279bb8b-7a15-6089-79f6-4a655c430ce8, timestamp=1562206353207&#125;]] with root cause</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">java.lang.ClassCastException: [B cannot be cast to java.lang.String</span></span><br><span class="line"><span class="string">	at org.apache.kafka.common.serialization.StringSerializer.serialize(StringSerializer.java:28) ~[kafka-clients-2.0.1.jar:na]</span></span><br><span class="line"><span class="string">	......</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/04/Exception/Spring Cloud Stream Kafka 异常/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/Linux/Kafka集群搭建/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/30/Linux/Kafka集群搭建/" itemprop="url">Kafka集群搭建</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:34:43+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/30/Linux/Kafka集群搭建/" class="leancloud_visitors" data-flag-title="Kafka集群搭建">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  647
                 </span>
               
 
@@ -1837,11 +1583,23 @@
 
       
         
-          <h2 id="检查组件运行状态"><a href="#检查组件运行状态" class="headerlink" title="检查组件运行状态"></a>检查组件运行状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">kubectl get cs</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出如下</span></span><br><span class="line">NAME                 STATUS    MESSAGE             ERROR</span><br><span class="line"><span class="comment"># 调度服务，主要作用是将 POD 调度到 Node</span></span><br><span class="line">scheduler            Healthy   ok                  </span><br><span class="line"><span class="comment"># 自动化修复服务，主要作用是 Node 宕机后自动修复 Node 回到正常的工作状态</span></span><br><span class="line">controller-manager   Healthy   ok                  </span><br><span class="line"><span class="comment"># 服务注册与发现</span></span><br><span class="line">etcd-0               Healthy   &#123;<span class="string">"health"</span>:<span class="string">"true"</span>&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="检查-Master-状态"><a href="#检查-Master-状态" class="headerlink" title="检查 Master 状态"></a>检查 Master 状态</h2>
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Apache Kafka是一款分布式消息发布和订阅系统，具有高性能、高吞吐量的特点而被广泛应用与大数据传输场景。它由LinkedIn公司开发，使用Scala语言编写，之后成为Apache基金会的一个顶级项目。<a href="http://kafka.apache.org/" target="_blank" rel="noopener">官方网站</a></p>
+<h2 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h2><h3 id="下载并解压Kafka包"><a href="#下载并解压Kafka包" class="headerlink" title="下载并解压Kafka包"></a>下载并解压Kafka包</h3><p><a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">官方下载地址</a></p>
+<blockquote>
+<p>注意Kafka所基于的Scala版本</p>
+<ul>
+<li>Binary downloads:<ul>
+<li>Scala 2.11  - <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz" target="_blank" rel="noopener">kafka_2.11-1.0.0.tgz</a> (<a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz.asc" target="_blank" rel="noopener">asc</a>, <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz.sha512" target="_blank" rel="noopener">sha512</a>)</li>
+<li>Scala 2.12  - <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.12-1.0.0.tgz" target="_blank" rel="noopener">kafka_2.12-1.0.0.tgz</a> (<a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.12-1.0.0.tgz.asc" target="_blank" rel="noopener">asc</a>, <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.12-1.0.0.tgz.sha512" target="_blank" rel="noopener">sha512</a>)</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>解压Kafka：<code>tar -zxf kafka_2.11-2.3.0.tgz</code></p>
+<h3 id="配置Zookeeper"><a href="#配置Zookeeper" class="headerlink" title="配置Zookeeper"></a>配置Zookeeper</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/使用K8s创建容器/#more" rel="contents">
+            <a class="btn" href="/2019/06/30/Linux/Kafka集群搭建/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1879,11 +1637,216 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/devNote/Tomcat外网远程Debug/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/30/devNote/Tomcat外网远程Debug/" itemprop="url">Tomcat外网远程Debug</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:07:22+08:00">
+                2019-06-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tomcat/" itemprop="url" rel="index">
+                    <span itemprop="name">Tomcat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/06/30/devNote/Tomcat外网远程Debug/" class="leancloud_visitors" data-flag-title="Tomcat外网远程Debug">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  139
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>保持远端代码版本本地代码版本一致</p>
+</li>
+<li><p>执行<code>sudo vim ${tomcat}/bin/catalina.sh</code>进行编辑，其中<code>${tomcat}</code>为tomcat的安装目录</p>
+</li>
+<li><p>添加如下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_OPTS=&quot;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005&quot;</span><br></pre></td></tr></table></figure>
+<p>其中address为开发的远程debug的端口号</p>
+</li>
+<li><p>把开放远程debug的端口加到防火墙配置中</p>
+</li>
+<li><p>及时关闭开发的debug端口</p>
+</li>
+<li><p>编辑<code>sudo vim /etc/sysconfig/iptables</code></p>
+</li>
+<li><p>添加如下配置<code>-A INPUT -p tcp -m tcp --dport 5000 -j ACCEPT</code></p>
+</li>
+<li><p><code>:wq</code>保存退出</p>
+</li>
+<li><p>重启防火墙<code>sudo service iptables restart</code></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1929,7 +1892,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1940,7 +1903,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1951,7 +1914,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2057,7 +2020,7 @@
     
       <span class="post-meta-item-text">Site total words </span>
     
-    <span title="Site words total count">117.3k</span>
+    <span title="Site words total count">142.2k</span>
   
 </div>
 

@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JVM故障分析,jstack,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="原文地址：http://www.javatang.com 基础概念先列出几个基础的概念： Shallow Heap 和 Retained HeapShallow Heap表示对象本身占用内存的大小，不包含对其他对象的引用，也就是对象头加成员变量（不是成员变量的值）的总和。 Retained Heap是该对象自己的Shallow Heap，并加上从该对象能直接或间接访问到对象的Shallow Hea">
+<meta name="keywords" content="JVM故障分析,jstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(七)使用MAT的Histogram和Dominator Tree定位溢出源">
+<meta property="og:url" content="http://yoursite.com/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/index.html">
+<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:description" content="原文地址：http://www.javatang.com 基础概念先列出几个基础的概念： Shallow Heap 和 Retained HeapShallow Heap表示对象本身占用内存的大小，不包含对其他对象的引用，也就是对象头加成员变量（不是成员变量的值）的总和。 Retained Heap是该对象自己的Shallow Heap，并加上从该对象能直接或间接访问到对象的Shallow Hea">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/1.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/2.jpg">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/3.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/4.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/5.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/6.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/7.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/8.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/9.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/10.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/11.png">
+<meta property="og:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/12.png">
+<meta property="og:updated_time" content="2019-07-06T13:17:39.787Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="(七)使用MAT的Histogram和Dominator Tree定位溢出源">
+<meta name="twitter:description" content="原文地址：http://www.javatang.com 基础概念先列出几个基础的概念： Shallow Heap 和 Retained HeapShallow Heap表示对象本身占用内存的大小，不包含对其他对象的引用，也就是对象头加成员变量（不是成员变量的值）的总和。 Retained Heap是该对象自己的Shallow Heap，并加上从该对象能直接或间接访问到对象的Shallow Hea">
+<meta name="twitter:image" content="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/">
+
+
+
+
+
+  <title>(七)使用MAT的Histogram和Dominator Tree定位溢出源 | 程鹏 | 个人博客</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-131905457-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1e660ccc784192fa277187863bbd5143";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知识是进步的基石，学习是成功的阶梯</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">(七)使用MAT的Histogram和Dominator Tree定位溢出源</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T20:28:22+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/" class="leancloud_visitors" data-flag-title="(七)使用MAT的Histogram和Dominator Tree定位溢出源">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>先列出几个基础的概念：</p>
+<h3 id="Shallow-Heap-和-Retained-Heap"><a href="#Shallow-Heap-和-Retained-Heap" class="headerlink" title="Shallow Heap 和 Retained Heap"></a>Shallow Heap 和 Retained Heap</h3><p>Shallow Heap表示对象本身占用内存的大小，不包含对其他对象的引用，也就是对象头加成员变量（不是成员变量的值）的总和。</p>
+<p>Retained Heap是该对象自己的Shallow Heap，并加上从该对象能直接或间接访问到对象的Shallow Heap之和。换句话说，Retained Heap是该对象GC之后所能回收到内存的总和。</p>
+<p>把内存中的对象看成下图中的节点，并且对象和对象之间互相引用。这里有一个特殊的节点GC Roots，这就是reference chain的起点。</p>
+<a id="more"></a>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/1.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/1.png"></p>
+<p>从obj1入手，上图中蓝色节点代表仅仅只有通过obj1才能直接或间接访问的对象。因为可以通过GC Roots访问，所以左图的obj3不是蓝色节点；而在右图却是蓝色，因为它已经被包含在retained集合内。所以对于左图，obj1的retained size是obj1、obj2、obj4的shallow size总和；右图的retained size是obj1、obj2、obj3、obj4的shallow size总和。obj2的retained size可以通过相同的方式计算。</p>
+<h3 id="对象引用（Reference）"><a href="#对象引用（Reference）" class="headerlink" title="对象引用（Reference）"></a>对象引用（Reference）</h3><p>对象引用按从最强到最弱有如下级别，不同的引用（可到达性）级别反映了对象的生命周期：</p>
+<ul>
+<li><strong>强引用（Strong Ref）</strong>：通常我们编写的代码都是强引用，于此相对应的是强可达性，只有去掉强可达性，对象才能被回收。</li>
+<li><strong>软引用（Soft Ref）</strong>：对应软可达性，只要有足够的内存就一直保持对象，直到发现内存不足且没有强引用的时候才回收对象。</li>
+<li><strong>弱引用（Weak Ref）</strong>：比软引用更弱，当发现不存在强引用的时候会立即回收此类型的对象，而不需要等到内存不足。通过java.lang.ref.WeakReference和java.util.WeakHashMap类实现。</li>
+<li><strong>虚引用（Phantom Ref）</strong>：根本不会在内存中保持该类型的对象，只能使用虚引用本身，一般用于在进入finalize()方法后进行特殊的清理过程，通过java.lang.ref.PhantomReference实现。</li>
+</ul>
+<h3 id="GC-Roots和Reference-Chain"><a href="#GC-Roots和Reference-Chain" class="headerlink" title="GC Roots和Reference Chain"></a>GC Roots和Reference Chain</h3><p>JVM在进行GC的时候是通过使用可达性来判断对象是否存活，通过GC Roots（GC根节点）的对象作为起始点，从这些节点开始进行向下搜索，搜索所走过的路径成为Reference Chain（引用链），当一个对象到GC Roots没有任何引用链相连（用图论的话来说就是从GC Roots到这个对象不可达）时，则证明此对象是不可用的。</p>
+<p>如下图所示，对象object 5、object 6、object 7虽然互相有关联，它们的引用并不为0，但是它们到GC Roots是不可达的，因此它们将会被判定为是可回收的对象。</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/2.jpg" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/2.png"></p>
+<h2 id="Histogram（直方图）视图"><a href="#Histogram（直方图）视图" class="headerlink" title="Histogram（直方图）视图"></a>Histogram（直方图）视图</h2><p>点击工具栏上的 <code>Histogram</code>图标可以打开 Histogram（直方图）视图，可以列出每个类产生的实例数量，以及所占用的内存大小和百分比。主界面如下图所示：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/3.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/3.png"></p>
+<p>图中Shallow Heap 和 Retained Heap分别表示对象自身不包含引用的大小和对象自身并包含引用的大小，具体请参考下面 <a href="https://www.javatang.com/archives/2017/11/08/11582145.html#Shallow_Heap_Retained_Heap" target="_blank" rel="noopener">Shallow Heap 和 Retained Heap</a> 部分的内容。默认的大小单位是 Bytes，可以在 Window - Preferences 菜单中设置单位，图中设置的是KB。</p>
+<p>通过直方图视图可以很容易找到占用内存最多的几个类（通过Retained Heap排序），还可以通过其他方式进行分组（见下图）。</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/4.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/4.png"></p>
+<p>如果存在内存溢出，时间久了溢出类的实例数量或者内存占比会越来越多，排名也越来越靠前。可以点击工具类上的右上角图标进行对比，通过多次对比不同时间点下的直方图对比就很容易把溢出的类找出来。</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/5.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/5.png"></p>
+<p>还有一种对比直方图的方式，首先通过 Window 菜单打开 Navigation History 视图，选中直方图右键并选中 Add to Compare Basket项目，将直方图添加到 Compare Basket 中。</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/6.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/6.png"></p>
+<p>然后在 Compare Basket 中点击右上角的 <code>红色感叹号</code> 按钮，可以分别列出对比的所有结果，见下图：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/7.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/7.png"></p>
+<p>并且在上面的可以设置不同的对比方式。</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/8.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/8.png"></p>
+<h2 id="Dominator-Tree视图"><a href="#Dominator-Tree视图" class="headerlink" title="Dominator Tree视图"></a>Dominator Tree视图</h2><p>点击工具栏上的<code>Dominator Tree</code>图标可以打开Dominator Tree（支配树）视图，在此视图中列出了每个对象（Object Instance）与其引用关系的树状结构，同时包含了占用内存的大小和百分比。</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/9.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/9.png"></p>
+<p>通过Dominator Tree视图可以很容易的找出占用内存最多的几个对象（根据Retained Heap或Percentage排序），和Histogram类似，可以通过不同的方式进行分组显示：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/10.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/10.png"></p>
+<h2 id="定位溢出源"><a href="#定位溢出源" class="headerlink" title="定位溢出源"></a>定位溢出源</h2><p>Histogram视图和Dominator Tree视图的角度不同，前者是基于类的角度，后者是基于对象实例的角度，并且可以更方便的看出其引用关系。</p>
+<p>首先，在两个视图中找出疑似溢出的对象或者类（可以通过Retained Heap排序，并且可以在Class Name中输入正则表达式的关键词只显示指定的类名），然后右键选择Path To GC Roots（Histogram中没有此项）或Merge Shortest Paths to GC Roots，然后选择 <em>exclude all phantom/weak/soft etc. reference</em>：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/11.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/11.png"></p>
+<p>GC Roots意为GC根节点，其含义见上面的 <a href="https://www.javatang.com/archives/2017/11/08/11582145.html#GC_RootsReference_Chain" target="_blank" rel="noopener">GC Roots和Reference Chain</a> 部分，后面的 <em>exclude all phantom/weak/soft etc. reference</em> 意思是排除<a href="https://www.javatang.com/archives/2017/11/08/11582145.html#Reference" target="_blank" rel="noopener">虚引用、弱引用和软引用</a>，即只剩下<a href="https://www.javatang.com/archives/2017/11/08/11582145.html#Reference" target="_blank" rel="noopener">强引用</a>，因为除了强引用之外，其他的引用都可以被JVM GC掉，如果一个对象始终无法被GC，就说明有强引用存在，从而导致在GC的过程中一直得不到回收，最终就内存溢出了。</p>
+<p>通过结果就可以很方便的定位到具体的代码，然后分析是什么原因无法释放该对象，比如被缓存了或者没有使用单例模式等等。</p>
+<p>下面是执行的结果：</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/JVM故障分析系列/使用MAT的Histogram和Dominator Tree定位溢出源/12.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/JVM%E6%95%85%E9%9A%9C%E5%88%86%E6%9E%90%E7%B3%BB%E5%88%97/%E4%BD%BF%E7%94%A8MAT%E7%9A%84Histogram%E5%92%8CDominator%20Tree%E5%AE%9A%E4%BD%8D%E6%BA%A2%E5%87%BA%E6%BA%90/12.png"></p>
+<p>上图中保留了大量的VelocitySqlBulder的外部引用，后来查看了代码，原来每次调用的时候都实例化一个新的对象，由于VelocitySqlBulder类是无状态的工具类，因此修改为单例方式就可以解决这个问题。</p>
+<h2 id="后续观察"><a href="#后续观察" class="headerlink" title="后续观察"></a>后续观察</h2><p>根据上面分析的结果对问题进行处理之后，再对照之前的操作，看看对象是否还再持续增长，如果没有就说明这个地方的问题已经解决了。</p>
+<p>最后再<a href="http://www.javatang.com/archives/2017/10/20/12131956.html#jstat" target="_blank" rel="noopener">用 jstat 持续跟踪</a>一段时间，看看<a href="http://www.javatang.com/archives/2017/10/20/12131956.html#JVM" target="_blank" rel="noopener">Old和Perm区的内存</a>是否最终稳定在一个范围之内，如果长时间稳定在一个范围说明溢出问题得到了解决，否则还要继续进行分析和处理，一直到稳定为止。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM故障分析/" rel="tag"># JVM故障分析</a>
+          
+            <a href="/tags/jstack/" rel="tag"># jstack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/06/JVM故障分析/(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用/" rel="next" title="(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用">
+                <i class="fa fa-chevron-left"></i> (六)JVM Heap Dump（堆转储文件）的生成和MAT的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/06/性能优化/从实际案例聊聊Java应用的GC优化/" rel="prev" title="从实际案例聊聊Java应用的GC优化">
+                从实际案例聊聊Java应用的GC优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c335a79d370ec5c" async="async"></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">程鹏</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mygithubspace" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/" title="Hexo" target="_blank">Hexo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bootcdn.cn/" title="Boot CDN" target="_blank">Boot CDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="科大谷歌字体加速" title="科大谷歌字体加速" target="_blank">科大谷歌字体加速</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.toyaml.com/index.html" title="YAML <-> Properties" target="_blank">YAML <-> Properties</-></a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cli.im/" title="二维码生成器" target="_blank">二维码生成器</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.toolfk.com/" title="程序员的在线工具箱" target="_blank">程序员的在线工具箱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mailnesia.com/" title="10分钟匿名邮箱注册" target="_blank">10分钟匿名邮箱注册</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础概念"><span class="nav-number">1.</span> <span class="nav-text">基础概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shallow-Heap-和-Retained-Heap"><span class="nav-number">1.1.</span> <span class="nav-text">Shallow Heap 和 Retained Heap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象引用（Reference）"><span class="nav-number">1.2.</span> <span class="nav-text">对象引用（Reference）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GC-Roots和Reference-Chain"><span class="nav-number">1.3.</span> <span class="nav-text">GC Roots和Reference Chain</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Histogram（直方图）视图"><span class="nav-number">2.</span> <span class="nav-text">Histogram（直方图）视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dominator-Tree视图"><span class="nav-number">3.</span> <span class="nav-text">Dominator Tree视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定位溢出源"><span class="nav-number">4.</span> <span class="nav-text">定位溢出源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续观察"><span class="nav-number">5.</span> <span class="nav-text">后续观察</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程鹏</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site total words </span>
+    
+    <span title="Site words total count">142.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">
+    Dev By <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>
+  </div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">
+    Theme by <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+  </div>
+
+
+
+<span>|</span>
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/07/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Run for "+dnum+" Days ";
+        document.getElementById("times").innerHTML = hnum + " Hours " + mnum + " m " + snum + " s";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Qwoaf74LKjPDJCdu3D1Uiq30-gzGzoHsz", "AhRCrDTKckU62aUKEvKtUWhk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JVM,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Java HotSpot VM选项以下选项分为不同类别。  行为选项会更改VM的基本行为。 垃圾优先（G1）垃圾收集选项 性能调整选项是旋钮，可用于调整VM性能。 调试选项通常可以跟踪，打印或输出VM信息。  官方文档 G1 垃圾收集选项参数">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java HotSpot VM选项">
+<meta property="og:url" content="http://yoursite.com/2019/07/11/性能优化/Java HotSpot VM选项/index.html">
+<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:description" content="Java HotSpot VM选项以下选项分为不同类别。  行为选项会更改VM的基本行为。 垃圾优先（G1）垃圾收集选项 性能调整选项是旋钮，可用于调整VM性能。 调试选项通常可以跟踪，打印或输出VM信息。  官方文档 G1 垃圾收集选项参数">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-11T06:24:07.013Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java HotSpot VM选项">
+<meta name="twitter:description" content="Java HotSpot VM选项以下选项分为不同类别。  行为选项会更改VM的基本行为。 垃圾优先（G1）垃圾收集选项 性能调整选项是旋钮，可用于调整VM性能。 调试选项通常可以跟踪，打印或输出VM信息。  官方文档 G1 垃圾收集选项参数">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/11/性能优化/Java HotSpot VM选项/">
+
+
+
+
+
+  <title>Java HotSpot VM选项 | 程鹏 | 个人博客</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-131905457-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?1e660ccc784192fa277187863bbd5143";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知识是进步的基石，学习是成功的阶梯</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/11/性能优化/Java HotSpot VM选项/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java HotSpot VM选项</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T14:21:36+08:00">
+                2019-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/11/性能优化/Java HotSpot VM选项/" class="leancloud_visitors" data-flag-title="Java HotSpot VM选项">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java HotSpot VM选项以下选项分为不同类别。</p>
+<ul>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#BehavioralOptions" target="_blank" rel="noopener">行为选项会</a>更改VM的基本行为。</li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#G1Options" target="_blank" rel="noopener">垃圾优先（G1）垃圾收集选项</a></li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#PerformanceTuning" target="_blank" rel="noopener">性能调整</a>选项是旋钮，可用于调整VM性能。</li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#DebuggingOptions" target="_blank" rel="noopener">调试选项</a>通常可以跟踪，打印或输出VM信息。</li>
+</ul>
+<p><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html" target="_blank" rel="noopener">官方文档</a></p>
+<h3 id="G1-垃圾收集选项参数"><a href="#G1-垃圾收集选项参数" class="headerlink" title="G1 垃圾收集选项参数"></a>G1 垃圾收集选项参数</h3><a id="more"></a>
+<table>
+<thead>
+<tr>
+<th>选项及默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-XX:+UseG1GC</td>
+<td>使用垃圾优先（G1）收集器</td>
+</tr>
+<tr>
+<td>-XX:MaxGCPauseMillis=n</td>
+<td>设置最大GC暂停时间的目标。这是一个软目标，JVM将尽最大努力实现它。</td>
+</tr>
+<tr>
+<td>-XX:InitiatingHeapOccupancyPercent=n</td>
+<td>启动并发GC循环的（整个）堆占用百分比。它由GC使用，它基于整个堆的占用而不仅仅是其中一代（例如，G1）触发并发GC循环。值0表示“执行恒定GC循环”。默认值为45。</td>
+</tr>
+<tr>
+<td>-XX:NewRatio=n</td>
+<td>旧/新一代尺寸的比例。默认值为2。</td>
+</tr>
+<tr>
+<td>-XX:SurvivorRatio=n</td>
+<td>eden/survivor区空间大小的比率。默认值为8。</td>
+</tr>
+<tr>
+<td>-XX:MaxTenuringThreshold=n</td>
+<td>终身临界值的最大值。默认值为15。</td>
+</tr>
+<tr>
+<td>-XX:ParallelGCThreads=n</td>
+<td>设置垃圾收集器并行阶段使用的线程数。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:ConcGCThreads=n</td>
+<td>并发垃圾收集器将使用的线程数。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:G1ReservePercent=n</td>
+<td>设置保留为false上限的堆的数量，以减少促销失败的可能性。默认值为10。</td>
+</tr>
+<tr>
+<td>-XX:G1HeapRegionSize=n</td>
+<td>使用G1，Java堆被细分为大小均匀的区域。这设置了各个子部门的大小。根据堆大小，符合人体工程学地确定此参数的默认值。最小值为1Mb，最大值为32Mb。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="行为选项及默认值选项参数"><a href="#行为选项及默认值选项参数" class="headerlink" title="行为选项及默认值选项参数"></a>行为选项及默认值选项参数</h3><table>
+<thead>
+<tr>
+<th>选项及默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-XX:-AllowUserSignalHandlers</td>
+<td>如果应用程序安装了信号处理程序，请不要抱怨。（仅与Solaris和Linux相关。）</td>
+</tr>
+<tr>
+<td>-XX:AltStackSize=16384</td>
+<td>备用信号堆栈大小（以千字节为单位）。（仅与Solaris相关，从5.0中删除。）</td>
+</tr>
+<tr>
+<td>-XX:-DisableExplicitGC</td>
+<td>默认情况下，启用对System.gc（）的调用（-XX：-DisableExplicitGC）。使用-XX：+ DisableExplicitGC禁用对System.gc（）的调用。请注意，JVM在必要时仍会执行垃圾回收。</td>
+</tr>
+<tr>
+<td>-XX:+FailOverToOldVerifier</td>
+<td>新类型检查程序失败时故障转移到旧验证程序。（在6中引入）</td>
+</tr>
+<tr>
+<td>-XX:+HandlePromotionFailure</td>
+<td>最年轻的一代系列不需要保证所有活动对象的完全升级。（在1.4.2更新11中引入）[5.0及更早版本：false。]</td>
+</tr>
+<tr>
+<td>-XX:+MaxFDLimit</td>
+<td>将文件描述符的数量转换为最大值。（仅与Solaris相关。）</td>
+</tr>
+<tr>
+<td>-XX:PreBlockSpin=10</td>
+<td>用于-XX的旋转计数变量：+ UseSpinning。控制在输入操作系统线程同步代码之前允许的最大旋转迭代。（在1.4.2中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-RelaxAccessControlCheck</td>
+<td>放宽验证程序中的访问控制检查。（在6中引入）</td>
+</tr>
+<tr>
+<td>-XX:+ScavengeBeforeFullGC</td>
+<td>在完整GC之前进行年轻一代GC。（在1.4.1中介绍。）</td>
+</tr>
+<tr>
+<td>-XX:+UseAltSigs</td>
+<td>对于VM内部信号，使用备用信号而不是SIGUSR1和SIGUSR2。（在1.3.1更新9中引入，1.4.1。仅与Solaris相关。）</td>
+</tr>
+<tr>
+<td>-XX:+UseBoundThreads</td>
+<td>将用户级线程绑定到内核线程。（仅与Solaris相关。）</td>
+</tr>
+<tr>
+<td>-XX:-UseConcMarkSweepGC</td>
+<td>为旧一代使用并发标记扫描集合。（在1.4.1中引入）</td>
+</tr>
+<tr>
+<td>-XX:+UseGCOverheadLimit</td>
+<td>使用策略限制在引发OutOfMemory错误之前在GC中花费的VM时间的比例。（在6中引入）</td>
+</tr>
+<tr>
+<td>-XX:+UseLWPSynchronization</td>
+<td>使用基于LWP而不是基于线程的同步。（在1.4.0中引入。仅与Solaris相关。）</td>
+</tr>
+<tr>
+<td>-XX:-UseParallelGC</td>
+<td>使用并行垃圾收集清除。（在1.4.1中引入）</td>
+</tr>
+<tr>
+<td>-XX:-UseParallelOldGC</td>
+<td>对完整集合使用并行垃圾回收。启用此选项会自动设置-XX：+ UseParallelGC。（在5.0更新中引入6.）</td>
+</tr>
+<tr>
+<td>-XX:-UseSerialGC</td>
+<td>使用串行垃圾收集。（5.0中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-UseSpinning</td>
+<td>在进入操作系统线程同步代码之前，在Java监视器上启用朴素旋转。（仅与1.4.2和5.0相关。）[1.4.2，多处理器Windows平台：true]</td>
+</tr>
+<tr>
+<td>-XX:+UseTLAB</td>
+<td>使用线程局部对象分配（在1.4.0中引入，在此之前称为UseTLE。）[1.4.2和更早版本，x86或使用-client：false]</td>
+</tr>
+<tr>
+<td>-XX:+UseSplitVerifier</td>
+<td>使用具有StackMapTable属性的新类型检查器。（在5.0中引入。）[5.0：false]</td>
+</tr>
+<tr>
+<td>-XX:+UseThreadPriorities</td>
+<td>使用本机线程优先级。</td>
+</tr>
+<tr>
+<td>-XX:+UseVMInterruptibleIO</td>
+<td>在EINTR之前或与EINTR进行I / O操作的线程中断导致OS_INTRPT。（仅在Solaris中引入。仅与Solaris相关。）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="性能选项参数"><a href="#性能选项参数" class="headerlink" title="性能选项参数"></a>性能选项参数</h3><table>
+<thead>
+<tr>
+<th>选项及默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-XX:+AggressiveOpts</td>
+<td>打开预期在即将发布的版本中默认的点性能编译器优化。（在5.0更新中引入6.）</td>
+</tr>
+<tr>
+<td>-XX:CompileThreshold=10000</td>
+<td>编译前的方法调用/分支数[-client：1,500]</td>
+</tr>
+<tr>
+<td>-XX:LargePageSizeInBytes=4m</td>
+<td>设置用于Java堆的大页面大小。（在1.4.0更新1中引入。）[amd64：2m。]</td>
+</tr>
+<tr>
+<td>-XX:MaxHeapFreeRatio=70</td>
+<td>GC后最大堆积空闲百分比以避免收缩。</td>
+</tr>
+<tr>
+<td>-XX:MaxNewSize=size</td>
+<td>新一代的最大大小（以字节为单位）。从1.4开始，MaxNewSize被计算为NewRatio的函数。[1.3.1 Sparc：32m; 1.3.1 x86：2.5米。]</td>
+</tr>
+<tr>
+<td>-XX:MaxPermSize=64m</td>
+<td>永久代的大小。[5.0及更新版本：64位虚拟机缩放30％; 1.4 amd64：96m; 1.3.1 -client：32m。]</td>
+</tr>
+<tr>
+<td>-XX:MinHeapFreeRatio=40</td>
+<td>GC后最小的堆积百分比以避免扩展。</td>
+</tr>
+<tr>
+<td>-XX:NewRatio=2</td>
+<td>旧/新一代尺寸的比例。[Sparc -client：8; x86 -server：8; x86 -client：12。] - 客户端：4（1.3）8（1.3.1 +），x86：12]</td>
+</tr>
+<tr>
+<td>-XX:NewSize=2m</td>
+<td>新一代的默认大小（以字节为单位）[5.0及更新版本：64位虚拟机缩放30％; x86：1米; x86,5.0及更早版本：640k]</td>
+</tr>
+<tr>
+<td>-XX:ReservedCodeCacheSize=32m</td>
+<td>保留代码缓存大小（以字节为单位） - 最大代码缓存大小。[Solaris 64位，amd64和-server x86：2048m; 在1.5.0_06及更早版本中，Solaris 64位和amd64：1024m。</td>
+</tr>
+<tr>
+<td>-XX:SurvivorRatio=8</td>
+<td>eden/survivor区空间大小的比例[Solaris amd64：6; Sparc在1.3.1：25; 5.0及更早版本中的其他Solaris平台：32]</td>
+</tr>
+<tr>
+<td>-XX:TargetSurvivorRatio=50</td>
+<td>清除后使用的幸存者空间的所需百分比。</td>
+</tr>
+<tr>
+<td>-XX:ThreadStackSize=512</td>
+<td>线程堆栈大小（以KB为单位）。（0表示使用默认堆栈大小）[Sparc：512; Solaris x86：320（在5.0及更早版本中为256之前的版本）; Sparc 64位：1024; Linux amd64：1024（5.0及更早版本中为0）; 所有其他的0.]</td>
+</tr>
+<tr>
+<td>-XX:+UseBiasedLocking</td>
+<td>启用偏置锁定。有关更多详细信息，请参阅此<a href="https://www.oracle.com/technetwork/java/tuning-139912.html#section4.2.5" target="_blank" rel="noopener">调整示例</a>。（在5.0更新中引入6.）[5.0：false]</td>
+</tr>
+<tr>
+<td>-XX:+UseFastAccessorMethods</td>
+<td>使用优化版本的Get <primitive> Field。</primitive></td>
+</tr>
+<tr>
+<td>-XX:-UseISM</td>
+<td>使用亲密共享内存。[不适用于非Solaris平台。]有关详细信息，请参阅<a href="https://www.oracle.com/technetwork/java/ism-139376.html" target="_blank" rel="noopener">私密共享内存</a>。</td>
+</tr>
+<tr>
+<td>-XX:+UseLargePages</td>
+<td>使用大页面内存。（在5.0更新5中引入。）有关详细信息，请参阅<a href="https://www.oracle.com/technetwork/java/javase/tech/largememory-jsp-137182.html" target="_blank" rel="noopener">Java支持大内存页面</a>。</td>
+</tr>
+<tr>
+<td>-XX:+UseMPSS</td>
+<td>使用具有4mb页面的多页面大小支持。不要与ISM一起使用，因为这取代了对ISM的需求。（在1.4.0更新1中引入，与Solaris 9及更新版本相关。）[1.4.1及更早版本：false]</td>
+</tr>
+<tr>
+<td>-XX:+UseStringCache</td>
+<td>启用常用分配字符串的缓存。</td>
+</tr>
+<tr>
+<td>-XX:AllocatePrefetchLines=1</td>
+<td>使用JIT编译代码中生成的预取指令在最后一次对象分配后加载的高速缓存行数。如果最后分配的对象是实例，则默认值为1;如果是数组，则默认值为3。</td>
+</tr>
+<tr>
+<td>-XX:AllocatePrefetchStyle=1</td>
+<td>生成预取指令的代码样式。<br>0 - 没有生成预取指令<em> d </em>，<br>1 - 在每次分配后执行预取指令，<br>2 - 在执行预取指令时使用TLAB分配水印指针到门。</td>
+</tr>
+<tr>
+<td>-XX:+UseCompressedStrings</td>
+<td>对字符串使用byte []，可以表示为纯ASCII。（在Java 6 Update 21性能发布中引入）</td>
+</tr>
+<tr>
+<td>-XX:+OptimizeStringConcat</td>
+<td>尽可能优化字符串连接操作。（在Java 6 Update 20中引入）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="调试选项及默认值参数"><a href="#调试选项及默认值参数" class="headerlink" title="调试选项及默认值参数"></a>调试选项及默认值参数</h3><table>
+<thead>
+<tr>
+<th>选项及默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-XX:-CITime</td>
+<td>打印在JIT编译器中花费的时间。（在1.4.0中引入。）</td>
+</tr>
+<tr>
+<td>-XX:ErrorFile=./hs_err_pid<pid>.log</pid></td>
+<td>如果发生错误，请将错误数据保存到此文件中。（在6中引入）</td>
+</tr>
+<tr>
+<td>-XX:-ExtendedDTraceProbes</td>
+<td>启用影响性能的<a href="http://docs.oracle.com/javase/6/docs/technotes/guides/vm/dtrace.html" target="_blank" rel="noopener">dtrace</a>探针。（仅在Solaris中引入。仅与Solaris相关。）</td>
+</tr>
+<tr>
+<td>-XX:HeapDumpPath=./java_pid<pid>.hprof</pid></td>
+<td>堆转储的目录或文件名的路径。<em>可管理</em>。（在1.4.2更新12,5.0更新7中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-HeapDumpOnOutOfMemoryError</td>
+<td>抛出java.lang.OutOfMemoryError时转储堆到文件。<em>可管理</em>。（在1.4.2更新12,5.0更新7中引入。）</td>
+</tr>
+<tr>
+<td>-XX:OnError=”<cmd args="">;<cmd args="">“</cmd></cmd></td>
+<td>在致命错误上运行用户定义的命令。（在1.4.2更新9中引入）</td>
+</tr>
+<tr>
+<td>-XX:OnOutOfMemoryError=”<cmd args="">;<br><cmd args="">“</cmd></cmd></td>
+<td>首次抛出OutOfMemoryError时运行用户定义的命令。（在1.4.2更新12,6中引入）</td>
+</tr>
+<tr>
+<td>-XX:-PrintClassHistogram</td>
+<td>在Ctrl-Break上打印类实例的直方图。<em>可管理</em>。（在1.4.2中引入。）<a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jmap.html" target="_blank" rel="noopener">jmap -histo</a>命令提供了等效的功能。</td>
+</tr>
+<tr>
+<td>-XX:-PrintConcurrentLocks</td>
+<td>在Ctrl-Break线程转储中打印java.util.concurrent锁。<em>可管理</em>。（在6.中引入）<a href="http://docs.oracle.com/javase/6/docs/technotes/tools/share/jstack.html" target="_blank" rel="noopener">jstack -l</a>命令提供等效功能。</td>
+</tr>
+<tr>
+<td>-XX:-PrintCommandLineFlags</td>
+<td>打印出现在命令行上的标志。（5.0中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-PrintCompilation</td>
+<td>编译方法时打印消息。</td>
+</tr>
+<tr>
+<td>-XX:-PrintGC</td>
+<td>在垃圾收集中打印消息。<em>可管理</em>。</td>
+</tr>
+<tr>
+<td>-XX:-PrintGCDetails</td>
+<td>在垃圾收集中打印更多细节。<em>可管理</em>。（在1.4.0中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-PrintGCTimeStamps</td>
+<td>打印垃圾回收时的时间戳。<em>可管理</em>（1.4.0中引入）</td>
+</tr>
+<tr>
+<td>-XX:-PrintTenuringDistribution</td>
+<td>打印终身年龄信息。</td>
+</tr>
+<tr>
+<td>-XX:-PrintAdaptiveSizePolicy</td>
+<td>允许打印有关自适应生成大小的信息。</td>
+</tr>
+<tr>
+<td>-XX:-TraceClassLoading</td>
+<td>跟踪类的加载。</td>
+</tr>
+<tr>
+<td>-XX:-TraceClassLoadingPreorder</td>
+<td>跟踪按引用顺序（未加载）加载的所有类。（在1.4.2中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-TraceClassResolution</td>
+<td>跟踪按引用顺序（未加载）加载的所有类。（在1.4.2中引入。）</td>
+</tr>
+<tr>
+<td>-XX:-TraceClassUnloading</td>
+<td>跟踪卸载类。</td>
+</tr>
+<tr>
+<td>-XX:-TraceLoaderConstraints</td>
+<td>跟踪记录装载机约束。（在6中引入）</td>
+</tr>
+<tr>
+<td>-XX:+PerfDataSaveToFile</td>
+<td>退出时保存jvmstat二进制数据。</td>
+</tr>
+<tr>
+<td>-XX:ParallelGCThreads=n</td>
+<td>设置年轻和旧的并行垃圾收集器中的垃圾收集线程数。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:+UseCompressedOops</td>
+<td>允许使用压缩指针（对象引用表示为32位偏移而不是64位指针），以优化64位性能，Java堆大小小于32gb。</td>
+</tr>
+<tr>
+<td>-XX:+AlwaysPreTouch</td>
+<td>在JVM初始化期间预先触摸Java堆。因此，堆的每个页面在初始化期间都是需求归零，而不是在应用程序执行期间递增。</td>
+</tr>
+<tr>
+<td>-XX:AllocatePrefetchDistance=n</td>
+<td>设置对象分配的预取距离。将使用新对象的值写入的内存以超出最后分配的对象的地址的距离（以字节为单位）预取到高速缓存中。每个Java线程都有自己的分配点。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:InlineSmallCode=n</td>
+<td>仅当先前编译的方法生成的本机代码大小小于此值时，才对其进行内联。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:MaxInlineSize=35</td>
+<td>要内联的方法的最大字节码大小。</td>
+</tr>
+<tr>
+<td>-XX:FreqInlineSize=n</td>
+<td>要内联的频繁执行方法的最大字节码大小。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:LoopUnrollLimit=n</td>
+<td>展开循环体，服务器编译器中间表示节点计数小于此值。服务器编译器使用的限制是此值的函数，而不是实际值。默认值因运行JVM的平台而异。</td>
+</tr>
+<tr>
+<td>-XX:InitialTenuringThreshold=7</td>
+<td>设置用于并行年轻收集器中自适应GC大小调整的初始时效阈值。终结阈值是对象在被提升为旧的或终身的一代之前在年轻的集合中存活的次数。</td>
+</tr>
+<tr>
+<td>-XX:MaxTenuringThreshold=n</td>
+<td>设置用于自适应GC大小调整的最大暂定阈值。当前最大值为15.并行收集器的默认值为15，CMS为默认值。</td>
+</tr>
+<tr>
+<td>-Xloggc:<filename></filename></td>
+<td>将GC详细输出记录到指定文件。详细输出由正常的详细GC标志控制。</td>
+</tr>
+<tr>
+<td>-XX:-UseGCLogFileRotation</td>
+<td>启用GC日志轮换，需要-Xloggc。</td>
+</tr>
+<tr>
+<td>-XX:NumberOfGClogFiles=1</td>
+<td>设置旋转日志时要使用的文件数，必须&gt; = 1.旋转的日志文件将使用以下命名方案，<filename> .0，<filename> .1，…，<filename> .n- 1。</filename></filename></filename></td>
+</tr>
+<tr>
+<td>-XX:GCLogFileSize=8K</td>
+<td>日志将在何时旋转日志文件的大小必须&gt; = 8K。</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/Git/git配置.gitignore/" rel="next" title="git配置.gitignore">
+                <i class="fa fa-chevron-left"></i> git配置.gitignore
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/12/devNote/远程连接Oracle数据库/" rel="prev" title="远程连接Oracle数据库(本地不安装Oracle)">
+                远程连接Oracle数据库(本地不安装Oracle) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c335a79d370ec5c" async="async"></script>
+</div>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">程鹏</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">110</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/mygithubspace" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://hexo.io/zh-cn/" title="Hexo" target="_blank">Hexo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.bootcdn.cn/" title="Boot CDN" target="_blank">Boot CDN</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="科大谷歌字体加速" title="科大谷歌字体加速" target="_blank">科大谷歌字体加速</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.toyaml.com/index.html" title="YAML <-> Properties" target="_blank">YAML <-> Properties</-></a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://cli.im/" title="二维码生成器" target="_blank">二维码生成器</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.toolfk.com/" title="程序员的在线工具箱" target="_blank">程序员的在线工具箱</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://mailnesia.com/" title="10分钟匿名邮箱注册" target="_blank">10分钟匿名邮箱注册</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#G1-垃圾收集选项参数"><span class="nav-number">1.</span> <span class="nav-text">G1 垃圾收集选项参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行为选项及默认值选项参数"><span class="nav-number">2.</span> <span class="nav-text">行为选项及默认值选项参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能选项参数"><span class="nav-number">3.</span> <span class="nav-text">性能选项参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试选项及默认值参数"><span class="nav-number">4.</span> <span class="nav-text">调试选项及默认值参数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">程鹏</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site total words </span>
+    
+    <span title="Site words total count">142.2k</span>
+  
+</div>
+
+
+  <div class="powered-by">
+    Dev By <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a>
+  </div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">
+    Theme by <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT</a>
+  </div>
+
+
+
+<span>|</span>
+<!-- 在网页底部添加网站运行时间 -->
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date();
+    function createtime() {
+        var grt= new Date("01/07/2019 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;}
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;}
+        document.getElementById("timeDate").innerHTML = "Run for "+dnum+" Days ";
+        document.getElementById("times").innerHTML = hnum + " Hours " + mnum + " m " + snum + " s";
+    }
+setInterval("createtime()",250);
+</script>
+        
+<div class="busuanzi-count">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("Qwoaf74LKjPDJCdu3D1Uiq30-gzGzoHsz", "AhRCrDTKckU62aUKEvKtUWhk");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

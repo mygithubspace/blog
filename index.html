@@ -179,7 +179,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle">没有爱因斯坦的智商，学习便没有事半功倍</p>
+        <p class="site-subtitle">知识是进步的基石，学习是成功的阶梯</p>
       
   </div>
 
@@ -303,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/Linux/Kafka集群搭建/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/12/devNote/远程连接Oracle数据库/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -322,7 +322,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/30/Linux/Kafka集群搭建/" itemprop="url">Kafka集群搭建</a></h1>
+                <a class="post-title-link" href="/2019/07/12/devNote/远程连接Oracle数据库/" itemprop="url">远程连接Oracle数据库(本地不安装Oracle)</a></h1>
         
 
         <div class="post-meta">
@@ -334,8 +334,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:34:43+08:00">
-                2019-06-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-12T08:49:05+08:00">
+                2019-07-12
               </time>
             
 
@@ -357,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kafka/" itemprop="url" rel="index">
-                    <span itemprop="name">Kafka</span>
+                  <a href="/categories/JavaUtils/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaUtils</span>
                   </a>
                 </span>
 
@@ -374,7 +374,7 @@
 
           
           
-             <span id="/2019/06/30/Linux/Kafka集群搭建/" class="leancloud_visitors" data-flag-title="Kafka集群搭建">
+             <span id="/2019/07/12/devNote/远程连接Oracle数据库/" class="leancloud_visitors" data-flag-title="远程连接Oracle数据库(本地不安装Oracle)">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  647
+                  397
                 </span>
               
 
@@ -415,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  1
                 </span>
               
             </div>
@@ -438,264 +438,53 @@
       
         
           
-            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Apache Kafka是一款分布式消息发布和订阅系统，具有高性能、高吞吐量的特点而被广泛应用与大数据传输场景。它由LinkedIn公司开发，使用Scala语言编写，之后成为Apache基金会的一个顶级项目。<a href="http://kafka.apache.org/" target="_blank" rel="noopener">官方网站</a></p>
-<h2 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h2><h3 id="下载并解压Kafka包"><a href="#下载并解压Kafka包" class="headerlink" title="下载并解压Kafka包"></a>下载并解压Kafka包</h3><p><a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">官方下载地址</a></p>
-<blockquote>
-<p>注意Kafka所基于的Scala版本</p>
+            <h3 id="下载Oracle客户端"><a href="#下载Oracle客户端" class="headerlink" title="下载Oracle客户端"></a>下载Oracle客户端</h3><p><code>instantclient-basic-windows.x64-11.2.0.4.0</code>网盘链接：<a href="https://pan.baidu.com/s/1cmLH2EWHqZ-VI0QBCDy0kQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1cmLH2EWHqZ-VI0QBCDy0kQ</a><br>提取码：<code>zlxu</code></p>
+<h3 id="配置Oracle客户端"><a href="#配置Oracle客户端" class="headerlink" title="配置Oracle客户端"></a>配置Oracle客户端</h3><ol>
+<li><p>将客户端压缩包解压</p>
+</li>
+<li><p>进入解压目录，新建文件夹<code>NETWORK</code>并进入其再新建文件夹<code>ADMIN</code></p>
+</li>
+<li><p>进入文件夹<code>ADMIN</code>，创建<code>tnsnames.ora</code>文件并编辑</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ORCL = </span><br><span class="line">   (DESCRIPTION = </span><br><span class="line">     (ADDRESS_LIST = </span><br><span class="line">       (ADDRESS = (PROTOCOL = TCP)(HOST = YOURSERVERIP )(PORT = 1521)) </span><br><span class="line">     ) </span><br><span class="line">     (CONNECT_DATA = </span><br><span class="line">	   (SERVICE = DEDICATED)</span><br><span class="line">       (SERVICE_NAME = YOURDBNAME) </span><br><span class="line">     ) </span><br><span class="line">   )</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Binary downloads:<ul>
-<li>Scala 2.11  - <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz" target="_blank" rel="noopener">kafka_2.11-1.0.0.tgz</a> (<a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz.asc" target="_blank" rel="noopener">asc</a>, <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.11-1.0.0.tgz.sha512" target="_blank" rel="noopener">sha512</a>)</li>
-<li>Scala 2.12  - <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.12-1.0.0.tgz" target="_blank" rel="noopener">kafka_2.12-1.0.0.tgz</a> (<a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.12-1.0.0.tgz.asc" target="_blank" rel="noopener">asc</a>, <a href="https://archive.apache.org/dist/kafka/1.0.0/kafka_2.12-1.0.0.tgz.sha512" target="_blank" rel="noopener">sha512</a>)</li>
+<li><code>ORCL</code>：本机识别服务名，可任意命名，不重复即可</li>
+<li><code>YOURSERVERIP</code>：待连接Oracle数据库服务器IP地址</li>
+<li><code>1521</code>：Oracle数据库暴露的端口号，默认则无需修改</li>
+<li><code>YOURDBNAME</code>：远程数据库服务名，需要按照数据库的服务器进行设置，如远程数据库名为<code>test_db</code>，则设置为<code>test_db</code>。</li>
 </ul>
 </li>
+</ol>
+<h3 id="环境变量准备"><a href="#环境变量准备" class="headerlink" title="环境变量准备"></a>环境变量准备</h3><ul>
+<li><p>新建变量<code>NLS_LANG</code>，值为<code>AMERICAN_AMERICA.AL32UTF8</code></p>
+</li>
+<li><p>新建变量<code>TNS_ADMIN</code>，值为<code>${ClientPath}\NETWORK\ADMIN</code>，比如我的设置为<code>D:\Software\DevSoftware\instantclient_12_1\NETWORK\ADMIN</code>。</p>
+</li>
 </ul>
-</blockquote>
-<p>解压Kafka：<code>tar -zxf kafka_2.11-2.3.0.tgz</code></p>
-<h3 id="配置Zookeeper"><a href="#配置Zookeeper" class="headerlink" title="配置Zookeeper"></a>配置Zookeeper</h3><ol>
-<li><p>下载<code>Zookeeper</code></p>
+<h3 id="配置图形化界面软件"><a href="#配置图形化界面软件" class="headerlink" title="配置图形化界面软件"></a>配置图形化界面软件</h3><h4 id="Navicat"><a href="#Navicat" class="headerlink" title="Navicat"></a>Navicat</h4><ol>
+<li><p>点击<code>工具</code>-&gt;<code>选项</code>-&gt;<code>环境</code></p>
 </li>
-<li><p>进入<code>Zookeeper</code>安装目录，编辑配置文件<code>vi conf/zoo.cfg</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tickTime=2000</span><br><span class="line">dataDir=/var/lib/zookeeper</span><br><span class="line">clientPort=2181</span><br><span class="line">initLimit=5</span><br><span class="line">syncLimit=2</span><br><span class="line">server.1=192.168.22.200:2888:3888</span><br><span class="line">server.2=192.168.22.201:2888:3888</span><br><span class="line">server.3=192.168.22.202:2888:3888</span><br></pre></td></tr></table></figure>
+<li><p>修改<code>OCI环境</code>，将<code>OCI library(oci.dll)*</code>的值设置为Oracle客户端解压文件中的<code>oci.dll</code></p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/devNote/远程连接Oracle数据库/1.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/devNote/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Oracle%E6%95%B0%E6%8D%AE%E5%BA%93/1.png"></p>
 </li>
-</ol>
-<ol start="3">
-<li><p>配置<code>zookeeper</code>集群的<code>myid</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建 dataDir 文件夹</span></span><br><span class="line">mkdir /var/lib/zookeeper</span><br><span class="line"><span class="comment"># 在ZK集群机器分别设置对应的myid,如在 192.168.22.200 节点设置</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"1"</span> &gt; /var/lib/zookeeper/myid</span><br></pre></td></tr></table></figure>
+<li><p>重启Navicat，再次连接远端Oracle数据库即可成功</p>
 </li>
-<li><p>启动<code>zookeeper</code>集群</p>
-<p>分别在集群中的机器中Kafka安装目录中执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证启动成功</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkServer.sh status</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以观察到如下内容</span></span><br><span class="line"><span class="comment"># 从节点</span></span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/<span class="built_in">local</span>/kafka/zookeeper-3.4.10/bin/../conf/zoo.cfg</span><br><span class="line">Starting zookeeper ... already running as process 9408.</span><br><span class="line">[root@root bin]<span class="comment"># ./zkServer.sh status</span></span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/<span class="built_in">local</span>/kafka/zookeeper-3.4.10/bin/../conf/zoo.cfg</span><br><span class="line">Mode: follower</span><br><span class="line"><span class="comment"># 主节点</span></span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/<span class="built_in">local</span>/kafka/apache-zookeeper-3.5.5/bin/zookeeper-3.4.10/bin/../conf/zoo.cfg</span><br><span class="line">Error contacting service. It is probably not running.</span><br><span class="line">[root@root bin]<span class="comment"># ./zookeeper-3.4.10/bin/zkServer.sh status</span></span><br><span class="line">ZooKeeper JMX enabled by default</span><br><span class="line">Using config: /usr/<span class="built_in">local</span>/kafka/apache-zookeeper-3.5.5/bin/zookeeper-3.4.10/bin/../conf/zoo.cfg</span><br><span class="line">Mode: leader</span><br></pre></td></tr></table></figure>
+<li><p>连接数据库配置，选择<code>TNS</code>方式连接</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/devNote/远程连接Oracle数据库/2.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/devNote/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Oracle%E6%95%B0%E6%8D%AE%E5%BA%93/2.png"></p>
 </li>
 </ol>
-<h2 id="配置Kafka"><a href="#配置Kafka" class="headerlink" title="配置Kafka"></a>配置Kafka</h2><ol>
-<li><p>修改Kafka服务器配置文件</p>
-<p>进入Kafka安装目录，编辑配置文件<code>vi config/service.properties</code>，修改以下内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改broker.id，每台服务器的broker.id为唯一的integer类型数字</span></span><br><span class="line">broker.id=0</span><br><span class="line"><span class="comment"># 添加主节点监听端口，IP为本机IP地址</span></span><br><span class="line">listeners=PLAINTEXT://192.168.22.200:9092</span><br><span class="line"><span class="comment"># 设置Zookeeper集群连接</span></span><br><span class="line">zookeeper.connect=192.168.22.200:2181,192.168.22.201:2181,192.168.22.202:2181</span><br></pre></td></tr></table></figure>
+<h4 id="PL-SQL-Developer"><a href="#PL-SQL-Developer" class="headerlink" title="PL/SQL Developer"></a>PL/SQL Developer</h4><ol>
+<li><p>进入<code>PL/SQL</code>，不填数据库选项，选择<code>Cancle</code>即可进入<code>PL/SQL</code></p>
 </li>
-<li><p>启动Kafka集群</p>
-<p>在每台服务器的Kafka安装目录执行</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh -daemon config/server.properties</span><br></pre></td></tr></table></figure>
+<li><p>点击<code>Tools</code>-&gt;<code>Preferences</code>j进行配置客户端信息</p>
+<p><img src="https://github.com/mygithubspace/Image-Repository/raw/master/devNote/远程连接Oracle数据库/3.png" alt="https://github.com/mygithubspace/Image-Repository/blob/master/devNote/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Oracle%E6%95%B0%E6%8D%AE%E5%BA%93/3.png"></p>
 </li>
-<li><p>验证</p>
-<p>使用zkCli进入Zookeeper，在Zookeeper安装目录执行<code>./bin/zkCli.sh -server 192.168.22.200:2181</code>(Zookeeper集群任意一台均可)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ls /</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以看到多出来许多节点，这些都是Kafka在ZK上注册的节点</span></span><br><span class="line">[cluster, controller_epoch, controller, brokers, zookeeper, admin, isr_change_notification, consumers, log_dir_event_notification, latest_producer_id_block, config]</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>controller：控制节点</p>
-<p>brokers：Kafka集群的broker信息，以及topic信息</p>
-<p>consumers：ids/owners/offsets</p>
-</blockquote>
-</li>
-<li><p>停止Kafka</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>Kafka使用文档：<a href="https://kafka.apache.org/10/documentation.html#quickstart" target="_blank" rel="noopener">https://kafka.apache.org/10/documentation.html#quickstart</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/devNote/Tomcat外网远程Debug/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程鹏">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/devNote/Tomcat外网远程Debug/" itemprop="url">Tomcat外网远程Debug</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:07:22+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Tomcat/" itemprop="url" rel="index">
-                    <span itemprop="name">Tomcat</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/30/devNote/Tomcat外网远程Debug/" class="leancloud_visitors" data-flag-title="Tomcat外网远程Debug">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  139
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p>保持远端代码版本本地代码版本一致</p>
-</li>
-<li><p>执行<code>sudo vim ${tomcat}/bin/catalina.sh</code>进行编辑，其中<code>${tomcat}</code>为tomcat的安装目录</p>
-</li>
-<li><p>添加如下配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_OPTS=&quot;-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005&quot;</span><br></pre></td></tr></table></figure>
-<p>其中address为开发的远程debug的端口号</p>
-</li>
-<li><p>把开放远程debug的端口加到防火墙配置中</p>
-</li>
-<li><p>及时关闭开发的debug端口</p>
-</li>
-<li><p>编辑<code>sudo vim /etc/sysconfig/iptables</code></p>
-</li>
-<li><p>添加如下配置<code>-A INPUT -p tcp -m tcp --dport 5000 -j ACCEPT</code></p>
-</li>
-<li><p><code>:wq</code>保存退出</p>
-</li>
-<li><p>重启防火墙<code>sudo service iptables restart</code></p>
+<li><p>重启输入Oracle信息即可成功连接</p>
+<ul>
+<li><code>Username</code>：为远程数据库用户名</li>
+<li><code>Password</code>：远程数据库密码</li>
+<li><code>Database</code>：与<code>tnsnames.ora</code>与本机识别服务名相同</li>
+<li><code>Connect as</code>：根据用户再数据库中的角色选择即可</li>
+</ul>
 </li>
 </ol>
 
@@ -746,7 +535,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/Linux/CentOS7.2安装htop/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/11/性能优化/Java HotSpot VM选项/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -765,7 +554,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/30/Linux/CentOS7.2安装htop/" itemprop="url">CentOS7.2安装htop</a></h1>
+                <a class="post-title-link" href="/2019/07/11/性能优化/Java HotSpot VM选项/" itemprop="url">Java HotSpot VM选项</a></h1>
         
 
         <div class="post-meta">
@@ -777,8 +566,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:05:02+08:00">
-                2019-06-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T14:21:36+08:00">
+                2019-07-11
               </time>
             
 
@@ -800,8 +589,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/CentOS/" itemprop="url" rel="index">
-                    <span itemprop="name">CentOS</span>
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
                   </a>
                 </span>
 
@@ -817,7 +606,7 @@
 
           
           
-             <span id="/2019/06/30/Linux/CentOS7.2安装htop/" class="leancloud_visitors" data-flag-title="CentOS7.2安装htop">
+             <span id="/2019/07/11/性能优化/Java HotSpot VM选项/" class="leancloud_visitors" data-flag-title="Java HotSpot VM选项">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -842,7 +631,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  93
+                  3k
                 </span>
               
 
@@ -858,7 +647,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  11
                 </span>
               
             </div>
@@ -880,593 +669,18 @@
 
       
         
-          
-            <h2 id="在CentOS7-2中安装htop"><a href="#在CentOS7-2中安装htop" class="headerlink" title="在CentOS7.2中安装htop"></a>在CentOS7.2中安装htop</h2><h3 id="安装gcc及其编译的库"><a href="#安装gcc及其编译的库" class="headerlink" title="安装gcc及其编译的库"></a>安装<code>gcc</code>及其编译的库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">如果没有安装gcc，按如下来安装</span><br><span class="line">yum install -y gcc</span><br><span class="line"></span><br><span class="line">安装后，编译htop需要安装一个编译Linux内核的库</span><br><span class="line">yum install -y ncurses-devel</span><br></pre></td></tr></table></figure>
-<h3 id="htop下载，编译和安装"><a href="#htop下载，编译和安装" class="headerlink" title="htop下载，编译和安装"></a><code>htop</code>下载，编译和安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">htop下载</span><br><span class="line">wget http://sourceforge.net/projects/htop/files/latest/download</span><br><span class="line"></span><br><span class="line">解压</span><br><span class="line">tar -zxf download</span><br><span class="line"><span class="built_in">cd</span> htop-1.0.2</span><br><span class="line">./configure &amp;&amp; make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行</span></span><br><span class="line">htop</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/Linux/Ubuntu 18.04配置静态IP地址/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程鹏">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/Linux/Ubuntu 18.04配置静态IP地址/" itemprop="url">Ubuntu 18.04配置静态IP地址</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:01:09+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ubuntu/" itemprop="url" rel="index">
-                    <span itemprop="name">Ubuntu</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/30/Linux/Ubuntu 18.04配置静态IP地址/" class="leancloud_visitors" data-flag-title="Ubuntu 18.04配置静态IP地址">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  114
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p>编辑网络配置文件</p>
-<blockquote>
-<p><code>vi /etc/netplan/50-cloud-init.yaml</code></p>
-</blockquote>
-</li>
-<li><p>将原文件修改为如下内容</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># This file is generated from information provided by</span><br><span class="line"># the datasource.  Changes to it will not persist across an instance.</span><br><span class="line"># To disable cloud-init&apos;s network configuration capabilities, write a file</span><br><span class="line"># /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg with the following:</span><br><span class="line"># network: &#123;config: disabled&#125;</span><br><span class="line">network:</span><br><span class="line">    ethernets:</span><br><span class="line">    ens33:</span><br><span class="line">        dhcp4: no</span><br><span class="line">        dhcp6: no </span><br><span class="line">        addresses: [192.168.22.100/24]</span><br><span class="line">        optional: true</span><br><span class="line">        gateway4: 192.168.22.2</span><br><span class="line">        nameservers:</span><br><span class="line">                addresses: [8.8.8.8,202.96.209.133]</span><br><span class="line">version: 2</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>启用配置<code>netplan apply</code></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/Linux/Ubuntu 18.04 vi编辑器原格式粘贴/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程鹏">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/Linux/Ubuntu 18.04 vi编辑器原格式粘贴/" itemprop="url">Ubuntu 18.04 vi编辑器原格式粘贴</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T11:00:20+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Ubuntu/" itemprop="url" rel="index">
-                    <span itemprop="name">Ubuntu</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/30/Linux/Ubuntu 18.04 vi编辑器原格式粘贴/" class="leancloud_visitors" data-flag-title="Ubuntu 18.04 vi编辑器原格式粘贴">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  55
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>使用vi编辑器打开文件</li>
-<li>使用命令编辑模式(即刚使用vi编辑器打开文件状态)</li>
-<li>输入<code>:set paste</code>，回车后，按<code>i</code>进入编辑模式，即可使用原样粘贴</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/30/Linux/CentOS7固定IP/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="程鹏">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/30/Linux/CentOS7固定IP/" itemprop="url">CentOS7设置固定IP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T10:39:21+08:00">
-                2019-06-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/FTP/" itemprop="url" rel="index">
-                    <span itemprop="name">FTP</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/FTP/CentOS/" itemprop="url" rel="index">
-                    <span itemprop="name">CentOS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/06/30/Linux/CentOS7固定IP/" class="leancloud_visitors" data-flag-title="CentOS7设置固定IP">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  279
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="查看当前启用的网卡"><a href="#查看当前启用的网卡" class="headerlink" title="查看当前启用的网卡"></a>查看当前启用的网卡</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[root@root ~]<span class="comment"># ip addr</span></span><br><span class="line">1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span><br><span class="line">    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00</span><br><span class="line">    inet 127.0.0.1/8 scope host lo</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 ::1/128 scope host </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">2: ens33: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000</span><br><span class="line">    link/ether 00:0c:29:9c:f1:80 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 192.168.22.128/24 brd 192.168.22.255 scope global noprefixroute dynamic ens33</span><br><span class="line">       valid_lft 1453sec preferred_lft 1453sec</span><br><span class="line">    inet6 fe80::d5c8:a782:53b7:4e5b/64 scope link noprefixroute </span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">[root@root ~]<span class="comment"># cd /etc/sysconfig/network-scripts</span></span><br><span class="line">[root@root network-scripts]<span class="comment"># ls -ltr ifcfg-*</span></span><br><span class="line">-rw-r--r--. 1 root root 254 1月   3 2018 ifcfg-lo</span><br><span class="line">-rw-r--r--. 1 root root 310 6月  24 16:27 ifcfg-ens33</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>如上所示，修改<code>ifcfg-ens33</code>设置为静态IP</p>
-</blockquote>
+          <p>Java HotSpot VM选项以下选项分为不同类别。</p>
+<ul>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#BehavioralOptions" target="_blank" rel="noopener">行为选项会</a>更改VM的基本行为。</li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#G1Options" target="_blank" rel="noopener">垃圾优先（G1）垃圾收集选项</a></li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#PerformanceTuning" target="_blank" rel="noopener">性能调整</a>选项是旋钮，可用于调整VM性能。</li>
+<li><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html#DebuggingOptions" target="_blank" rel="noopener">调试选项</a>通常可以跟踪，打印或输出VM信息。</li>
+</ul>
+<p><a href="https://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html" target="_blank" rel="noopener">官方文档</a></p>
+<h3 id="G1-垃圾收集选项参数"><a href="#G1-垃圾收集选项参数" class="headerlink" title="G1 垃圾收集选项参数"></a>G1 垃圾收集选项参数</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/30/Linux/CentOS7固定IP/#more" rel="contents">
+            <a class="btn" href="/2019/07/11/性能优化/Java HotSpot VM选项/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1517,7 +731,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Kubectl 常用命令/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/Git/git配置.gitignore/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1536,7 +750,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/Kubectl 常用命令/" itemprop="url">Kubectl 常用命令</a></h1>
+                <a class="post-title-link" href="/2019/07/10/Git/git配置.gitignore/" itemprop="url">git配置.gitignore</a></h1>
         
 
         <div class="post-meta">
@@ -1548,8 +762,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:41:46+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T16:41:10+08:00">
+                2019-07-10
               </time>
             
 
@@ -1571,8 +785,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/Git/" itemprop="url" rel="index">
+                    <span itemprop="name">Git</span>
                   </a>
                 </span>
 
@@ -1588,7 +802,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/Kubectl 常用命令/" class="leancloud_visitors" data-flag-title="Kubectl 常用命令">
+             <span id="/2019/07/10/Git/git配置.gitignore/" class="leancloud_visitors" data-flag-title="git配置.gitignore">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1613,7 +827,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  274
+                  30
                 </span>
               
 
@@ -1651,14 +865,580 @@
 
       
         
-          <blockquote>
-<p><strong>小提示：</strong> 所有命令前都可以加上 <code>watch</code> 命令来观察状态的实时变化，如：<code>watch kubectl get pods --all-namespaces</code></p>
-<h2 id="查看组件状态"><a href="#查看组件状态" class="headerlink" title="查看组件状态"></a>查看组件状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; kubectl get cs</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="查看环境信息"><a href="#查看环境信息" class="headerlink" title="查看环境信息"></a>查看环境信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl cluster-info</span><br></pre></td></tr></table></figure>
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">target/</span><br><span class="line">!.mvn/wrapper/maven-wrapper.jar</span><br><span class="line">### STS ###</span><br><span class="line">.apt_generated</span><br><span class="line">.classpath</span><br><span class="line">.factorypath</span><br><span class="line">.project</span><br><span class="line">.settings</span><br><span class="line">.springBeans</span><br><span class="line">### IntelliJ IDEA ###</span><br><span class="line">.idea</span><br><span class="line">*.iws</span><br><span class="line">*.iml</span><br><span class="line">*.ipr</span><br><span class="line">### JRebel ###</span><br><span class="line">rebel.xml</span><br><span class="line">### MAC ###</span><br><span class="line">.DS_Store</span><br><span class="line">### Other ###</span><br><span class="line">logs/</span><br><span class="line">temp/</span><br><span class="line">.mvn/</span><br><span class="line">mvnw</span><br><span class="line">mvnw.cmd</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/性能优化/Tomcat 性能优化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/07/性能优化/Tomcat 性能优化/" itemprop="url">Tomcat 性能优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-07T21:14:23+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/07/性能优化/Tomcat 性能优化/" class="leancloud_visitors" data-flag-title="Tomcat 性能优化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="配置优化"><a href="#配置优化" class="headerlink" title="配置优化"></a>配置优化</h3><h4 id="减少配置优化"><a href="#减少配置优化" class="headerlink" title="减少配置优化"></a>减少配置优化</h4><ul>
+<li><p>场景一：假设当前 REST 应用(微服务)、不需要JSP的情况</p>
+<p>分析：它不需要静态资源，Tomcat 容器静态和动态</p>
+<p>静态处理：<code>DefaultServlet</code></p>
+<ul>
+<li><p>优化方案：通过移除<code>conf/web.xml</code>中的 <code>DefaultServlet</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>default<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.catalina.servlets.DefaultServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>debug<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>0<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>listings<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/Kubectl 常用命令/#more" rel="contents">
+            <a class="btn" href="/2019/07/07/性能优化/Tomcat 性能优化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/devNote/Tomcat8 Maven 插件/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/07/devNote/Tomcat8 Maven 插件/" itemprop="url">Tomcat Maven 插件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-07T09:49:35+08:00">
+                2019-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Tomcat8/" itemprop="url" rel="index">
+                    <span itemprop="name">Tomcat8</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/07/devNote/Tomcat8 Maven 插件/" class="leancloud_visitors" data-flag-title="Tomcat Maven 插件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  107
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Tomcat7-Maven-插件地址"><a href="#Tomcat7-Maven-插件地址" class="headerlink" title="Tomcat7 Maven 插件地址"></a>Tomcat7 Maven 插件地址</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat7-maven-plugin --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat7-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Tomcat8-Maven-插件地址"><a href="#Tomcat8-Maven-插件地址" class="headerlink" title="Tomcat8 Maven 插件地址"></a>Tomcat8 Maven 插件地址</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat8-maven-plugin --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat8-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0-r1756463<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/性能优化/从实际案例聊聊Java应用的GC优化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/06/性能优化/从实际案例聊聊Java应用的GC优化/" itemprop="url">从实际案例聊聊Java应用的GC优化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T21:17:04+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/06/性能优化/从实际案例聊聊Java应用的GC优化/" class="leancloud_visitors" data-flag-title="从实际案例聊聊Java应用的GC优化">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  22
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>原文地址：<a href="https://tech.meituan.com/2017/12/29/jvm-optimize.html" target="_blank" rel="noopener">https://tech.meituan.com/2017/12/29/jvm-optimize.html</a></p>
+<p>当Java程序性能达不到既定目标，且其他优化手段都已经穷尽时，通常需要调整垃圾回收器来进一步提高性能，称为GC优化。但GC算法复杂，影响GC性能的参数众多，且参数调整又依赖于应用各自的特点，这些因素很大程度上增加了GC优化的难度。即便如此，GC调优也不是无章可循，仍然有一些通用的思考方法。本篇会介绍这些通用的GC优化策略和相关实践案例，主要包括如下内容：</p>
+<blockquote>
+<p>优化方法: 介绍调优的一般流程：明确优化目标→优化→跟踪优化结果。 &gt; 优化案例: 简述笔者所在团队遇到的GC问题以及优化方案。</p>
+</blockquote>
+<h2 id="一、优化前的准备"><a href="#一、优化前的准备" class="headerlink" title="一、优化前的准备"></a>一、优化前的准备</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/06/性能优化/从实际案例聊聊Java应用的GC优化/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1709,7 +1489,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/28/k8s/Kubectl 与 Docker 命令/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="程鹏">
@@ -1728,7 +1508,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/28/k8s/Kubectl 与 Docker 命令/" itemprop="url">Kubectl 与 Docker 命令</a></h1>
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/" itemprop="url">(七)使用MAT的Histogram和Dominator Tree定位溢出源</a></h1>
         
 
         <div class="post-meta">
@@ -1740,8 +1520,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-28T16:40:09+08:00">
-                2019-06-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T20:28:22+08:00">
+                2019-07-06
               </time>
             
 
@@ -1763,8 +1543,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/Kubernetes/" itemprop="url" rel="index">
-                    <span itemprop="name">Kubernetes</span>
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
                   </a>
                 </span>
 
@@ -1780,7 +1560,7 @@
 
           
           
-             <span id="/2019/06/28/k8s/Kubectl 与 Docker 命令/" class="leancloud_visitors" data-flag-title="Kubectl 与 Docker 命令">
+             <span id="/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/" class="leancloud_visitors" data-flag-title="(七)使用MAT的Histogram和Dominator Tree定位溢出源">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1805,7 +1585,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  333
+                  1.7k
                 </span>
               
 
@@ -1821,7 +1601,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  6
                 </span>
               
             </div>
@@ -1843,21 +1623,205 @@
 
       
         
-          <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Docker 命令和 Kubectl 命令有很多相似的地方，Docker 操作容器，Kubectl 操作 Pod（容器的集合）等</p>
-<h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><ul>
-<li>docker：<code>docker run -d --restart=always -e DOMAIN=cluster --name nginx-app -p 80:80 nginx</code></li>
-<li>kubectl：<ul>
-<li><code>kubectl run --image=nginx nginx-app --port=80 --env=&quot;DOMAIN=cluster&quot;</code></li>
-<li><code>kubectl expose deployment nginx-app --port=80 --name=nginx-http</code></li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p><strong>注意：</strong> <code>kubectl run</code> 会创建一个 <strong>Deployment</strong> 并且默认会在后台运行，以上面的代码为例它的名称为 <strong>nginx-app</strong>。默认情况 Deployment 并不会将端口暴露出去，所以我们还需要使用 <code>kubectl expose</code> 暴露端口以供访问，此时还会创建一个同名的 <strong>Service</strong></p>
-</blockquote>
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><p>先列出几个基础的概念：</p>
+<h3 id="Shallow-Heap-和-Retained-Heap"><a href="#Shallow-Heap-和-Retained-Heap" class="headerlink" title="Shallow Heap 和 Retained Heap"></a>Shallow Heap 和 Retained Heap</h3><p>Shallow Heap表示对象本身占用内存的大小，不包含对其他对象的引用，也就是对象头加成员变量（不是成员变量的值）的总和。</p>
+<p>Retained Heap是该对象自己的Shallow Heap，并加上从该对象能直接或间接访问到对象的Shallow Heap之和。换句话说，Retained Heap是该对象GC之后所能回收到内存的总和。</p>
+<p>把内存中的对象看成下图中的节点，并且对象和对象之间互相引用。这里有一个特殊的节点GC Roots，这就是reference chain的起点。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/28/k8s/Kubectl 与 Docker 命令/#more" rel="contents">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(七)使用MAT的Histogram和Dominator Tree定位溢出源/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/JVM故障分析/(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="程鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="程鹏 | 个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/06/JVM故障分析/(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用/" itemprop="url">(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T20:19:38+08:00">
+                2019-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM故障分析/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM故障分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/07/06/JVM故障分析/(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用/" class="leancloud_visitors" data-flag-title="(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>原文地址：<a href="http://www.javatang.com" target="_blank" rel="noopener">http://www.javatang.com</a></p>
+<h2 id="JVM-Heap-Dump（堆转储文件）的生成"><a href="#JVM-Heap-Dump（堆转储文件）的生成" class="headerlink" title="JVM Heap Dump（堆转储文件）的生成"></a>JVM Heap Dump（堆转储文件）的生成</h2><p>正如Thread Dump文件记录了当时JVM中线程运行的情况一样，Heap Dump记录了JVM中堆内存运行的情况。<br>可以通过以下几种方式生成Heap Dump文件：</p>
+<h3 id="使用-jmap-命令生成"><a href="#使用-jmap-命令生成" class="headerlink" title="使用 jmap 命令生成"></a>使用 jmap 命令生成</h3><p><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/jmap.html" target="_blank" rel="noopener">jmap</a> 命令是JDK提供的用于生成堆内存信息的工具，可以执行下面的命令生成Heap Dump：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jmap -dump:live,format=b,file=heap-dump.bin &lt;pid&gt;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/06/JVM故障分析/(六)JVM Heap Dump（堆转储文件）的生成和MAT的使用/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1899,7 +1863,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1945,7 +1909,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">96</span>
+                  <span class="site-state-item-count">110</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1956,7 +1920,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1967,7 +1931,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">56</span>
+                  <span class="site-state-item-count">63</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2073,7 +2037,7 @@
     
       <span class="post-meta-item-text">Site total words </span>
     
-    <span title="Site words total count">117.3k</span>
+    <span title="Site words total count">142.2k</span>
   
 </div>
 
