@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="个人博客" type="application/atom+xml">
 
 
 
@@ -86,7 +86,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Cloud Alibaba熔断器仪表盘">
 <meta property="og:url" content="http://yoursite.com/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba熔断器仪表盘/index.html">
-<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="Sentinel 控制台Sentinel 控制台提供一个轻量级的控制台，它提供机器发现、单机资源实时监控、集群资源汇总，以及规则管理的功能。您只需要对应用进行简单的配置，就可以使用这些功能。 注意: 集群资源汇总仅支持 500 台以下的应用集群，有大概 1 - 2 秒的延时。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lgy1fz4qjg5fbkj31gr0mbq6v.jpg">
@@ -133,7 +133,7 @@
 
 
 
-  <title>Spring Cloud Alibaba熔断器仪表盘 | 程鹏 | 个人博客</title>
+  <title>Spring Cloud Alibaba熔断器仪表盘 | 个人博客</title>
   
 
 
@@ -182,7 +182,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="site-title">个人博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -320,7 +320,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
+      <meta itemprop="name" content="个人博客">
     </span>
 
     
@@ -375,6 +375,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba熔断器仪表盘/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba熔断器仪表盘/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -501,8 +511,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba路由网关/" rel="next" title="Spring Cloud Alibaba路由网关">
-                <i class="fa fa-chevron-left"></i> Spring Cloud Alibaba路由网关
+              <a href="/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba统一的依赖管理/" rel="next" title="cloud alibaba统一的依赖管理">
+                <i class="fa fa-chevron-left"></i> cloud alibaba统一的依赖管理
               </a>
             
           </div>
@@ -511,8 +521,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/Zookeeper/Zookeeper安装/" rel="prev" title="CentOS 7 Zookeeper安装">
-                CentOS 7 Zookeeper安装 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba路由网关/" rel="prev" title="Spring Cloud Alibaba路由网关">
+                Spring Cloud Alibaba路由网关 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -550,7 +560,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -941,22 +953,48 @@ setInterval("createtime()",250);
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'MicroCheng',
+            repo: 'microcheng.github.io',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ec97417ef03221385ac0fa693a5175bb3a98874c',
+            
+                client_id: '5ac638ad8b1eeaf1f536'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

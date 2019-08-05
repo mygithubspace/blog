@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="个人博客" type="application/atom+xml">
 
 
 
@@ -86,7 +86,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="配置 Jenkins">
 <meta property="og:url" content="http://yoursite.com/2019/05/23/Jenkins/配置 Jenkins/index.html">
-<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="本教程基于docker-compose安装Jenkins 详细安装教程：站内搜索Docker-Compose安装Jenkins 配置 JDK &amp;amp; Maven 上传 JDK 和 Maven 的 tar 包到服务器（容器数据卷目录/usr/local/docker/jenkins/data） 解压 JDK 和 Maven 的 tar 包，完成后删除压缩包 Manage Jenkins -&amp;gt">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006j3B4Lgy1fzs6dbu330j314b09owel.jpg">
@@ -134,7 +134,7 @@
 
 
 
-  <title>配置 Jenkins | 程鹏 | 个人博客</title>
+  <title>配置 Jenkins | 个人博客</title>
   
 
 
@@ -183,7 +183,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="site-title">个人博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -321,7 +321,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
+      <meta itemprop="name" content="个人博客">
     </span>
 
     
@@ -387,6 +387,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/23/Jenkins/配置 Jenkins/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/23/Jenkins/配置 Jenkins/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -522,8 +532,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/Jenkins/Docker-Compose安装Jenkins/" rel="next" title="Docker-Compose安装Jenkins">
-                <i class="fa fa-chevron-left"></i> Docker-Compose安装Jenkins
+              <a href="/2019/05/23/hexo-next-blog搭建/npm切换镜像到淘宝镜像/" rel="next" title="npm切换镜像到淘宝镜像">
+                <i class="fa fa-chevron-left"></i> npm切换镜像到淘宝镜像
               </a>
             
           </div>
@@ -532,8 +542,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/k8s/Kubernetes入门/" rel="prev" title="Kubernetes入门">
-                Kubernetes入门 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/23/Jenkins/Jenkins安装/" rel="prev" title="CentOS 7 Jenkins安装">
+                CentOS 7 Jenkins安装 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -571,7 +581,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -962,22 +974,48 @@ setInterval("createtime()",250);
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'MicroCheng',
+            repo: 'microcheng.github.io',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ec97417ef03221385ac0fa693a5175bb3a98874c',
+            
+                client_id: '5ac638ad8b1eeaf1f536'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

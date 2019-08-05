@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="个人博客" type="application/atom+xml">
 
 
 
@@ -86,7 +86,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="运用Swagger编写API文档">
 <meta property="og:url" content="http://yoursite.com/2019/05/23/前端/Swagger简单使用/index.html">
-<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="什么是Swagger随着互联网技术的发展，现在的网站架构基本都由原来的后端渲染，变成了：前端渲染、先后端分离的形态，而且前端技术和后端技术在各自的道路上越走越远。  前端和后端的唯一联系，变成了API接口；API文档变成了前后端开发人员联系的纽带，变得越来越重要，`swagger`就是一款让你更好的书写API文档的框架。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/01/10/5c36d6bb00fda.png">
@@ -139,7 +139,7 @@
 
 
 
-  <title>运用Swagger编写API文档 | 程鹏 | 个人博客</title>
+  <title>运用Swagger编写API文档 | 个人博客</title>
   
 
 
@@ -188,7 +188,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="site-title">个人博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -326,7 +326,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
+      <meta itemprop="name" content="个人博客">
     </span>
 
     
@@ -381,6 +381,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/23/前端/Swagger简单使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/23/前端/Swagger简单使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -723,8 +733,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/spring-cloud-alibaba/Spring Cloud Alibaba路由网关的全局过滤功能/" rel="next" title="Spring Cloud Alibaba路由网关全局过滤功能">
-                <i class="fa fa-chevron-left"></i> Spring Cloud Alibaba路由网关全局过滤功能
+              <a href="/2019/05/23/Zookeeper/Zookeeper安装/" rel="next" title="CentOS 7 Zookeeper安装">
+                <i class="fa fa-chevron-left"></i> CentOS 7 Zookeeper安装
               </a>
             
           </div>
@@ -772,7 +782,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -1163,22 +1175,48 @@ setInterval("createtime()",250);
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'MicroCheng',
+            repo: 'microcheng.github.io',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ec97417ef03221385ac0fa693a5175bb3a98874c',
+            
+                client_id: '5ac638ad8b1eeaf1f536'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

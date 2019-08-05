@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="个人博客" type="application/atom+xml">
 
 
 
@@ -86,7 +86,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kubectl 常用命令">
 <meta property="og:url" content="http://yoursite.com/2019/06/28/k8s/Kubectl 常用命令/index.html">
-<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="小提示： 所有命令前都可以加上 watch 命令来观察状态的实时变化，如：watch kubectl get pods --all-namespaces 查看组件状态12&amp;gt; kubectl get cs&amp;gt;  查看环境信息1kubectl cluster-info">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-06-28T08:44:12.277Z">
@@ -128,7 +128,7 @@
 
 
 
-  <title>Kubectl 常用命令 | 程鹏 | 个人博客</title>
+  <title>Kubectl 常用命令 | 个人博客</title>
   
 
 
@@ -177,7 +177,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="site-title">个人博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -315,7 +315,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
+      <meta itemprop="name" content="个人博客">
     </span>
 
     
@@ -370,6 +370,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/28/k8s/Kubectl 常用命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/06/28/k8s/Kubectl 常用命令/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -545,7 +555,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -936,22 +948,48 @@ setInterval("createtime()",250);
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'MicroCheng',
+            repo: 'microcheng.github.io',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ec97417ef03221385ac0fa693a5175bb3a98874c',
+            
+                client_id: '5ac638ad8b1eeaf1f536'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

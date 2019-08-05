@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="个人博客" type="application/atom+xml">
 
 
 
@@ -86,7 +86,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot整合tk.mybatis">
 <meta property="og:url" content="http://yoursite.com/2019/05/23/spring/SpringBoot整合tk.mybatis/index.html">
-<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="tk.mybatis 简介tk.mybatis 是在 MyBatis 框架的基础上提供了很多工具，让开发更加高效 引入依赖在 pom.xml 文件中引入 mapper-spring-boot-starter 依赖，该依赖会自动引入 MyBaits 相关依赖 12345&amp;lt;dependency&amp;gt;    &amp;lt;groupId&amp;gt;tk.mybatis&amp;lt;/groupId&amp;gt;">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-04-29T10:44:12.632Z">
@@ -128,7 +128,7 @@
 
 
 
-  <title>SpringBoot整合tk.mybatis | 程鹏 | 个人博客</title>
+  <title>SpringBoot整合tk.mybatis | 个人博客</title>
   
 
 
@@ -177,7 +177,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="site-title">个人博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -315,7 +315,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
+      <meta itemprop="name" content="个人博客">
     </span>
 
     
@@ -370,6 +370,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/23/spring/SpringBoot整合tk.mybatis/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/23/spring/SpringBoot整合tk.mybatis/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -481,8 +491,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/spring/SpringBoot整合Druid/" rel="next" title="SpringBoot整合Druid">
-                <i class="fa fa-chevron-left"></i> SpringBoot整合Druid
+              <a href="/2019/05/23/spring/Spring Security oAuth2/" rel="next" title="Spring Security oAuth2快速上手">
+                <i class="fa fa-chevron-left"></i> Spring Security oAuth2快速上手
               </a>
             
           </div>
@@ -491,8 +501,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/spring/集成MyBatis的Maven插件生成代码/" rel="prev" title="集成MyBatis的Maven插件生成代码">
-                集成MyBatis的Maven插件生成代码 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/23/spring/SpringBoot整合Mybatis分页助手/" rel="prev" title="SpringBoot整合Mybatis分页助手pagehelper">
+                SpringBoot整合Mybatis分页助手pagehelper <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -530,7 +540,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -921,22 +933,48 @@ setInterval("createtime()",250);
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'MicroCheng',
+            repo: 'microcheng.github.io',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ec97417ef03221385ac0fa693a5175bb3a98874c',
+            
+                client_id: '5ac638ad8b1eeaf1f536'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 

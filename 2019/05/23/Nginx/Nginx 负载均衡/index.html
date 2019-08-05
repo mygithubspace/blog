@@ -74,7 +74,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="程鹏 | 个人博客" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="个人博客" type="application/atom+xml">
 
 
 
@@ -86,7 +86,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx 负载均衡">
 <meta property="og:url" content="http://yoursite.com/2019/05/23/Nginx/Nginx 负载均衡/index.html">
-<meta property="og:site_name" content="程鹏 | 个人博客">
+<meta property="og:site_name" content="个人博客">
 <meta property="og:description" content="Nginx 实现负载均衡 nginx 作为负载均衡服务器，用户请求先到达 nginx，再由 nginx 根据负载配置将请求转发至 tomcat 服务器 nginx 负载均衡服务器：192.168.75.145:80 tomcat1 服务器：192.168.75.145:9090 tomcat2 服务器：192.168.75.145:9091  Nginx 配置负载均衡修改 /usr/local/d">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-07-02T02:34:43.534Z">
@@ -128,7 +128,7 @@
 
 
 
-  <title>Nginx 负载均衡 | 程鹏 | 个人博客</title>
+  <title>Nginx 负载均衡 | 个人博客</title>
   
 
 
@@ -177,7 +177,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">程鹏 | 个人博客</span>
+        <span class="site-title">个人博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -315,7 +315,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="程鹏 | 个人博客">
+      <meta itemprop="name" content="个人博客">
     </span>
 
     
@@ -370,6 +370,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/23/Nginx/Nginx 负载均衡/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/23/Nginx/Nginx 负载均衡/" itemprop="commentsCount"></span>
+                </a>
+              </span>
             
           
 
@@ -492,8 +502,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/Linux/CentOS7搭建FTP/" rel="next" title="CentOS7 搭建FTP">
-                <i class="fa fa-chevron-left"></i> CentOS7 搭建FTP
+              <a href="/2019/05/23/Nginx/Nginx 虚拟主机/" rel="next" title="Nginx 虚拟主机">
+                <i class="fa fa-chevron-left"></i> Nginx 虚拟主机
               </a>
             
           </div>
@@ -502,8 +512,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/Nginx/Nginx 虚拟主机/" rel="prev" title="Nginx 虚拟主机">
-                Nginx 虚拟主机 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/23/Redis/Redis安装/" rel="prev" title="Redis安装">
+                Redis安装 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -541,7 +551,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -932,22 +944,48 @@ setInterval("createtime()",250);
 
 
   
-    <script type="text/javascript">
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
-  
 
 
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'MicroCheng',
+            repo: 'microcheng.github.io',
+            
+            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'ec97417ef03221385ac0fa693a5175bb3a98874c',
+            
+                client_id: '5ac638ad8b1eeaf1f536'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
 
