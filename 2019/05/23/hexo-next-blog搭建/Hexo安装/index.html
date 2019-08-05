@@ -371,16 +371,6 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/23/hexo-next-blog搭建/Hexo安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/23/hexo-next-blog搭建/Hexo安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -523,8 +513,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/23/hexo-next-blog搭建/Hexo Next构建个人博客/" rel="next" title="Hexo Next构建个人博客">
-                <i class="fa fa-chevron-left"></i> Hexo Next构建个人博客
+              <a href="/2019/05/23/hexo-next-blog搭建/Hexo Next第三方服务集成/" rel="next" title="Hexo Next第三方服务集成">
+                <i class="fa fa-chevron-left"></i> Hexo Next第三方服务集成
               </a>
             
           </div>
@@ -533,8 +523,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/hexo-next-blog搭建/Hexo建站/" rel="prev" title="Hexo建站(博客)">
-                Hexo建站(博客) <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/23/hexo-next-blog搭建/Hexo Next构建个人博客/" rel="prev" title="Hexo Next构建个人博客">
+                Hexo Next构建个人博客 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -572,9 +562,7 @@
 
   
     <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjAxNS8xODU2Mg=="></div>
     </div>
 
   
@@ -965,48 +953,22 @@ setInterval("createtime()",250);
 
 
   
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
 
 
 
 
 
-
-
-<!-- LOCAL: You can save these files to your site and update links -->
-    
-        
-        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
-        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
-    
-<!-- END LOCAL -->
-
-    
-
-    
-      <script type="text/javascript">
-      function renderGitment(){
-        var gitment = new Gitmint({
-            id: window.location.pathname, 
-            owner: 'mygithubspace',
-            repo: 'mygithubspace.github.io',
-            
-            lang: "zh-Hans" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
-            
-            oauth: {
-            
-            
-                client_secret: '8a79121531f6394336508e08b7a7a0bcd5d0a314',
-            
-                client_id: '28bbb040509318971850'
-            }});
-        gitment.render('gitment-container');
-      }
-
-      
-      renderGitment();
-      
-      </script>
-    
 
 
 
